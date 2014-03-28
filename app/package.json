@@ -1,0 +1,14 @@
+{
+  "name": "redis-explorer",
+  "version": "0.0.0",
+  "private": "true",
+  "main": "index.html",
+  "window": {
+    "toolbar": false,
+    "width": 1200,
+    "height": 800
+  },
+  "dependencies": {
+    "redis": "~0.10.1"
+  }
+}

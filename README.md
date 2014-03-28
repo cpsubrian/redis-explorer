@@ -1,9 +1,36 @@
-redis-explorer
+RedisExplorer
 ==============
 
 A node-webkit app for browsing Redis.
 
-[![build status](https://secure.travis-ci.org/cpsubrian/redis-explorer.png)](http://travis-ci.org/cpsubrian/redis-explorer)
+Installation
+------------
+
+RedisExplorer is built with node-webkit, grunt, and bower. However, a Makefile
+exists that should get you up and running in no time.
+
+Clone this repository.
+```
+$ git clone git@github.com:cpsubrian/redis-explorer
+```
+
+Run the make command.
+```
+$ make
+```
+
+This installs all the dependencies and runs the grunt tasks to build the app.
+It also runs the app for you.
+
+In the future you can run the app with:
+```
+$ make run
+```
+
+If you'd like to symlink the build app into your `/Applications` directory, just run:
+```
+$make link
+```
 
 - - -
 

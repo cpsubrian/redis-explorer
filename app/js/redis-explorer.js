@@ -18,6 +18,7 @@ define(function (require) {
   require('plugins/handlebars');
   require('plugins/navigate');
   require('plugins/views');
+  require('plugins/redis');
 
   // Router.
   RedisExplorerRouter = Router.extend({

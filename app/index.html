@@ -23,6 +23,10 @@
         <div class="col-sm-9 main"></div>
     </div>
 
+    <script>
+      // Cache Node.js require since we're clobbering it with requirejs.
+      window.requireNode = window.require;
+    </script>
     <script src="vendor/requirejs/require.js"></script>
     <script src="js/config.js"></script>
     <script>

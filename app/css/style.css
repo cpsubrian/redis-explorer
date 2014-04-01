@@ -27,8 +27,8 @@ body {
   padding: 20px;
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-  background-color: #f5f5f5;
-  border-right: 1px solid #eee;
+  background-color: #f2f2f2;
+  border-right: 1px solid #e6e6e6;
 }
 .main {
   position: fixed;
@@ -37,12 +37,15 @@ body {
   right: 0;
   overflow-x: hidden;
   overflow-y: auto;
+  display: block;
+  padding: 20px;
 }
 
 /* Sidebar Tree
 *******************************************************************************/
 .sidebar .tree {
   font-size: 0.85em;
+  margin-left: -15px;
 }
 .sidebar .tree ul {
   list-style: none;
@@ -52,5 +55,53 @@ body {
 .sidebar .tree ul li {
   list-style: none;
   margin: 0;
-  padding: 2px 0 2px 10px;
+  padding: 3px 0 3px 15px;
+}
+.sidebar .tree ul li a.expand .open {
+  display: none;
+}
+.sidebar .tree ul li a.expanded .open {
+  display: inline-block;
+}
+.sidebar .tree ul li a.expanded .closed {
+  display: none;
+}
+.sidebar .tree .closed,
+.sidebar .tree .open {
+  float: left;
+  width: 14px;
+  color: #666;
+  text-align: center;
+}
+.sidebar .tree a.expand:hover {
+  text-decoration: none;
+}
+.sidebar .tree a:hover .closed
+.sidebar .tree a:hover .open {
+  color: #000;
+}
+.sidebar .tree ul li.bottom {
+  margin-left: 10px;
+}
+.sidebar .tree a.key {
+  display: block;
+  padding: 0 5px;
+  color: #666;
+}
+.sidebar .tree a.key:hover {
+  color: #000;
+  background: #eee;
+  text-decoration: none;
+}
+.sidebar .tree a.key.selected {
+  color: #9F180F;
+  font-weight: bold;
+}
+.sidebar .tree a.key .folder {
+  margin-right: 5px;
+  color: #DA382F;
+  text-align: center;
+}
+.sidebar .tree a.key.selected .folder {
+  color: #6C0800;
 }

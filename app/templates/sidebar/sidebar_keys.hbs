@@ -1,10 +1,20 @@
 {{#if children}}
-  <li>
-    {{key}}:*
-    <ul>
-      {{#children}}
-        {{> sidebar_keys}}
-      {{/children}}
-    </ul>
+  <li class="{{#if bottom}}bottom{{else}}collapsible{{/if}}">
+    {{#unless bottom}}
+      <a href="#" class="expand" data-toggle="collapse" data-target=".{{key}}-children">
+        <i class="fa fa-caret-right closed"></i>
+        <i class="fa fa-caret-down open"></i>
+      </a>
+    {{/unless}}
+    <a href="#" class="key">
+      <i class="fa fa-folder folder"></i>{{key}} : *
+    </a>
+    {{#unless bottom}}
+      <ul class="{{key}}-children collapse">
+        {{#children}}
+          {{> sidebar_keys}}
+        {{/children}}
+      </ul>
+    {{/unless}}
   </li>
 {{/if}}

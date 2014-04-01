@@ -1,0 +1,10 @@
+{{#if children}}
+  <li>
+    {{key}}:*
+    <ul>
+      {{#children}}
+        {{> sidebar_keys}}
+      {{/children}}
+    </ul>
+  </li>
+{{/if}}

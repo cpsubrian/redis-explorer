@@ -8,7 +8,7 @@ define(function (require) {
 
   // Define app regions.
   app.addRegions({
-    'sidebar': '.sidebar',
+    'left': '.left',
     'main': '.main'
   });
 

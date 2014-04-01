@@ -14,7 +14,7 @@ define(function (require) {
       container: app.main
     },
 
-    initialize: function () {
+    onRender: function () {
       this.options.loader.load();
     }
   });

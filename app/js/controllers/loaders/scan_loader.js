@@ -6,12 +6,12 @@ define(function (require) {
   var ScanLoader = Marionette.Controller.extend({
 
     initialize: function (options) {
+      this.options.mode = options.mode || 'add';
       this.collection = options.collection;
       this.cursor = 0;
-      this.onLoaded = this.onLoaded.bind(this);
     },
 
-    load: function () {
+    load: function (cb) {
       var args = [];
       if (this.cursor !== false) {
         args.push(this.cursor);
@@ -26,22 +26,24 @@ define(function (require) {
           args.push('match');
           args.push(this.options.match);
         }
-        args.push(this.onLoaded);
+        args.push(this.onLoaded.bind(this, cb));
         app.redis.scan.apply(app.redis, args);
-        return true;
       }
       else {
-        return false;
+        if (cb) cb(null, false);
       }
     },
 
-    onLoaded: function (err, results) {
-      if (err) return this.triggerMethod('onLoadError', err);
+    onLoaded: function (cb, err, results) {
+      if (err) {
+        if (cb) return cb(err);
+      }
       this.cursor = results[0];
-      if (this.cursor === 0) this.cursor = false;
-      this.collection.add(results[1].map(function (key) {
+      if (this.cursor == 0) this.cursor = false;
+      this.collection[this.options.mode](results[1].map(function (key) {
         return {id: key};
       }));
+      if (cb) cb(null, this.cursor !== false);
     },
 
     reset: function () {

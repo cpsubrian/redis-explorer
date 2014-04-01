@@ -5,6 +5,17 @@ define(function (require) {
 
   Backbone.sync = function(method, model, options) {
     options = options || {};
+
+    // Handle a redis error.
+    function error (err) {
+      if (options.error) options.error(err);
+    }
+
+    // Handle success.
+    function success (resp) {
+      if (options.success) options.success(resp);
+    }
+
     switch (method) {
       case 'create':
         break;
@@ -17,21 +28,24 @@ define(function (require) {
         break;
 
       case 'read':
-        app.redis.get(model.id, handleRequest(options));
+        app.redis.type(model.id, function (err, type) {
+          if (err) return error(err);
+          if (type === 'string') {
+            app.redis.get(model.id, function (err, resp) {
+              if (err) error(err);
+              try {
+                success({id: model.id, type: type, value: JSON.parse(resp)});
+              }
+              catch (e) {
+                success({id: model.id, type: type, value: resp});
+              }
+            });
+          }
+          else {
+            success({id: model.id, type: type});
+          }
+        });
         break;
     }
   };
-
-  // Handle a redis request.
-  function handleRequest (options) {
-    return function (err, result) {
-      if (err && options.error) {
-        options.error(err);
-      }
-      else if (options.success) {
-        options.success(result, true);
-      }
-    };
-  }
-
 });

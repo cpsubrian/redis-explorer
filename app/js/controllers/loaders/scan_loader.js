@@ -12,19 +12,27 @@ define(function (require) {
     },
 
     load: function () {
+      var args = [];
       if (this.cursor !== false) {
-        if (this.options.count && this.options.match) {
-          app.redis.scan(this.cursor, 'match', this.options.match, 'count', this.options.count, this.onLoaded);
+        this.args.push(this.cursor);
+
+        if (this.options.key) {
+          this.args.push(this.options.key);
         }
-        else if (this.options.count) {
-          app.redis.scan(this.cursor, 'count', this.options.count, this.onLoaded);
+
+        if (this.options.count) {
+          this.args.push('count');
+          this.args.push(this.options.count);
         }
-        else if (this.options.match) {
-          app.redis.scan(this.cursor, 'match', this.options.match, this.onLoaded);
+
+        if (this.options.match) {
+          this.args.push('match');
+          this.args.push(this.options.match);
         }
-        else {
-          app.redis.scan(this.cursor, this.onLoaded);
-        }
+
+        this.args.push(this.onLoaded);
+        app.redis.scan.apply(app.redis, args);
+
         return true;
       }
       else {

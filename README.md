@@ -29,7 +29,7 @@ $ make run
 
 If you'd like to symlink the build app into your `/Applications` directory, just run:
 ```
-$make link
+$ make link
 ```
 
 - - -

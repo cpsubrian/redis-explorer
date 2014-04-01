@@ -14,25 +14,20 @@ define(function (require) {
     load: function () {
       var args = [];
       if (this.cursor !== false) {
-        this.args.push(this.cursor);
-
+        args.push(this.cursor);
         if (this.options.key) {
-          this.args.push(this.options.key);
+          args.push(this.options.key);
         }
-
         if (this.options.count) {
-          this.args.push('count');
-          this.args.push(this.options.count);
+          args.push('count');
+          args.push(this.options.count);
         }
-
         if (this.options.match) {
-          this.args.push('match');
-          this.args.push(this.options.match);
+          args.push('match');
+          args.push(this.options.match);
         }
-
-        this.args.push(this.onLoaded);
+        args.push(this.onLoaded);
         app.redis.scan.apply(app.redis, args);
-
         return true;
       }
       else {

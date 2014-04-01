@@ -15,6 +15,9 @@ run:
 	@echo "Running OSX Build"
 	@open ./build/releases/redis-explorer/mac/redis-explorer.app
 
+watch:
+	nodemon --watch app --exec "make"
+
 link:
 	@ln -s `pwd`/build/releases/redis-explorer/mac/redis-explorer.app /Applications/RedisExplorer.app
 
@@ -31,6 +34,7 @@ clean:
 .PHONY: install
 .PHONY: build
 .PHONY: run
+.PHONY: watch
 .PHONY: link
 .PHONY: unlink
 .PHONY: clean

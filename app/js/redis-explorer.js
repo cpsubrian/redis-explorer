@@ -19,6 +19,7 @@ define(function (require) {
   require('plugins/navigate');
   require('plugins/views');
   require('plugins/redis');
+  require('plugins/sync');
 
   // Router.
   RedisExplorerRouter = Router.extend({

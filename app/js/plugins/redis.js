@@ -1,8 +1,7 @@
 define(function (require) {
 
   var app = require('app')
-    , redis = requireNode('redis');
+    , redis = nodejs.require('redis');
 
   app.redis = redis.createClient();
-
 });

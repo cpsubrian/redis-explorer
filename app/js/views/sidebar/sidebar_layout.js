@@ -1,5 +1,6 @@
 define(function (require) {
-  var Marionette = require('marionette')
+  var app = require('app')
+    , Marionette = require('marionette')
     , ScanLoader = require('controllers/loaders/scan_loader')
     , RecordsCollection = require('collections/records_collection')
     , SidebarTreeView = require('views/sidebar/sidebar_tree_view');
@@ -18,18 +19,22 @@ define(function (require) {
       this.loader = new ScanLoader({
         collection: this.collection,
         mode: 'reset',
-        count: 100
+        count: 500
       });
     },
 
     onRender: function () {
       var self = this;
-      this.load(function (err) {
+      app.redis.dbsize(function (err, dbsize) {
         if (err) return console.error(err);
-        self.tree.show(new SidebarTreeView({
-          keys: self.keys,
-          homeLoader: self.options.homeLoader
-        }));
+        self.load(function (err) {
+          if (err) return console.error(err);
+          self.tree.show(new SidebarTreeView({
+            keys: self.keys,
+            dbsize: dbsize,
+            homeLoader: self.options.homeLoader
+          }));
+        });
       });
     },
 

@@ -1,4 +1,5 @@
 all: install build run
+rebuild: clean install build run
 
 install:
 	@echo ""

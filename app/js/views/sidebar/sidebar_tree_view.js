@@ -22,6 +22,7 @@ define(function (require) {
 
     templateHelpers: function () {
       var data = {};
+      data.dbsize = this.options.dbsize;
       data.keys = this.keysToItems(this.options.keys, '');
       return data;
     },

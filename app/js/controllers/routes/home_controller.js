@@ -14,7 +14,9 @@ define(function (require) {
       app.main.show(new HomeLayout({
         collection: recordsCollection,
         loader: new ScanLoader({
-          collection: recordsCollection
+          collection: recordsCollection,
+          count: 50,
+          fetch: true
         })
       }));
       app.left.show(new SidebarLayout());

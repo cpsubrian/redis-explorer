@@ -11,6 +11,7 @@ requirejs.config({
     backbone: '../vendor/backbone/backbone',
     handlebars: '../vendor/handlebars/handlebars',
     marionette: '../vendor/backbone.marionette/lib/backbone.marionette',
+    async: '../vendor/async/lib/async',
 
     // Handlebars template loader/compiler.
     text: '../vendor/requirejs-text/text',

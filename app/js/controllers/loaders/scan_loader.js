@@ -1,5 +1,6 @@
 define(function (require) {
   var app = require('app')
+    , async = require('async')
     , _ = require('underscore')
     , Marionette = require('marionette');
 
@@ -35,15 +36,49 @@ define(function (require) {
     },
 
     onLoaded: function (cb, err, results) {
-      if (err) {
+      var self = this;
+
+      // Error handler.
+      function error (err) {
         if (cb) return cb(err);
+        return app.emit('error', err);
       }
+
+      if (err) return error(err);
+
+      // Check cursor
       this.cursor = results[0];
       if (this.cursor == 0) this.cursor = false;
-      this.collection[this.options.mode](results[1].map(function (key) {
-        return {id: key};
-      }));
-      if (cb) cb(null, this.cursor !== false);
+
+      // Create models.
+      var models = results[1].map(function (key) {
+        return new self.collection.model({id: key});
+      });
+
+      // Fetch models, if we've been asked to.
+      var tasks = [];
+      if (this.options.fetch) {
+        tasks = models.map(function (model) {
+          return function (done) {
+            model.fetch({
+              error: function (err) {
+                done(err);
+              },
+              success: function () {
+                done();
+              }
+            });
+          };
+        });
+      }
+      async.parallel(tasks, function (err) {
+        if (err) return error(err);
+
+        // Add models to collection.
+        self.collection[self.options.mode](models);
+
+        if (cb) cb(null, self.cursor !== false);
+      });
     },
 
     reset: function () {

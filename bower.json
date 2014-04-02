@@ -9,6 +9,7 @@
     "handlebars": "~1.3.0",
     "requirejs": "~2.1.11",
     "requirejs-text": "~2.0.10",
-    "font-awesome": "~4.0.3"
+    "font-awesome": "~4.0.3",
+    "async": "~0.6.2"
   }
 }

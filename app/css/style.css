@@ -17,12 +17,11 @@ body {
 .navbar .redis {
   color: #fff;
 }
-.left {
+.left-sidebar {
   position: fixed;
   top: 41px;
   bottom: 0;
   left: 0;
-  z-index: 1000;
   display: block;
   padding: 20px;
   overflow-x: hidden;
@@ -94,14 +93,52 @@ body {
   text-decoration: none;
 }
 .sidebar .tree a.key.selected {
-  color: #9F180F;
+  color: #DA382F;
   font-weight: bold;
 }
 .sidebar .tree a.key .folder {
   margin-right: 5px;
-  color: #DA382F;
+  color: #bbb;
   text-align: center;
 }
 .sidebar .tree a.key.selected .folder {
-  color: #6C0800;
+  color: #DA382F;
+}
+.sidebar .tree a.key .count {
+  font-size: 0.9em;
+  color: #999;
+  margin-left: 5px;
+}
+
+/* Records Table
+*******************************************************************************/
+.records-table table {
+  table-layout: fixed;
+}
+.records-table td.type {
+  color: #bbb;
+  font-size: 0.85em;
+  vertical-align: middle;
+  text-align: center;
+  width: 20px;
+}
+.records-table td.key {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.9em;
+}
+.records-table td.key .sep {
+  color: #999;
+  margin: 0 2px;
+}
+.records-table td.value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 200px;
+  font-size: 0.7em;
+  color: #999;
+  text-align: right;
+  font-family: monospace;
 }

@@ -33,12 +33,7 @@ define(function (require) {
           if (type === 'string') {
             app.redis.get(model.id, function (err, resp) {
               if (err) error(err);
-              try {
-                success({id: model.id, type: type, value: JSON.parse(resp)});
-              }
-              catch (e) {
-                success({id: model.id, type: type, value: resp});
-              }
+              success({id: model.id, type: type, value: resp});
             });
           }
           else {

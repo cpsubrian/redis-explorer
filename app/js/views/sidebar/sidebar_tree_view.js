@@ -31,12 +31,28 @@ define(function (require) {
         items.push({
           key: key,
           children: children,
+          count: self.countChildren(children),
           bottom: !children ? true : !children.some(function (child) {
             return !!child.children;
           })
         });
       });
       return items.length ? items : false;
+    },
+
+    countChildren: function (children) {
+      var sum = 0, self = this;
+      if (children) {
+        children.forEach(function (child) {
+          if (child.children) {
+            sum += self.countChildren(child.children);
+          }
+          else {
+            sum += 1;
+          }
+        });
+      }
+      return sum;
     },
 
     onExpand: function (e) {

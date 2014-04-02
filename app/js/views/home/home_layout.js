@@ -1,6 +1,6 @@
 define(function (require) {
   var Marionette = require('marionette')
-    , RecordsListView = require('views/records/records_list_view');
+    , RecordsTableView = require('views/records/records_table_view');
 
   var HomeLayout = Marionette.Layout.extend({
     className: 'home clearfix',
@@ -11,14 +11,14 @@ define(function (require) {
     },
 
     initialize: function () {
-      this.recordsListView = new RecordsListView({
-        collection: this.collection,
-        loader: this.options.loader
+      this.recordsTableView = new RecordsTableView({
+        collection: this.collection
       });
+      this.options.loader.load();
     },
 
     onRender: function () {
-      this.records.show(this.recordsListView);
+      this.records.show(this.recordsTableView);
     }
   });
 

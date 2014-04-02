@@ -3,6 +3,8 @@ RedisExplorer
 
 A node-webkit app for browsing Redis.
 
+![Preview](https://raw.githubusercontent.com/cpsubrian/redis-explorer/master/app/images/redis-explorer.gif)
+
 Installation
 ------------
 

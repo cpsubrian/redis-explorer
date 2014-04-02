@@ -100,6 +100,7 @@ define(function (require) {
       if (options) {
         _(this.options).extend(options);
       }
+      this.trigger('reset');
     }
 
   });

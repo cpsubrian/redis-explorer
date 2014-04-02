@@ -32,8 +32,26 @@ define(function (require) {
           if (err) return error(err);
           if (type === 'string') {
             app.redis.get(model.id, function (err, resp) {
-              if (err) error(err);
+              if (err) return error(err);
               success({id: model.id, type: type, value: resp});
+            });
+          }
+          else if (type === 'list') {
+            app.redis.llen(model.id, function (err, len) {
+              if (err) return error(err);
+              success({id: model.id, type: type, value: app.format.plural(len, 'list item', 'list items')});
+            });
+          }
+          else if (type === 'set') {
+            app.redis.scard(model.id, function (err, len) {
+              if (err) return error(err);
+              success({id: model.id, type: type, value: app.format.plural(len, 'set member', 'set members')});
+            });
+          }
+          else if (type === 'zset') {
+            app.redis.zcard(model.id, function (err, len) {
+              if (err) return error(err);
+              success({id: model.id, type: type, value: app.format.plural(len, 'set member', 'set members')});
             });
           }
           else {

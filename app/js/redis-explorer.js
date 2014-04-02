@@ -20,6 +20,7 @@ define(function (require) {
   require('plugins/views');
   require('plugins/redis');
   require('plugins/sync');
+  require('plugins/format');
 
   // Router.
   RedisExplorerRouter = Router.extend({

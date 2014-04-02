@@ -29,6 +29,8 @@ define(function (require) {
 
     keysToItems: function (keys, prefix) {
       var items = [], self = this;
+
+      // Create items from keys.
       Object.keys(keys).forEach(function (key) {
         var children = self.keysToItems(keys[key], prefix + key + ':');
         items.push({
@@ -41,6 +43,14 @@ define(function (require) {
           })
         });
       });
+
+      // Sort by key.
+      items.sort(function (a, b) {
+        if (a.key > b.key) return 1;
+        if (a.key < b.key) return -1;
+        return 0;
+      });
+
       return items.length ? items : false;
     },
 

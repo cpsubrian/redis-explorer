@@ -1,5 +1,6 @@
 body {
   padding-top: 41px;
+  font-size: 12px;
 }
 .navbar {
   min-height: 0;
@@ -47,29 +48,36 @@ body {
 }
 .settings button,
 .settings a {
-  font-size: 0.8em;
+  font-size: 0.85em;
 }
 .settings button {
-  border-color: #555;
-  background: #303030;
+  border-color: #333;
+  background: #555;
   color: #fff;
   text-shadow: 1px 1px rgba(0, 0, 0, 0.05);
 }
 .settings button:hover {
-  border-color: #666;
-  background: #444;
+  border-color: #444;
+  background: #666;
   color: #fff;
   text-shadow: 1px 1px rgba(0, 0, 0, 0.05);
+}
+.settings .open .dropdown-toggle {
+  background: #777;
+  border-color: #2E2E2E;
+  color: #ccc;
 }
 .settings i {
   margin-right: 5px;
   opacity: 0.5;
 }
+.settings .dropdown-menu li a {
+  padding: 3px 10px;
+}
 
 /* Sidebar Tree
 *******************************************************************************/
 .sidebar .tree {
-  font-size: 0.85em;
   margin-left: -15px;
 }
 .sidebar .tree ul {
@@ -142,7 +150,6 @@ body {
 }
 .records-table td.type {
   color: #bbb;
-  font-size: 0.85em;
   vertical-align: middle;
   text-align: center;
   width: 20px;
@@ -162,7 +169,7 @@ body {
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 200px;
-  font-size: 0.7em;
+  font-size: 0.8em;
   color: #999;
   text-align: right;
   font-family: monospace;

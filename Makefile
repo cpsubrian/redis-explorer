@@ -16,7 +16,7 @@ run:
 	@open ./build/releases/redis-explorer/mac/redis-explorer.app
 
 watch:
-	nodemon --watch app --exec "make"
+	nodemon --watch app -e js,hbs,css,json,html --exec "make"
 
 link:
 	@ln -s `pwd`/build/releases/redis-explorer/mac/redis-explorer.app /Applications/RedisExplorer.app

@@ -10,16 +10,25 @@ define(function (require) {
   var HomeController = Marionette.Controller.extend({
 
     index: function () {
-      var recordsCollection = new RecordsCollection();
-      app.main.show(new HomeLayout({
-        collection: recordsCollection,
-        loader: new ScanLoader({
-          collection: recordsCollection,
-          count: 50,
-          fetch: true
-        })
-      }));
-      app.left.show(new SidebarLayout());
+      this.recordsCollection = new RecordsCollection();
+      this.recordsLoader = new ScanLoader({
+        collection: this.recordsCollection,
+        count: 50,
+        fetch: true,
+        min: 50
+      });
+
+      this.homeLayout = new HomeLayout({
+        collection: this.recordsCollection,
+        loader: this.recordsLoader
+      });
+
+      this.sidebarLayout = new SidebarLayout({
+        homeLoader: this.recordsLoader
+      });
+
+      app.main.show(this.homeLayout);
+      app.left.show(this.sidebarLayout);
     }
 
   });

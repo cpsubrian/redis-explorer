@@ -10,6 +10,7 @@ define(function (require) {
       this.options.mode = options.mode || 'add';
       this.collection = options.collection;
       this.cursor = 0;
+      this.models = [];
     },
 
     load: function (cb) {
@@ -51,14 +52,14 @@ define(function (require) {
       if (this.cursor == 0) this.cursor = false;
 
       // Create models.
-      var models = results[1].map(function (key) {
+      var newModels = results[1].map(function (key) {
         return new self.collection.model({id: key});
       });
 
       // Fetch models, if we've been asked to.
       var tasks = [];
       if (this.options.fetch) {
-        tasks = models.map(function (model) {
+        tasks = newModels.map(function (model) {
           return function (done) {
             model.fetch({
               error: function (err) {
@@ -74,15 +75,31 @@ define(function (require) {
       async.parallel(tasks, function (err) {
         if (err) return error(err);
 
-        // Add models to collection.
-        self.collection[self.options.mode](models);
+        // Add to models arrary.
+        self.models = self.models.concat(newModels);
 
-        if (cb) cb(null, self.cursor !== false);
+        // Do we need to load more?
+        if (self.cursor && self.options.min && self.models.length < self.options.min) {
+          self.load(cb);
+        }
+        else {
+          self.doneLoading(cb);
+        }
       });
     },
 
-    reset: function () {
+    doneLoading: function (cb) {
+      this.collection[this.options.mode](this.models);
+      this.models = [];
+      if (cb) cb(null, this.cursor !== false);
+    },
+
+    reset: function (options) {
       this.cursor = 0;
+      this.collection.reset();
+      if (options) {
+        _(this.options).extend(options);
+      }
     }
 
   });

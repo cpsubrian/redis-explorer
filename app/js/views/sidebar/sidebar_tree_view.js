@@ -15,21 +15,23 @@ define(function (require) {
     },
 
     events: {
-      'click a.expand': 'onExpand'
+      'click a.expand': 'onExpand',
+      'click a.key': 'onClickKey'
     },
 
     templateHelpers: function () {
       var data = {};
-      data.keys = this.keysToItems(this.options.keys);
+      data.keys = this.keysToItems(this.options.keys, '');
       return data;
     },
 
-    keysToItems: function (keys) {
+    keysToItems: function (keys, prefix) {
       var items = [], self = this;
       Object.keys(keys).forEach(function (key) {
-        var children = self.keysToItems(keys[key]);
+        var children = self.keysToItems(keys[key], prefix + key + ':');
         items.push({
           key: key,
+          fullKey: prefix + key,
           children: children,
           count: self.countChildren(children),
           bottom: !children ? true : !children.some(function (child) {
@@ -59,12 +61,23 @@ define(function (require) {
       var $expand = $(e.currentTarget)
         , $target = $($expand.attr('data-target'));
 
+      e.preventDefault();
+
       if ($target.hasClass('in')) {
         $expand.removeClass('expanded');
       }
       else {
         $expand.addClass('expanded');
       }
+    },
+
+    onClickKey: function (e) {
+      e.preventDefault();
+      var key = $(e.currentTarget).attr('data-key');
+      this.options.homeLoader.reset({
+        match: key + ':*'
+      });
+      this.options.homeLoader.load();
     }
   });
 

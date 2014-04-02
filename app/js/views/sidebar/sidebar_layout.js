@@ -27,7 +27,8 @@ define(function (require) {
       this.load(function (err) {
         if (err) return console.error(err);
         self.tree.show(new SidebarTreeView({
-          keys: self.keys
+          keys: self.keys,
+          homeLoader: self.options.homeLoader
         }));
       });
     },

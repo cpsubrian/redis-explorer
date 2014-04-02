@@ -11,7 +11,8 @@ define(function (require) {
     template: require('hbs!sidebar/sidebar_tree'),
 
     ui: {
-      'expand': 'a.expand'
+      'expand': 'a.expand',
+      'keys': 'a.key'
     },
 
     events: {
@@ -75,9 +76,11 @@ define(function (require) {
       e.preventDefault();
       var key = $(e.currentTarget).attr('data-key');
       this.options.homeLoader.reset({
-        match: key + ':*'
+        match: (key === '[all]') ? '*' : (key + ':*')
       });
       this.options.homeLoader.load();
+      this.ui.keys.removeClass('selected');
+      $(e.currentTarget).addClass('selected');
     }
   });
 

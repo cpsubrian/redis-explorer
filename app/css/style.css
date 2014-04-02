@@ -94,7 +94,6 @@ body {
 }
 .sidebar .tree a.key.selected {
   color: #DA382F;
-  font-weight: bold;
 }
 .sidebar .tree a.key .folder {
   margin-right: 5px;

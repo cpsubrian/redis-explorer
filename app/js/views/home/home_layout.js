@@ -14,6 +14,15 @@ define(function (require) {
       records: '.records'
     },
 
+    ui: {
+      search: '.search input',
+      searchMatch: '.search .match'
+    },
+
+    events: {
+      'keyup .search input': 'onSearch'
+    },
+
     initialize: function () {
       this.recordsTableView = new RecordsTableView({
         collection: this.collection
@@ -35,6 +44,15 @@ define(function (require) {
 
     onLoaderReset: function () {
       this.resetScroll();
+      this.ui.search.val(this.options.loader.options.match);
+    },
+
+    onSearch: function (e) {
+      e.preventDefault();
+      this.options.loader.reset({
+        match: this.ui.search.val()
+      });
+      this.options.loader.load();
     }
   });
 

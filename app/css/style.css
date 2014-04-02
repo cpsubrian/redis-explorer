@@ -160,23 +160,21 @@ body {
   text-align: center;
   width: 20px;
 }
-.records-table td.key {
+.records-table td.record {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 0.9em;
 }
-.records-table td.key .sep {
+.records-table td.record .key {
+  margin-right: 10px;
+}
+.records-table td.record .key .sep {
   color: #999;
   margin: 0 2px;
 }
-.records-table td.value {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 220px;
+.records-table td.record .value {
   font-size: 0.8em;
   color: #999;
-  text-align: right;
   font-family: monospace;
 }

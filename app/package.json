@@ -4,7 +4,7 @@
   "private": "true",
   "main": "index.html",
   "window": {
-    "toolbar": false,
+    "toolbar": true,
     "width": 1200,
     "height": 800
   },

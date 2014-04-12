@@ -30,7 +30,7 @@ define(function (require) {
       data.loaded = this.loaded || false;
 
       // Key
-      data.key = this.model.id.split(':').join('<span class="sep">:</span> ');
+      data.key = this.model.id.split(':').join('<span class="sep">:</span><wbr>');
 
       // Per type helpers.
       switch (this.model.get('type')) {

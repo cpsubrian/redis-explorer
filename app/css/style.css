@@ -41,22 +41,21 @@ body {
 }
 .slideout {
   position: fixed;
-  top: 51px;
-  bottom: 10px;
-  right: 0;
+  top: 53px;
+  bottom: 12px;
+  right: 12px;
   width: 500px;
-  background: #363636;
-  color: white;
+  background: rgba(0, 0, 0, 0.85);
+  color: #eee;
   border: 1px solid #ddd;
   border-right: none;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
+  border-radius: 8px;
   margin-right: -520px;
-  transition: margin-right 150ms ease-in;
+  transition: margin-right 100ms ease-in;
 }
 .slideout.open {
-  transition: margin-right 300ms ease-out;
+  transition: margin-right 200ms ease-out;
   margin-right: 0;
 }
 
@@ -196,7 +195,7 @@ body {
   border-bottom: 1px solid #4a4a4a;
 }
 .slideout .slideout-title h3 {
-  font-size: 1.2em;
+  font-size: 1em;
   margin: 0;
   padding: 0;
   font-weight: normal;
@@ -205,8 +204,9 @@ body {
   flex: 1;
   padding: 10px 20px;
   overflow-y: scroll;
-  background: #3D3D3D;
+  background: rgba(255, 255, 255, 0.08);
   border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 .slideout .slideout-content pre {
   border: none;
@@ -231,13 +231,13 @@ body {
   cursor: pointer;
 }
 .records-table tr.selected td {
-  background: #E2FFD8;
+  background: #F5FCE6;
 }
 .records-table tr.selected td i {
-  color: green;
+  color: #8BCC09;
 }
 .records-table tr.selected:hover td {
-  background: #E2FFD8;
+  background: #F5FCE6;
 }
 .records-table td.type {
   color: #bbb;
@@ -269,7 +269,7 @@ body {
   word-wrap: break-word;
 }
 .record-detail .key .sep {
-  color: #999;
+  color: #bbb;
   margin: 0 2px;
 }
 .record-detail .value {

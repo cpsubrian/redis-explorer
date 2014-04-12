@@ -50,7 +50,7 @@ body {
   border: 1px solid #ddd;
   border-right: none;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  border-radius: 5px;
   margin-right: -520px;
   transition: margin-right 100ms ease-in;
 }
@@ -195,18 +195,18 @@ body {
   border-bottom: 1px solid #4a4a4a;
 }
 .slideout .slideout-title h3 {
-  font-size: 1em;
+  font-size: 1.1em;
   margin: 0;
   padding: 0;
   font-weight: normal;
 }
 .slideout .slideout-content {
   flex: 1;
-  padding: 10px 20px;
+  padding: 15px 25px;
   overflow-y: scroll;
   background: rgba(255, 255, 255, 0.08);
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 .slideout .slideout-content pre {
   border: none;
@@ -214,6 +214,8 @@ body {
   overflow: visible;
   color: #eee;
   font-size:  0.9em;
+  padding: 0;
+  margin: 0;
 }
 
 /* Search

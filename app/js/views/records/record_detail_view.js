@@ -13,8 +13,12 @@ define(function (require) {
     },
 
     initialize: function () {
-      var self = this;
-      self.loaded = true;
+      var self = this
+        , type = this.model.get('type');
+
+      if (type === 'string') {
+        self.loaded = true;
+      }
     },
 
     onRender: function () {

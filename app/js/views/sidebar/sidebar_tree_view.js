@@ -92,6 +92,7 @@ define(function (require) {
       this.options.homeLoader.load();
       this.ui.keys.removeClass('selected');
       $(e.currentTarget).addClass('selected');
+      app.slideout.close();
     }
   });
 

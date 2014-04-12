@@ -1,7 +1,8 @@
 define(function (require) {
 
   var app = require('app')
-    , Marionette = require('marionette');
+    , Marionette = require('marionette')
+    , Prism = require('prismjs');
 
   var RecordDetailView = Marionette.ItemView.extend({
     className: 'record-detail',
@@ -17,6 +18,14 @@ define(function (require) {
         self.loaded = true;
         self.render();
       }, 500);
+    },
+
+    onRender: function () {
+      this.$el.find('code').each(function () {
+        console.log(this);
+        console.log(Prism);
+        Prism.highlightElement(this);
+      });
     },
 
     templateHelpers: function () {

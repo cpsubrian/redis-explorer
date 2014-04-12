@@ -12,6 +12,7 @@ requirejs.config({
     handlebars: '../vendor/handlebars/handlebars',
     marionette: '../vendor/backbone.marionette/lib/backbone.marionette',
     async: '../vendor/async/lib/async',
+    prismjs: '../vendor/prismjs/prism',
 
     // Handlebars template loader/compiler.
     text: '../vendor/requirejs-text/text',
@@ -40,6 +41,9 @@ requirejs.config({
     },
     underscore: {
       exports: '_'
+    },
+    prismjs: {
+      exports: 'Prism'
     }
   }
 });

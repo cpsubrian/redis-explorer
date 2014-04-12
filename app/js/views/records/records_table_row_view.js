@@ -2,11 +2,16 @@ define(function (require) {
 
   var app = require('app')
     , Marionette = require('marionette')
-    , bootstrap = require('bootstrap');
+    , bootstrap = require('bootstrap')
+    , RecordDetailView = require('views/records/record_detail_view');
 
   var RecordsTableRowView = Marionette.ItemView.extend({
     tagName: 'tr',
     template: require('hbs!records/records_table_row'),
+
+    events: {
+      'click': 'onClick'
+    },
 
     templateHelpers: function () {
       var data = {};
@@ -42,6 +47,15 @@ define(function (require) {
       data.key = this.model.id.split(':').join('<span class="sep">:</span>');
 
       return data;
+    },
+
+    onClick: function (e) {
+      e.preventDefault();
+      app.slideout.show(new RecordDetailView({
+        model: this.model
+      }));
+      this.$el.addClass('selected');
+      this.$el.siblings('tr').removeClass('selected');
     }
   });
 

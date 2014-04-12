@@ -1,0 +1,21 @@
+{{#if loaded}}
+  <div class="slideout-container">
+    <div class="slideout-title">
+      <a href="#" class="close"><i class="fa fa-times"></i></a>
+      <h3 class="key">{{{key}}}</h3>
+    </div>
+    <div class="slideout-content">
+      {{#is type 'string'}}
+        <div class="value">
+          {{#if json}}
+            <pre>{{value}}</pre>
+          {{else}}
+            {{value}}
+          {{/if}}
+        </div>
+      {{/is}}
+    </div>
+  </div>
+{{else}}
+  <i class="fa fa-spinner fa-spin loader"></i>
+{{/if}}

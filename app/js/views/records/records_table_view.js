@@ -9,7 +9,15 @@ define(function (require) {
     template: require('hbs!records/records_table'),
     className: 'records-table',
     itemView: RecordsTableRowView,
-    itemViewContainer: 'tbody'
+    itemViewContainer: 'tbody',
+
+    initialize: function () {
+      app.slideout.on('close', this.onSlideoutClose.bind(this));
+    },
+
+    onSlideoutClose: function () {
+      this.$el.find('.selected').removeClass('selected');
+    }
   });
 
   return RecordsTableView;

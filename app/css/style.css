@@ -39,6 +39,26 @@ body {
   display: block;
   padding: 20px;
 }
+.slideout {
+  position: fixed;
+  top: 51px;
+  bottom: 10px;
+  right: 0;
+  width: 500px;
+  background: #363636;
+  color: white;
+  border: 1px solid #ddd;
+  border-right: none;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  margin-right: -520px;
+  transition: margin-right 150ms ease-in;
+}
+.slideout.open {
+  transition: margin-right 300ms ease-out;
+  margin-right: 0;
+}
 
 /* Settings
 *******************************************************************************/
@@ -140,6 +160,62 @@ body {
   margin-left: 5px;
 }
 
+/* Slideout
+*******************************************************************************/
+.slideout .slideout-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.slideout .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 14px;
+  color: #ccc;
+}
+.slideout .close:hover {
+  color: #999;
+}
+.slideout .loader {
+  font-size: 100px;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 50%;
+  left: 0;
+  margin: -50px auto 0 auto;
+  color: #444;
+}
+.slideout .slideout-title {
+  padding: 10px 30px 10px 20px;
+  border-bottom: 1px solid #4a4a4a;
+}
+.slideout .slideout-title h3 {
+  font-size: 1.2em;
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+.slideout .slideout-content {
+  flex: 1;
+  padding: 10px 20px;
+  overflow-y: scroll;
+  background: #3D3D3D;
+  border-bottom-left-radius: 8px;
+}
+.slideout .slideout-content pre {
+  border: none;
+  background: none;
+  overflow: visible;
+  color: #eee;
+  font-size:  0.9em;
+}
+
 /* Search
 *******************************************************************************/
 .search {
@@ -150,6 +226,18 @@ body {
 *******************************************************************************/
 .records-table table {
   table-layout: fixed;
+}
+.records-table tr {
+  cursor: pointer;
+}
+.records-table tr.selected td {
+  background: #E2FFD8;
+}
+.records-table tr.selected td i {
+  color: green;
+}
+.records-table tr.selected:hover td {
+  background: #E2FFD8;
 }
 .records-table td.type {
   color: #bbb;
@@ -173,4 +261,17 @@ body {
 .records-table td.record .value {
   color: #999;
   font-family: monospace;
+}
+
+/* Record Detail
+*******************************************************************************/
+.record-detail .key {
+  word-wrap: break-word;
+}
+.record-detail .key .sep {
+  color: #999;
+  margin: 0 2px;
+}
+.record-detail .value {
+  word-wrap: break-word;
 }

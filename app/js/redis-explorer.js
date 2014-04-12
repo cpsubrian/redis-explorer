@@ -9,7 +9,16 @@ define(function (require) {
   // Define app regions.
   app.addRegions({
     'left': '.left-sidebar',
-    'main': '.main'
+    'main': '.main',
+    'slideout': '.slideout'
+  });
+
+  // Close/open slideout.
+  app.slideout.on('show', function () {
+    app.slideout.$el.addClass('open');
+  });
+  app.slideout.on('close', function () {
+    app.slideout.$el.removeClass('open');
   });
 
   // Load plugins.

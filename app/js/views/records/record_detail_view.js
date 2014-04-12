@@ -14,16 +14,11 @@ define(function (require) {
 
     initialize: function () {
       var self = this;
-      setTimeout(function () {
-        self.loaded = true;
-        self.render();
-      }, 500);
+      self.loaded = true;
     },
 
     onRender: function () {
       this.$el.find('code').each(function () {
-        console.log(this);
-        console.log(Prism);
         Prism.highlightElement(this);
       });
     },
@@ -35,7 +30,7 @@ define(function (require) {
       data.loaded = this.loaded || false;
 
       // Key
-      data.key = this.model.id.split(':').join('<span class="sep">:</span>');
+      data.key = this.model.id.split(':').join('<span class="sep">:</span> ');
 
       // Per type helpers.
       switch (this.model.get('type')) {

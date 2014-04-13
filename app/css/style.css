@@ -264,6 +264,20 @@ body {
   color: #999;
   font-family: monospace;
 }
+.records-table .operations {
+  margin-left: 5px;
+  font-size: 11px;
+}
+.records-table .operations i {
+  cursor: pointer;
+  color: #ddd;
+}
+.records-table .operations i:hover {
+  color: #000;
+}
+.records-table tr:hover .operations {
+  display: inline;
+}
 
 /* Record Detail
 *******************************************************************************/

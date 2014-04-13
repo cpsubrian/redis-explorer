@@ -1,7 +1,12 @@
 <td class="type">
-  <i class="fa {{icon}} icon" title="{{type}}"></i>
+  <i class="fa {{icon}}" title="{{type}}"></i>
 </td>
 <td class="record">
-  <span class="key">{{{key}}}</span>
+  <span class="key">
+    {{{key}}}
+    <span class="operations">
+      <i class="copy fa fa-clipboard" title="Copy key to clipboard"></i>
+    </span>
+  </span>
   <span class="value">{{value}}</span>
 </td>

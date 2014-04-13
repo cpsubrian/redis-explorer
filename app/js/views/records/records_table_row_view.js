@@ -65,12 +65,26 @@ define(function (require) {
     },
 
     onClick: function (e) {
+      var mh = app.main.$el.outerHeight()
+        , st = app.main.$el.scrollTop()
+        , et = this.$el.offset().top - app.main.$el.position().top
+        , eh = this.$el.outerHeight();
+
       e.preventDefault();
       app.slideout.show(new RecordDetailView({
         model: this.model
       }));
       this.$el.addClass('selected');
       this.$el.siblings('tr').removeClass('selected');
+
+      if ((et + eh) > mh) {
+        this.el.scrollIntoView(false);
+        app.main.$el.scrollTop(app.main.$el.scrollTop() + (eh / 2));
+      }
+      if (et < 0) {
+        this.el.scrollIntoView(true);
+        app.main.$el.scrollTop(app.main.$el.scrollTop() - (eh / 2));
+      }
     },
 
     onClickCopy: function (e) {

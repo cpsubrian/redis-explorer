@@ -232,11 +232,15 @@ body {
 .records-table tr {
   cursor: pointer;
 }
+.records-table tr:hover td {
+  background: #fafafa;
+}
 .records-table tr.selected td {
   background: #F5FCE6;
 }
-.records-table tr.selected td i {
-  color: #8BCC09;
+.records-table tr.selected .type i,
+.records-table tr.selected .key {
+  color: #71AA00;
 }
 .records-table tr.selected:hover td {
   background: #F5FCE6;

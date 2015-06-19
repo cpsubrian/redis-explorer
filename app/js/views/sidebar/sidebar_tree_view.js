@@ -81,6 +81,8 @@ define(function (require) {
       else {
         $expand.addClass('expanded');
       }
+
+      app.left.trigger('update');
     },
 
     onClickKey: function (e) {

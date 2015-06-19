@@ -25,7 +25,7 @@ body {
   left: 0;
   display: block;
   padding: 20px;
-  overflow: auto; /* Scrollable contents if viewport is shorter than content. */
+  overflow: hidden;
   background-color: #f2f2f2;
   border-right: 1px solid #e6e6e6;
 }
@@ -34,16 +34,14 @@ body {
   top: 41px;
   bottom: 0;
   right: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  display: block;
+  overflow: hidden;
   padding: 20px;
 }
 .slideout {
   position: fixed;
-  top: 53px;
-  bottom: 12px;
-  right: 12px;
+  top: 59px;
+  bottom: 18px;
+  right: 18px;
   width: 500px;
   background: rgba(0, 0, 0, 0.85);
   color: #eee;
@@ -203,7 +201,8 @@ body {
 .slideout .slideout-content {
   flex: 1;
   padding: 15px 25px;
-  overflow-y: scroll;
+  position: relative;
+  overflow: hidden;
   background: rgba(255, 255, 255, 0.08);
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;

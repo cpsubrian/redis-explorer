@@ -13,6 +13,8 @@ requirejs.config({
     marionette: '../vendor/backbone.marionette/lib/backbone.marionette',
     async: '../vendor/async/lib/async',
     prismjs: '../vendor/prismjs/prism',
+    mousewheel: '../vendor/perfect-scrollbar/src/jquery.mousewheel',
+    'perfect-scrollbar': '../vendor/perfect-scrollbar/src/perfect-scrollbar',
 
     // Handlebars template loader/compiler.
     text: '../vendor/requirejs-text/text',

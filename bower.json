@@ -11,6 +11,7 @@
     "requirejs-text": "~2.0.10",
     "font-awesome": "~4.0.3",
     "async": "~0.6.2",
-    "prismjs": "*"
+    "prismjs": "*",
+    "perfect-scrollbar": "~0.4.9"
   }
 }

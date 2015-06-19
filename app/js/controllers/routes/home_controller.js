@@ -29,6 +29,10 @@ define(function (require) {
 
       app.main.show(this.homeLayout);
       app.left.show(this.sidebarLayout);
+
+      this.recordsCollection.on('reset', function () {
+        app.main.trigger('update');
+      });
     }
 
   });

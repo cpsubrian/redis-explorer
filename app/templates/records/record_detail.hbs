@@ -5,15 +5,17 @@
       <h3 class="key">{{{key}}}</h3>
     </div>
     <div class="slideout-content">
-      {{#is type 'string'}}
-        <div class="value">
-          {{#if json}}
-            <pre><code class="language-javascript">{{value}}</code></pre>
-          {{else}}
-            {{value}}
-          {{/if}}
-        </div>
-      {{/is}}
+      <div class="inner">
+        {{#is type 'string'}}
+          <div class="value">
+            {{#if json}}
+              <pre><code class="language-javascript">{{value}}</code></pre>
+            {{else}}
+              {{value}}
+            {{/if}}
+          </div>
+        {{/is}}
+      </div>
     </div>
   </div>
 {{else}}

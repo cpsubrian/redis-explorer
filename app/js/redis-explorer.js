@@ -8,8 +8,8 @@ define(function (require) {
 
   // Define app regions.
   app.addRegions({
-    'left': '.left-sidebar',
-    'main': '.main',
+    'left': '.left-sidebar .inner',
+    'main': '.main .inner',
     'slideout': '.slideout'
   });
 
@@ -30,6 +30,7 @@ define(function (require) {
   require('plugins/redis');
   require('plugins/sync');
   require('plugins/format');
+  require('plugins/scrollbars');
 
   // Router.
   RedisExplorerRouter = Router.extend({

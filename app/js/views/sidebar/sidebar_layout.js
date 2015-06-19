@@ -34,6 +34,7 @@ define(function (require) {
             dbsize: dbsize,
             homeLoader: self.options.homeLoader
           }));
+          app.left.trigger('update');
         });
       });
     },

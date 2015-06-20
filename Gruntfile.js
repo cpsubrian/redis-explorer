@@ -118,10 +118,15 @@ module.exports = function (grunt) {
           src: ['**/*'],
           dest: 'build/fonts/'
         }, {
+          expand: true,
+          cwd: 'node_modules/material-design-icons/iconfont/',
+          src: ['MaterialIcons-Regular.woff2'],
+          dest: 'build/fonts/MaterialIcons/',
+        }, {
+          expand: true,
           cwd: 'node_modules/',
           src: Object.keys(packagejson.dependencies).map(function (dep) { return dep + '/**/*';}),
-          dest: 'build/node_modules/',
-          expand: true
+          dest: 'build/node_modules/'
         }, {
           src: ICON + '.png',
           dest: 'build/images/logo.png'

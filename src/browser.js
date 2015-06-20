@@ -34,8 +34,7 @@ app.on('ready', () => {
     'min-height': os.platform() === 'win32' ? 260 : 500,
     'standard-window': false,
     'resizable': true,
-    'show': false,
-    'frame': false,
+    'show': false
   });
 
   // Load the index.html of the app.

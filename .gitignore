@@ -1,4 +1,8 @@
+.DS_Store
+.swp
+build
+dist
+installer
 node_modules
-build/*
-app/node_modules
-app/vendor
+coverage
+npm-debug.log

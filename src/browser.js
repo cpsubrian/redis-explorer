@@ -35,7 +35,7 @@ app.on('ready', () => {
     'standard-window': false,
     'resizable': true,
     'show': false,
-    //'frame': false,
+    'frame': false,
   });
 
   // Load the index.html of the app.

@@ -111,17 +111,20 @@ module.exports = function (grunt) {
           expand: true,
           cwd: 'images/',
           src: ['**/*'],
-          dest: 'build/'
+          dest: 'build/images/'
         }, {
           expand: true,
           cwd: 'fonts/',
           src: ['**/*'],
-          dest: 'build/'
+          dest: 'build/fonts/'
         }, {
           cwd: 'node_modules/',
           src: Object.keys(packagejson.dependencies).map(function (dep) { return dep + '/**/*';}),
           dest: 'build/node_modules/',
           expand: true
+        }, {
+          src: ICON + '.png',
+          dest: 'build/images/logo.png'
         }]
       },
       windows: {

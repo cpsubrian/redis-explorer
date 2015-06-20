@@ -1,19 +1,12 @@
 import React from 'react';
 import Router from 'react-router';
-import {Route, DefaultRoute, RouteHandler} from 'react-router';
+import {Route, DefaultRoute} from 'react-router';
 
+import Main from './components/Main';
 import Home from './components/Home';
 
-const App = React.createClass({
-  render () {
-    return (
-      <RouteHandler/>
-    );
-  }
-});
-
 const routes = (
-  <Route name="app" path="/" handler={App}>
+  <Route name="main" path="/" handler={Main}>
     <DefaultRoute name="home" handler={Home}/>
   </Route>
 );

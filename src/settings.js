@@ -1,11 +1,10 @@
-module.exports = {
-  'BASENAME': 'RedisExplorer',
-  'APPNAME': this.BASENAME,
-  'DEVELPER_ID': 'Brian Link',
-  'COMPANY': 'Terra Eclipse, Inc.',
-  'ICON': 'resources/redisexplorer',
-  'ICON_URL': 'https://raw.githubusercontent.com/cpsubrian/redisexplorer/master/' + this.ICON + '.ico',
-  'BUNDLE_ID': 'com.terraeclipse.redisexplorer',
-  'OSX_OUT': './dist/osx',
-  'OSX_FILENAME': this.OSX_OUT + '/' + this.APPNAME + '.app'
-};
+var settings = module.exports = {};
+settings.BASENAME = 'RedisExplorer';
+settings.APPNAME = settings.BASENAME;
+settings.DEVELPER_ID = 'Brian Link';
+settings.COMPANY = 'Terra Eclipse, Inc.';
+settings.ICON = 'resources/redisexplorer';
+settings.ICON_URL = 'https://raw.githubusercontent.com/cpsubrian/redisexplorer/master/' + settings.ICON + '.ico';
+settings.BUNDLE_ID = 'com.terraeclipse.redisexplorer';
+settings.OSX_OUT = './dist/osx';
+settings.OSX_FILENAME = settings.OSX_OUT + '/' + settings.APPNAME + '.app';

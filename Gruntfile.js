@@ -108,12 +108,6 @@ module.exports = function (grunt) {
           src: ['package.json', 'settings.json', 'index.html'],
           dest: 'build/'
         }, {
-          // This might be replaced by LESS.
-          expand: true,
-          cwd: 'styles/',
-          src: ['**/*'],
-          dest: 'build/'
-        }, {
           expand: true,
           cwd: 'images/',
           src: ['**/*'],
@@ -173,6 +167,18 @@ module.exports = function (grunt) {
       }
     },
 
+    // Styles (LESS)
+    less: {
+      options: {
+        sourceMapFileInline: true
+      },
+      dist: {
+        files: {
+          'build/main.css': 'styles/main.less'
+        }
+      }
+    },
+
     // Rename files.
     rename: {
       installer: {
@@ -226,9 +232,12 @@ module.exports = function (grunt) {
         files: ['src/**/*.js'],
         tasks: ['newer:babel']
       },
+      less: {
+        files: ['styles/**/*.less'],
+        tasks: ['less']
+      },
       copy: {
-        // Remove styles if using LESS.
-        files: ['images/*', 'index.html', 'fonts/*', 'styles/*'],
+        files: ['images/*', 'index.html', 'fonts/*'],
         tasks: ['newer:copy:dev']
       }
     }
@@ -236,13 +245,13 @@ module.exports = function (grunt) {
 
 
   // Define default (development) task.
-  grunt.registerTask('default', ['newer:babel', 'newer:copy:dev', 'shell:electron', 'watchChokidar']);
+  grunt.registerTask('default', ['newer:babel', 'less', 'newer:copy:dev', 'shell:electron', 'watchChokidar']);
 
   // Define platform-specific release task.
   if (process.platform === 'win32') {
-    grunt.registerTask('release', ['clean:release', 'babel', 'copy:dev', 'electron:windows', 'copy:windows', 'rcedit:exes', 'create-windows-installer', 'rename:installer']);
+    grunt.registerTask('release', ['clean:release', 'babel', 'less', 'copy:dev', 'electron:windows', 'copy:windows', 'rcedit:exes', 'create-windows-installer', 'rename:installer']);
   } else {
-    grunt.registerTask('release', ['clean:release', 'babel', 'copy:dev', 'electron:osx', 'copy:osx', 'shell:sign', 'shell:zip']);
+    grunt.registerTask('release', ['clean:release', 'babel', 'less', 'copy:dev', 'electron:osx', 'copy:osx', 'shell:sign', 'shell:zip']);
   }
 
   // Bail-out on electron command if this dies.

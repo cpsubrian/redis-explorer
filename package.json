@@ -38,6 +38,7 @@
     "grunt-cli": "^0.1.13",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-less": "^1.0.1",
     "grunt-contrib-watch-chokidar": "^1.0.0",
     "grunt-download-electron": "^2.1.1",
     "grunt-electron": "^1.0.0",

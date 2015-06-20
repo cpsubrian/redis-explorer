@@ -1,31 +1,31 @@
-var app = require('app')
-  , settings = require('./settings')
-  , BrowserWindow = require('browser-window')
-  , os = require('os');
+import app from 'app';
+import settings from './settings';
+import BrowserWindow from 'browser-window';
+import os from 'os';
 
 // Report crashes to our server.
 require('crash-reporter').start();
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
-var mainWindow = null;
+let mainWindow = null;
 
 // Quit when all windows are closed.
-app.on('window-all-closed', function() {
+app.on('window-all-closed', () => {
   if (process.platform != 'darwin') {
     app.quit();
   }
 });
 
 // Get size from os.
-var size = {};
+let size = {};
 try {
   size = JSON.parse(fs.readFileSync(path.join(process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'], 'Library', 'Application\ Support', settings['APPNAME'], 'size')));
 } catch (err) {}
 
 // This method will be called when Electron has done everything
 // initialization and ready for creating browser windows.
-app.on('ready', function() {
+app.on('ready', () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     'width': size.width || 800,
@@ -42,22 +42,21 @@ app.on('ready', function() {
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
   // Show window after the url is loaded.
-  mainWindow.webContents.on('did-finish-load', function() {
+  mainWindow.webContents.on('did-finish-load', () => {
     mainWindow.setTitle(settings['BASENAME']);
     mainWindow.show();
     mainWindow.focus();
   });
 
   // Don't allow navigation to weird endpoints.
-  mainWindow.webContents.on('will-navigate', function (e, url) {
+  mainWindow.webContents.on('will-navigate', (e, url) => {
     if (url.indexOf('build/index.html#') < 0) {
       e.preventDefault();
     }
   });
 
   // Handle window close depending on platform.
-  app.on('window-all-closed', function() {
+  app.on('window-all-closed', () => {
     app.quit();
   });
-
 });

@@ -24,7 +24,11 @@
   "scripts": {
     "test": "echo 'No Tests'"
   },
-  "dependencies": {},
+  "dependencies": {
+    "alt": "^0.16.10",
+    "react": "^0.13.3",
+    "react-router": "^0.13.3"
+  },
   "devDependencies": {
     "babel": "^5.5.8",
     "electron-prebuilt": "^0.28.2",

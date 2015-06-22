@@ -28,7 +28,7 @@ const Header = React.createClass({
   render () {
     return (
       <div className="header">
-        <Toolbar>
+        <Toolbar className="toolbar">
           <ToolbarGroup key={0} float="left">
             <IconButton tooltip="Keys"><Icon type="list"/></IconButton>
             <IconButton tooltip="Pub/Sub"><Icon type="import_export"/></IconButton>

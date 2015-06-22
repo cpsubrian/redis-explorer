@@ -1,12 +1,15 @@
+import os from 'os';
+import fs from 'fs';
+import path from 'path';
+import mkdirp from 'mkdirp';
 import app from 'app';
 import settings from './settings';
 import BrowserWindow from 'browser-window';
-import os from 'os';
 
 // Report crashes to our server.
 require('crash-reporter').start();
 
-// Keep a global reference of the window object, if you don't, the window will
+// Keep a reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
 let mainWindow = null;
 
@@ -17,10 +20,16 @@ app.on('window-all-closed', () => {
   }
 });
 
+// Filepath to settings.
+function settingPath (setting) {
+  return path.join(process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'], 'Library', 'Application\ Support', settings['APPNAME'], setting);
+}
+
 // Get size from os.
-let size = {};
+let bounds = {};
 try {
-  size = JSON.parse(fs.readFileSync(path.join(process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'], 'Library', 'Application\ Support', settings['APPNAME'], 'size')));
+  mkdirp(settingPath(''));
+  bounds = JSON.parse(fs.readFileSync(settingPath('bounds')));
 } catch (err) {}
 
 // This method will be called when Electron has done everything
@@ -28,8 +37,10 @@ try {
 app.on('ready', () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    'width': size.width || 800,
-    'height': size.height || 600,
+    'x': bounds.x || 50,
+    'y': bounds.y || 50,
+    'width': bounds.width || 1100,
+    'height': bounds.height || 800,
     'min-width': os.platform() === 'win32' ? 400 : 700,
     'min-height': os.platform() === 'win32' ? 260 : 500,
     'standard-window': false,
@@ -52,6 +63,14 @@ app.on('ready', () => {
     if (url.indexOf('build/index.html#') < 0) {
       e.preventDefault();
     }
+  });
+
+  // Save size and position of window.
+  mainWindow.on('resize', () => {
+    fs.writeFileSync(settingPath('bounds'), JSON.stringify(mainWindow.getBounds()));
+  });
+  mainWindow.on('move', () => {
+    fs.writeFileSync(settingPath('bounds'), JSON.stringify(mainWindow.getBounds()));
   });
 
   // Handle window close depending on platform.

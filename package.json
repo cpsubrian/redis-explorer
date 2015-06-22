@@ -27,6 +27,7 @@
   "dependencies": {
     "alt": "^0.16.10",
     "material-ui": "^0.9.1",
+    "mkdirp": "^0.5.1",
     "react": "^0.13.3",
     "react-router": "^0.13.3",
     "react-tap-event-plugin": "^0.1.7"

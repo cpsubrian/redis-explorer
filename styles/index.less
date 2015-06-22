@@ -2,13 +2,19 @@
 @import url(fonts/Roboto/Roboto.css);
 @import url(fonts/MaterialIcons/MaterialIcons.css);
 
-// Imports
-@import "variables.less";
-@import "material-colors.less";
-@import "mixins.less";
-@import "retina.less";
-@import "header.less";
-@import "values-table.less";
+// Utils
+@import "utils/variables.less";
+@import "utils/material-colors.less";
+@import "utils/mixins.less";
+@import "utils/retina.less";
+
+// Handlers
+@import "handlers/main.less";
+@import "handlers/home.less";
+
+// Components
+@import "components/header.less";
+@import "components/values-table.less";
 
 // Reset html/body
 html, body {

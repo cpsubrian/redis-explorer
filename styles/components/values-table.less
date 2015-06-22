@@ -1,0 +1,57 @@
+.values-table {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  table {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  thead {
+    flex: 0 0 auto;
+    display: block;
+
+    tr {
+      display: flex;
+      flex-direction: row;
+    }
+    th {
+      flex: 1;
+      border-bottom: 2px solid @grey-300;
+      padding: 5px;
+      text-align: left;
+      background: @grey-100;
+    }
+    th.key {
+      flex: 2;
+    }
+  }
+
+  tbody {
+    flex: 1 1 auto;
+    display: block;
+    overflow: auto;
+
+    tr {
+      display: flex;
+      flex-direction: row;
+    }
+    td {
+      flex: 1;
+      border-bottom: 1px solid @grey-100;
+      padding: 5px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    tr:nth-child(2n) td {
+      background: @grey-50;
+    }
+    td.key {
+      flex: 2;
+    }
+  }
+}

@@ -2,12 +2,12 @@ import React from 'react';
 import Router from 'react-router';
 import {Route, DefaultRoute} from 'react-router';
 
-import Main from './components/Main';
-import ValuesTable from './components/ValuesTable';
+import MainHandler from './handlers/MainHandler';
+import HomeHandler from './handlers/HomeHandler';
 
 const routes = (
-  <Route name="main" path="/" handler={Main}>
-    <DefaultRoute name="home" handler={ValuesTable}/>
+  <Route name="main" path="/" handler={MainHandler}>
+    <DefaultRoute name="home" handler={HomeHandler}/>
   </Route>
 );
 

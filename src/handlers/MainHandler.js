@@ -15,7 +15,7 @@ injectTapEventPlugin();
 const ThemeManager = new mui.Styles.ThemeManager();
 
 // Main app component.
-const Main = React.createClass({
+const MainHandler = React.createClass({
 
   childContextTypes: {
     muiTheme: React.PropTypes.object
@@ -37,4 +37,4 @@ const Main = React.createClass({
   }
 });
 
-export default Main;
+export default MainHandler;

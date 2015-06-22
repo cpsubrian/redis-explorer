@@ -4,13 +4,12 @@ const ValuesRow = React.createClass({
 
   render () {
     return (
-      <tr>
-        <td>A Key</td>
-        <td>A Value</td>
+      <tr className="values-row">
+        <td className="key">{this.props.valueKey}</td>
+        <td className="value">A Value</td>
       </tr>
     );
   }
-
 });
 
 export default ValuesRow;

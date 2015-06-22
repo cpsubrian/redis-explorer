@@ -2,19 +2,19 @@ var path = require('path')
   , fs = require('fs')
   , electron = require('electron-prebuilt')
   , packagejson = require('./package.json')
-  , settings = require('./src/settings.js');
+  , conf = require('./src/conf.js');
 
 module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
 
-  var BASENAME = settings['BASENAME']
+  var BASENAME = conf['BASENAME']
     , APPNAME = BASENAME
-    , DEVELPER_ID = settings['DEVELPER_ID']
-    , COMPANY = settings['COMPANY']
-    , ICON = settings['ICON']
-    , ICON_URL = settings['ICON_URL']
-    , BUNDLE_ID = settings['BUNDLE_ID']
-    , OSX_OUT = settings['OSX_OUT']
+    , DEVELPER_ID = conf['DEVELPER_ID']
+    , COMPANY = conf['COMPANY']
+    , ICON = conf['ICON']
+    , ICON_URL = conf['ICON_URL']
+    , BUNDLE_ID = conf['BUNDLE_ID']
+    , OSX_OUT = conf['OSX_OUT']
     , OSX_FILENAME = OSX_OUT + '/' + APPNAME + '.app'
     , ELECTRON_VERSION = require('./node_modules/electron-prebuilt/package.json').version
     , target = grunt.option('target') | 'development'
@@ -105,7 +105,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '.',
-          src: ['package.json', 'settings.json', 'index.html'],
+          src: ['package.json', 'conf.json', 'index.html'],
           dest: 'build/'
         }, {
           expand: true,

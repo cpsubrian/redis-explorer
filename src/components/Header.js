@@ -1,6 +1,6 @@
 import remote from 'remote';
 import React from 'react';
-import util from '../utils/Util';
+import util from '../utils/util';
 import {
   DropDownMenu,
   IconButton,

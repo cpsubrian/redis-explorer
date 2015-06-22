@@ -1,0 +1,10 @@
+var conf = module.exports = {};
+conf.BASENAME = 'RedisExplorer';
+conf.APPNAME = conf.BASENAME;
+conf.DEVELPER_ID = 'Brian Link';
+conf.COMPANY = 'Terra Eclipse, Inc.';
+conf.ICON = 'resources/redisexplorer';
+conf.ICON_URL = 'https://raw.githubusercontent.com/cpsubrian/redisexplorer/master/' + conf.ICON + '.ico';
+conf.BUNDLE_ID = 'com.terraeclipse.redisexplorer';
+conf.OSX_OUT = './dist/osx';
+conf.OSX_FILENAME = conf.OSX_OUT + '/' + conf.APPNAME + '.app';

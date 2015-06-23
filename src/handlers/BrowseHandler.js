@@ -5,7 +5,7 @@ import keyActions from '../actions/keyActions';
 
 import ValuesTable from '../components/ValuesTable';
 
-const HomeHandler = React.createClass({
+const BrowseHandler = React.createClass({
 
   statics: {
     getStores () {
@@ -22,11 +22,11 @@ const HomeHandler = React.createClass({
 
   render () {
     return (
-      <div className="home">
+      <div className="browse">
         <ValuesTable {...this.props}/>
       </div>
     );
   }
 });
 
-export default connectToStores(HomeHandler);
+export default connectToStores(BrowseHandler);

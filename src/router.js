@@ -3,11 +3,11 @@ import Router from 'react-router';
 import {Route, DefaultRoute} from 'react-router';
 
 import MainHandler from './handlers/MainHandler';
-import HomeHandler from './handlers/HomeHandler';
+import BrowseHandler from './handlers/BrowseHandler';
 
 const routes = (
   <Route name="main" path="/" handler={MainHandler}>
-    <DefaultRoute name="home" handler={HomeHandler}/>
+    <DefaultRoute name="browse" handler={BrowseHandler}/>
   </Route>
 );
 

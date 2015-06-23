@@ -35,7 +35,6 @@
   tbody {
     flex: 1 1 auto;
     display: block;
-    overflow: auto;
 
     tr {
       display: flex;
@@ -45,11 +44,12 @@
       flex: 1;
       border-bottom: 1px solid @grey-100;
       padding: @space/2 @space;
+      height: (30 - @space);
+      line-height: (30 - @space);
       overflow: hidden;
       text-overflow: ellipsis;
-    }
-    tr:nth-child(2n) td {
-      background: @grey-50;
+      white-space: nowrap;
+      font-size: 12px;
     }
     td.key {
       flex: 2;

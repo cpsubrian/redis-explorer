@@ -12,6 +12,7 @@ class KeyStore {
     this.loading = false;
     this.loaded = false;
     this.error = null;
+    this.offset = 0;
   }
 
   onFetchKeys () {
@@ -33,6 +34,10 @@ class KeyStore {
   onFetchKeysFinished () {
     this.loading = false;
     this.loaded = true;
+  }
+
+  onSetOffset (offset) {
+    this.offset = offset;
   }
 
 }

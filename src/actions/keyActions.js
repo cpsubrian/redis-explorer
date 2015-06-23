@@ -41,6 +41,10 @@ class KeyActions {
     this.dispatch(keys);
   }
 
+  setOffset (offset) {
+    this.dispatch(offset);
+  }
+
 }
 
 export default alt.createActions(KeyActions);

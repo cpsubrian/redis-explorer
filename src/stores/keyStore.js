@@ -10,12 +10,14 @@ class KeyStore {
     // Initialize state.
     this.keys = [];
     this.loading = false;
+    this.loaded = false;
     this.error = null;
   }
 
   onFetchKeys () {
     this.error = null;
     this.loading = true;
+    this.loaded = false;
     this.keys = [];
   }
 
@@ -30,6 +32,7 @@ class KeyStore {
 
   onFetchKeysFinished () {
     this.loading = false;
+    this.loaded = true;
   }
 
 }

@@ -17,7 +17,9 @@ const BrowseHandler = React.createClass({
   },
 
   componentDidMount() {
-    keyActions.fetchKeys();
+    if (!this.props.loading && !this.props.loaded) {
+      keyActions.fetchKeys();
+    }
   },
 
   render () {

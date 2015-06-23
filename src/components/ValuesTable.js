@@ -9,18 +9,22 @@ const ValuesTable = React.createClass({
 
   propTypes: {
     loading: React.PropTypes.bool,
-    keys: React.PropTypes.array
+    keys: React.PropTypes.array,
+    offset: React.PropTypes.number,
+    limit: React.PropTypes.number
   },
 
   getDefaultProps () {
     return {
       loading: false,
-      keys: []
+      keys: [],
+      offset: 0,
+      limit: 100
     };
   },
 
   renderRows () {
-    return this.props.keys.map((key) => {
+    return this.props.keys.slice(this.props.offset, this.props.limit).map((key) => {
       return <ValuesRow key={key} valueKey={key}/>;
     });
   },

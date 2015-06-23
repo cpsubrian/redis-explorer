@@ -1,13 +1,15 @@
 import React from 'react';
 import Router from 'react-router';
-import {Route, DefaultRoute} from 'react-router';
+import {Route, DefaultRoute, NotFoundRoute} from 'react-router';
 
 import MainHandler from './handlers/MainHandler';
 import BrowseHandler from './handlers/BrowseHandler';
+import NotFoundHandler from './handlers/NotFoundHandler';
 
 const routes = (
-  <Route name="main" path="/" handler={MainHandler}>
-    <DefaultRoute name="browse" handler={BrowseHandler}/>
+  <Route handler={MainHandler}>
+    <Route name="browse" path="/" handler={BrowseHandler}/>
+    <NotFoundRoute handler={NotFoundHandler}/>
   </Route>
 );
 

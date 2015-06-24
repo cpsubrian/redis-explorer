@@ -6,27 +6,23 @@ class KeyActions {
   fetchKeys () {
     this.dispatch();
 
-    let size = 1000
-      , scan = db.client.scan('*', size)
-      , batch = [];
+    // Do the scan.
+    let getKeys = (scan) => {
+      scan.next((err, keys) => {
+        if (err) {
+          this.actions.fetchKeysFailed(err);
+        }
+        else if (keys) {
+          this.actions.fetchKeysAdd(keys);
+          getKeys(scan);
+        }
+        else {
+          this.actions.fetchKeysFinished();
+        }
+      });
+    };
 
-    scan.on('error', (err) => {
-      this.actions.fetchKeysFailed(err);
-    });
-    scan.on('data', (key) => {
-      batch.push(key);
-      if (batch.length === size) {
-        this.actions.fetchKeysAdd(batch);
-        batch = [];
-      }
-    });
-    scan.on('end', () => {
-      if (batch.length > 0) {
-        this.actions.fetchKeysAdd(batch);
-        batch = [];
-      }
-      this.actions.fetchKeysFinished();
-    });
+    getKeys(db.scan());
   }
 
   fetchKeysFailed (err) {

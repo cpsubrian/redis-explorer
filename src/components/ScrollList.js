@@ -50,7 +50,7 @@ const ScrollList = React.createClass({
   },
 
   getDisplayOffset () {
-    let offset = this.props.offset - (this.props.limit / 3);
+    let offset = this.props.offset - Math.floor(this.props.limit / 3);
     return (offset >= 0) ? offset : 0;
   },
 
@@ -79,7 +79,7 @@ const ScrollList = React.createClass({
     // Add currently visible items.
     results = results.concat(slice.map((item, i) => {
       return this.props.renderItem({
-        key: item.key || (offset + i)
+        key: item.key || (offset + '_' + i)
       }, item);
     }));
 

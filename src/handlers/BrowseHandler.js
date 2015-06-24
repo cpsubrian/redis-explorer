@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'underscore';
 import connectToStores from 'alt/utils/connectToStores';
 import keyStore from '../stores/keyStore';
 import keyActions from '../actions/keyActions';
@@ -16,10 +17,24 @@ const BrowseHandler = React.createClass({
     }
   },
 
-  componentDidMount() {
-    if (!this.props.loading && !this.props.loaded) {
-      keyActions.fetchKeys();
+  componentWillMount () {
+    this.fetchKeys = _.debounce(this.fetchKeys.bind(this), 250);
+  },
+
+  componentDidMount () {
+    if (!this.props.loaded) {
+      this.fetchKeys({match: this.props.match ? this.props.match + '*' : null});
     }
+  },
+
+  componentWillUpdate (nextProps) {
+    if (this.props.match !== nextProps.match) {
+      this.fetchKeys({match: nextProps.match ? nextProps.match + '*' : null});
+    }
+  },
+
+  fetchKeys (options) {
+    keyActions.fetchKeys(options);
   },
 
   render () {

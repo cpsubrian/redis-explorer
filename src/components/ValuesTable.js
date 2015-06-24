@@ -1,7 +1,7 @@
 import React from 'react';
-import connectToStores from 'alt/utils/connectToStores';
-import keyStore from '../stores/keyStore';
+import keyActions from '../actions/keyActions';
 
+import {TextField} from 'material-ui';
 import ScrollList from '../components/ScrollList';
 import LoadingRow from '../components/LoadingRow';
 import ValuesRow from '../components/ValuesRow';
@@ -26,11 +26,14 @@ const ValuesTable = React.createClass({
     return this.props.keys.map((key, i) => {
       return {
         key: key,
-        rowNum: i,
         rowKey: key,
         rowValue: 'value'
       };
     });
+  },
+
+  onSearchChange (e) {
+    keyActions.setMatch(e.currentTarget.value);
   },
 
   renderRoot (props, children) {
@@ -38,7 +41,7 @@ const ValuesTable = React.createClass({
   },
 
   renderItem (props, item) {
-    return <ValuesRow {...props} {...item}/>
+    return <ValuesRow matchRegExp={this.props.matchRegExp} {...props} {...item}/>
   },
 
   renderPlaceholder (props) {
@@ -51,8 +54,18 @@ const ValuesTable = React.createClass({
         <table>
           <thead>
             <tr>
-              <th className="key">Key</th>
-              <th className="value">Value</th>
+              <th className="key">
+                <TextField
+                  className="search"
+                  hintText="key:*:pattern"
+                  floatingLabelText="Search"
+                  value={this.props.match}
+                  onChange={this.onSearchChange}
+                  fullWidth />
+              </th>
+              <th className="value">
+
+              </th>
             </tr>
           </thead>
           <ScrollList
@@ -61,8 +74,7 @@ const ValuesTable = React.createClass({
             renderPlaceholder={this.renderPlaceholder}
             getItems={this.getItems}
             itemHeight={30}
-            offset={this.props.offset}
-          />
+            offset={this.props.offset} />
         </table>
       </div>
     );

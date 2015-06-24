@@ -31,7 +31,8 @@
     "react": "^0.13.3",
     "react-router": "^0.13.3",
     "react-tap-event-plugin": "^0.1.7",
-    "redis": "^0.12.1"
+    "redis": "^0.12.1",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "babel": "^5.5.8",

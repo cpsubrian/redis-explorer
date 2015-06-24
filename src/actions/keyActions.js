@@ -1,28 +1,23 @@
 import alt from '../alt';
 import db from '../utils/db';
 
+// 'Global' scan object.
+let _scan;
+
+// Key Actions.
 class KeyActions {
 
-  fetchKeys () {
+  fetchKeys (options = {}) {
     this.dispatch();
 
-    // Do the scan.
-    let getKeys = (scan) => {
-      scan.next((err, keys) => {
-        if (err) {
-          this.actions.fetchKeysFailed(err);
-        }
-        else if (keys) {
-          this.actions.fetchKeysAdd(keys);
-          getKeys(scan);
-        }
-        else {
-          this.actions.fetchKeysFinished();
-        }
-      });
-    };
+    // Stop an active scan.
+    if (_scan) _scan.stop();
 
-    getKeys(db.scan());
+    // Create the scan.
+    _scan = db.scan(options);
+
+    // Start the scan.
+    this.actions.fetchKeysNext();
   }
 
   fetchKeysFailed (err) {
@@ -33,12 +28,34 @@ class KeyActions {
     this.dispatch();
   }
 
+  fetchKeysNext () {
+    this.dispatch();
+    if (_scan) {
+      _scan.next((err, keys) => {
+        if (err) {
+          this.actions.fetchKeysFailed(err);
+        }
+        else if (keys) {
+          this.actions.fetchKeysAdd(keys);
+        }
+        else {
+          this.actions.fetchKeysFinished();
+        }
+      });
+    }
+  }
+
   fetchKeysAdd (keys) {
     this.dispatch(keys);
+    this.actions.fetchKeysNext();
   }
 
   setOffset (offset) {
     this.dispatch(offset);
+  }
+
+  setMatch (match) {
+    this.dispatch(match);
   }
 
 }

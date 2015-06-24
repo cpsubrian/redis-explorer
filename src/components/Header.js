@@ -23,11 +23,11 @@ const Header = React.createClass({
         <Toolbar className="toolbar">
           <ToolbarGroup key={0} float="left">
             <Link to="/" className="button">
-              <Icon type="list"/>
+              <Icon type="search"/>
               Browse
             </Link>
             <Link to="/pubsub" className="button">
-              <Icon type="import_export"/>
+              <Icon type="swap_vert"/>
               Pub/Sub
             </Link>
           </ToolbarGroup>

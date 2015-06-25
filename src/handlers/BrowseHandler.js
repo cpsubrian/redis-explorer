@@ -1,19 +1,19 @@
 import React from 'react';
 import _ from 'underscore';
 import connectToStores from 'alt/utils/connectToStores';
+import hostsStore from '../stores/hostsStore';
 import keyStore from '../stores/keyStore';
 import keyActions from '../actions/keyActions';
-
 import ValuesTable from '../components/ValuesTable';
 
 const BrowseHandler = React.createClass({
 
   statics: {
     getStores () {
-      return [keyStore];
+      return [hostsStore, keyStore];
     },
     getPropsFromStores () {
-      return keyStore.getState();
+      return _.extend({}, hostsStore.getState(), keyStore.getState());
     }
   },
 
@@ -31,10 +31,15 @@ const BrowseHandler = React.createClass({
     if (this.props.match !== nextProps.match) {
       this.fetchKeys({match: nextProps.match ? nextProps.match + '*' : null});
     }
+    if (!this.props.connected && nextProps.connected) {
+      this.fetchKeys({match: this.props.match ? this.props.match + '*' : null});
+    }
   },
 
   fetchKeys (options) {
-    keyActions.fetchKeys(options);
+    if (this.props.connected) {
+      keyActions.fetchKeys(options);
+    }
   },
 
   render () {

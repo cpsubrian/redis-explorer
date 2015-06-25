@@ -2,7 +2,9 @@ import React from 'react';
 import {RouteHandler} from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import mui from 'material-ui';
-
+import connectToStores from 'alt/utils/connectToStores';
+import hostsStore from '../stores/hostsStore';
+import hostsActions from '../actions/hostsActions';
 import Header from '../components/Header';
 
 // Needed for onTouchTap
@@ -17,6 +19,15 @@ const ThemeManager = new mui.Styles.ThemeManager();
 // Main app component.
 const MainHandler = React.createClass({
 
+  statics: {
+    getStores () {
+      return [hostsStore];
+    },
+    getPropsFromStores () {
+      return hostsStore.getState();
+    }
+  },
+
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
@@ -27,14 +38,18 @@ const MainHandler = React.createClass({
     };
   },
 
+  componentWillMount () {
+    hostsActions.connectToHost(this.props.activeHost);
+  },
+
   render () {
     return (
       <div className="main">
-        <Header hostName="localhost"/>
+        <Header {...this.props}/>
         <RouteHandler/>
       </div>
     );
   }
 });
 
-export default MainHandler;
+export default connectToStores(MainHandler);

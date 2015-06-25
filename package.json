@@ -32,6 +32,8 @@
     "react-router": "^0.13.3",
     "react-tap-event-plugin": "^0.1.7",
     "redis": "^0.12.1",
+    "ssh-config": "^0.1.0",
+    "tunnel-ssh": "^1.0.2",
     "underscore": "^1.8.3"
   },
   "devDependencies": {

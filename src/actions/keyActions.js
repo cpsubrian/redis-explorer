@@ -7,6 +7,10 @@ let _scan;
 // Key Actions.
 class KeyActions {
 
+  resetKeys () {
+    this.dispatch();
+  }
+
   fetchKeys (options = {}) {
     this.dispatch();
 

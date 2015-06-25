@@ -18,6 +18,16 @@ class KeyStore {
     this.matchRegExp = null;
   }
 
+  onResetKeys () {
+    this.keys = [];
+    this.loading = false;
+    this.loaded = false;
+    this.error = null;
+    this.offset = 0;
+    this.match = null;
+    this.matchRegExp = null;
+  }
+
   onFetchKeys () {
     this.loading = true;
     this.loaded = false;

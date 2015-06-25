@@ -1,3 +1,8 @@
+/**
+ * ES7-like async via a wrapped generator function.
+ * Inside the function you can yield Promises.
+ */
+
 function spawn(genF) {
   return new Promise(function(resolve, reject) {
     let gen = genF();

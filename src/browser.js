@@ -4,7 +4,7 @@ import settings from './utils/settings';
 import BrowserWindow from 'browser-window';
 
 // Report crashes to our server.
-require('crash-reporter').start();
+//require('crash-reporter').start();
 
 // Keep a reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.

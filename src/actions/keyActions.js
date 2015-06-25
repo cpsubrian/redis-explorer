@@ -34,19 +34,18 @@ class KeyActions {
 
   fetchKeysNext () {
     this.dispatch();
-    if (_scan) {
-      _scan.next((err, keys) => {
-        if (err) {
-          this.actions.fetchKeysFailed(err);
-        }
-        else if (keys) {
-          this.actions.fetchKeysAdd(keys);
-        }
-        else {
-          this.actions.fetchKeysFinished();
-        }
-      });
-    }
+
+    _scan.next((err, keys) => {
+      if (err) {
+        this.actions.fetchKeysFailed(err);
+      }
+      else if (keys) {
+        this.actions.fetchKeysAdd(keys);
+      }
+      else {
+        this.actions.fetchKeysFinished();
+      }
+    });
   }
 
   fetchKeysAdd (keys) {

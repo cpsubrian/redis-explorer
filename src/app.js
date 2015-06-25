@@ -1,9 +1,12 @@
 import React from 'react';
 import router from './router';
-import alt from './alt';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
-// Debug dispatcher.
-alt.dispatcher.register(console.log.bind(console))
+// Needed for onTouchTap
+// Can go away when react 1.0 release
+// Check this repo:
+// https://github.com/zilverline/react-tap-event-plugin
+injectTapEventPlugin();
 
 // Run the router.
 router.run((Handler) => {

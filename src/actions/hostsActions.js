@@ -8,7 +8,7 @@ class HostsActions {
 
     db.connect(host, (err) => {
       if (err) {
-        this.actions.connectToHostFailed();
+        this.actions.connectToHostFailed(err);
       }
       else {
         this.actions.connectedToHost();

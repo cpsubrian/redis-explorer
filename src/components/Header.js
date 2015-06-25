@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router'
 import hostsActions from '../actions/hostsActions';
 import keyActions from '../actions/keyActions';
+import Icon from '../components/Icon';
 import {
   DropDownMenu,
   LeftNav,
@@ -9,8 +10,6 @@ import {
   ToolbarGroup,
   ToolbarSeparator,
 } from 'material-ui';
-
-import Icon from '../components/Icon';
 
 const Header = React.createClass({
 

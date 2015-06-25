@@ -15,7 +15,7 @@ const LoadingRow = React.createClass({
   render () {
     return (
       <tr className="loading-row">
-        <td colspan={this.props.cols}>
+        <td colSpan={this.props.cols}>
           Loading&hellip;
         </td>
       </tr>

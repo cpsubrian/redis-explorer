@@ -11,6 +11,7 @@ const LOCAL_PORT = 8379;
 // Abstraction around redis.
 class DB {
 
+  // Initiate a new host connection.
   connect (host, cb) {
     if (this.client) {
       this.client.end();
@@ -21,6 +22,7 @@ class DB {
     }
   }
 
+  // Connect to localhost or remote, but close any open ssh tunnels first.
   connectToHost (host, cb) {
     if (host.Host === 'localhost') {
       setImmediate(() => {
@@ -43,6 +45,7 @@ class DB {
     }
   }
 
+  // Connect to a remote host using privateKey auth via ssh-agent.
   connectToRemoteHost (host, cb) {
     let config = {
       host: host.Hostname,
@@ -58,16 +61,9 @@ class DB {
         cb();
       });
     });
-    this.tunnel.on('sshConnection', (sshConnection) => {
-      sshConnection.on('keyboard-interactive',
-        function(name, instructions, instructionsLang, prompts, finish) {
-          // Pass answers to `prompts` to `finish()`. Typically `prompts.length === 1`
-          // with `prompts[0] === "Password: "`
-          finish(['blink33i']);
-        });
-    });
   }
 
+  // An iterator-like api to scan keys.
   scan (options = {}) {
     options.cmd = 'SCAN';
     options.count = options.count || 500;
@@ -111,7 +107,6 @@ class DB {
     };
     return _scan;
   }
-
 }
 
 export default (new DB());

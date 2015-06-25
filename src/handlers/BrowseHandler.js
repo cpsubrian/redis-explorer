@@ -6,6 +6,7 @@ import keyStore from '../stores/keyStore';
 import keyActions from '../actions/keyActions';
 import ValuesTable from '../components/ValuesTable';
 
+// BrowserHandler Component
 const BrowseHandler = React.createClass({
 
   statics: {
@@ -17,6 +18,8 @@ const BrowseHandler = React.createClass({
     }
   },
 
+  // Since prop updates can happend very frequently and fetchKeys is
+  // expensive, we debounce calls to it.
   componentWillMount () {
     this.fetchKeys = _.debounce(this.fetchKeys.bind(this), 250);
   },
@@ -28,9 +31,11 @@ const BrowseHandler = React.createClass({
   },
 
   componentWillUpdate (nextProps) {
+    // Match text changed.
     if (this.props.match !== nextProps.match) {
       this.fetchKeys({match: nextProps.match ? nextProps.match + '*' : null});
     }
+    // Just connected to a new host.
     if (!this.props.connected && nextProps.connected) {
       this.fetchKeys({match: this.props.match ? this.props.match + '*' : null});
     }

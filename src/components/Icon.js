@@ -15,7 +15,8 @@ const Icon = React.createClass({
 
   render () {
     return (
-      <i className={"icon material-icons " + (this.props.className || '')}  style={this.props.style}>{this.props.type}</i>
+      <i className={"icon material-icons " + (this.props.className || '')}
+         style={this.props.style}>{this.props.type}</i>
     );
   }
 

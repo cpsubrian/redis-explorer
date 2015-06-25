@@ -32,7 +32,6 @@ const settings = {
     cache[key] = value;
     fs.writeFileSync(settingsPath, JSON.stringify(cache));
   }
-
 };
 
 export default settings;

@@ -68,13 +68,19 @@ const ValuesTable = React.createClass({
               </th>
             </tr>
           </thead>
-          <ScrollList
-            renderRoot={this.renderRoot}
-            renderItem={this.renderItem}
-            renderPlaceholder={this.renderPlaceholder}
-            getItems={this.getItems}
-            itemHeight={30}
-            offset={this.props.offset} />
+          {this.props.loading ?
+            <tbody>
+              <LoadingRow/>
+            </tbody>
+          :/*else*/
+            <ScrollList
+              renderRoot={this.renderRoot}
+              renderItem={this.renderItem}
+              renderPlaceholder={this.renderPlaceholder}
+              getItems={this.getItems}
+              itemHeight={30}
+              offset={this.props.offset} />
+          }
         </table>
       </div>
     );

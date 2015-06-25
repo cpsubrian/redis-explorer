@@ -3,6 +3,7 @@ import React from 'react';
 const ValuesRow = React.createClass({
 
   renderKey () {
+    // Highlight search pattern matches.
     if (this.props.matchRegExp) {
       return this.props.rowKey
         .split(this.props.matchRegExp)
@@ -15,6 +16,7 @@ const ValuesRow = React.createClass({
           }
         });
     }
+    // Else, just spit out the key.
     else {
       return this.props.rowKey;
     }

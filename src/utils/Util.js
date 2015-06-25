@@ -1,4 +1,7 @@
-// From Kitmatic.
+/**
+ * Some utils ported from Kitmatic.
+ */
+
 var remote = require('remote');
 var app = remote.require('app');
 

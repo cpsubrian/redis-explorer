@@ -11,18 +11,23 @@ const LOCAL_PORT = 8379;
 // Abstraction around redis.
 class DB {
 
-  // Initiate a new host connection.
+  // Clean up open connections, then initiate a new host connection.
   connect (host, cb) {
     if (this.client) {
       this.client.end();
-      this.connectToHost(host, cb);
+    }
+    if (this.tunnel) {
+      this.tunnel.close((err) => {
+        if (err && err.message !== 'Not running') return cb(err);
+        this.connectToHost(host, cb);
+      });
     }
     else {
       this.connectToHost(host, cb);
     }
   }
 
-  // Connect to localhost or remote, but close any open ssh tunnels first.
+  // Connect to localhost or remote.
   connectToHost (host, cb) {
     if (host.Host === 'localhost') {
       setImmediate(() => {
@@ -33,15 +38,7 @@ class DB {
       });
     }
     else {
-      if (this.tunnel) {
-        this.tunnel.close((err) => {
-          if (err) return cb(err);
-          this.connectToRemoteHost(host, cb);
-        });
-      }
-      else {
-        this.connectToRemoteHost(host, cb);
-      }
+      this.connectToRemoteHost(host, cb);
     }
   }
 

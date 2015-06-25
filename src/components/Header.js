@@ -18,15 +18,6 @@ const Header = React.createClass({
     activeHost: React.PropTypes.object
   },
 
-  getHostsMenuItems () {
-    return this.props.hosts.map((host) => {
-      return {
-        host: host,
-        text: <span className="host-option"><Icon type="public"/> {host.Host}</span>
-      };
-    });
-  },
-
   onClickHostButton (e) {
     e.preventDefault();
     this.refs.hostsNav.toggle();
@@ -40,15 +31,33 @@ const Header = React.createClass({
   },
 
   hostButtonClass () {
-    if (this.props.connecting) {
+    if (this.props.connecting)
       return 'connecting';
-    }
-    else if (this.props.connected) {
+    else if (this.props.connected)
       return 'connected';
-    }
-    else {
+    else
       return 'disconnected';
-    }
+  },
+
+  hostsNavProps () {
+    let selectedIndex
+      , menuItems = this.props.hosts.map((host, i) => {
+          if (this.activeHost === host) {
+            selectedIndex = i;
+          }
+          return {
+            host: host,
+            text: <span className="host-option"><Icon type="public"/> {host.Host}</span>
+          };
+        });
+
+    return {
+      docked: false,
+      openRight: true,
+      onChange: this.onChangeHost,
+      selectedIndex: selectedIndex,
+      menuItems: menuItems
+    };
   },
 
   render () {
@@ -65,18 +74,13 @@ const Header = React.createClass({
           </ToolbarGroup>
           <ToolbarGroup key={1} float="right" className="no-drag">
             {this.props.activeHost ?
-              <Link to="/hosts" className="button host-button" onClick={this.onClickHostButton}>
-                {this.props.activeHost.Host} <Icon className={this.hostButtonClass()} type="public"/>
+              <Link to="/hosts" className={"button host-button " + this.hostButtonClass()} onClick={this.onClickHostButton}>
+                {this.props.activeHost.Host} <Icon type="public"/>
               </Link>
-            :
+            :/*else*/
               <span>Not Connected</span>
             }
-            <LeftNav
-              ref="hostsNav"
-              docked={false}
-              openRight={true}
-              onChange={this.onChangeHost}
-              menuItems={this.getHostsMenuItems()} />
+            <LeftNav ref="hostsNav" {...this.hostsNavProps()} />
           </ToolbarGroup>
         </Toolbar>
       </div>

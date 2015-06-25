@@ -34,8 +34,10 @@ const Header = React.createClass({
   },
 
   onChangeHost (e, i, menuItem) {
-    keyActions.resetKeys();
-    hostsActions.connectToHost(menuItem.host);
+    if (menuItem.host.Host !== this.props.activeHost.Host) {
+      keyActions.resetKeys();
+      hostsActions.connectToHost(menuItem.host);
+    }
   },
 
   hostButtonClass () {

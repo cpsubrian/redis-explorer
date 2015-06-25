@@ -41,6 +41,9 @@ app.on('ready', () => {
     'show': false
   });
 
+  // Open dev tools. Probably should remove this when this is more production ready.
+  mainWindow.openDevTools();
+
   // Load the index.html of the app.
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
 

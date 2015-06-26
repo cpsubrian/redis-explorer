@@ -16,7 +16,13 @@ run:
 	@echo ""
 	@open ./dist/osx/RedisExplorer.app
 
+copy:
+	@echo ""
+	@rm -Rf /Applications/RedisExplorer.app
+	@cp -R ./dist/osx/RedisExplorer.app /Applications/
+
 .PHONY: install
 .PHONY: dev
 .PHONY: release
 .PHONY: run
+.PHONY: copy

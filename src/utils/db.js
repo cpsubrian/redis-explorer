@@ -7,6 +7,7 @@ import settings from '../utils/settings';
 
 const DST_PORT = 6379;
 const LOCAL_PORT = 8379;
+const DEFAULT_COUNT = 250;
 
 // Abstraction around redis.
 class DB {
@@ -63,11 +64,13 @@ class DB {
   // An iterator-like api to scan keys.
   scan (options = {}) {
     options.cmd = 'SCAN';
-    options.count = options.count || 500;
+    options.count = options.count || DEFAULT_COUNT;
 
     let _scan = {
+      options: options,
       cursor: 0,
       stopped: false,
+      keys: [],
       next: (cb) => {
         let args = []
         if (_scan.stopped) return;
@@ -96,7 +99,16 @@ class DB {
         if (_scan.stopped) return;
         let [cursor, keys] = results;
         _scan.cursor = (cursor == 0) ? false : cursor;
-        cb(null, keys);
+        _scan.keys = _scan.keys.concat(keys);
+        if ((_scan.keys.length >= options.count) || (_scan.cursor === false)) {
+          ((keys) => {
+            _scan.keys = [];
+            cb(null, keys);
+          })(_scan.keys);
+        }
+        else {
+          _scan.next(cb);
+        }
       },
       stop: () => {
         _scan.stopped = true;

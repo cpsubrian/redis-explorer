@@ -1,5 +1,4 @@
 import React from 'react';
-import keyActions from '../actions/keyActions';
 
 const ScrollList = React.createClass({
 
@@ -36,21 +35,32 @@ const ScrollList = React.createClass({
     };
   },
 
+  getInitialState () {
+    return {
+      offset: this.props.offset
+    };
+  },
+
   componentDidMount () {
-    this.getDOMNode().scrollTop = this.props.offset * this.props.itemHeight;
+    this.getDOMNode().scrollTop = this.state.offset * this.props.itemHeight;
   },
 
   onScroll (e) {
     let top = e.currentTarget.scrollTop
-      , count = Math.floor(top / this.props.itemHeight);
+      , count = Math.floor(top / this.props.itemHeight)
+      , newOffset;
 
-    if (count !== this.props.offset) {
-      keyActions.setOffset(count);
+    if (count !== this.state.offset) {
+      newOffset = count;
+      this.setState({offset: newOffset});
+    }
+    if (this.props.scrollHandler) {
+      this.props.scrollHandler(e, newOffset);
     }
   },
 
   getDisplayOffset () {
-    let offset = this.props.offset - Math.floor(this.props.limit / 3);
+    let offset = this.state.offset - Math.floor(this.props.limit / 3);
     return (offset >= 0) ? offset : 0;
   },
 

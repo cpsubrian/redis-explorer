@@ -50,7 +50,6 @@ class KeyActions {
 
   fetchKeysAdd (keys) {
     this.dispatch(keys);
-    this.actions.fetchKeysNext();
   }
 
   setOffset (offset) {

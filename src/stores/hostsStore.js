@@ -15,13 +15,7 @@ class HostsStore {
     this.error = null;
     this.connected = false;
     this.connecting = false;
-    this.hosts = [
-      {
-        Host: 'localhost',
-        Hostname: 'localhost'
-      }
-    ];
-    this.activeHost = this.hosts[0];
+    this.hosts = [];
 
     // Load hosts from .ssh.
     let configPath = path.join(
@@ -36,6 +30,22 @@ class HostsStore {
         this.hosts.push(host);
       });
     }
+
+    // Alphabetize.
+    this.hosts.sort(function (a, b) {
+      let aHost = a.Host.toLowerCase()
+        , bHost = b.Host.toLowerCase();
+
+      if (aHost < bHost) return -1;
+      if (aHost > bHost) return 1;
+      return 0;
+    });
+
+    this.hosts.unshift({
+      Host: 'localhost',
+      Hostname: 'localhost'
+    });
+    this.activeHost = this.hosts[0];
   }
 
   onConnectToHost (host) {

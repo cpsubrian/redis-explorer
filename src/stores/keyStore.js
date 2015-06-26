@@ -12,6 +12,7 @@ class KeyStore {
     this.keys = [];
     this.loading = false;
     this.loaded = false;
+    this.finished = false;
     this.error = null;
     this.offset = 0;
     this.match = null;
@@ -22,6 +23,7 @@ class KeyStore {
     this.keys = [];
     this.loading = false;
     this.loaded = false;
+    this.finished = false;
     this.error = null;
     this.offset = 0;
     this.match = null;
@@ -29,11 +31,12 @@ class KeyStore {
   }
 
   onFetchKeys () {
+    this.keys = [];
     this.loading = true;
     this.loaded = false;
+    this.finished = false;
     this.error = null;
     this.offset = 0;
-    this.keys = [];
 
     // Compute match regular expression.
     if (this.match && !this.matchRegExp) {
@@ -42,17 +45,21 @@ class KeyStore {
   }
 
   onFetchKeysFailed (err) {
-    this.error = err;
     this.loading = false;
+    this.loaded = true;
+    this.error = err;
   }
 
   onFetchKeysAdd (keys) {
+    this.loading = false;
+    this.loaded = true;
     this.keys = this.keys.concat(keys);
   }
 
   onFetchKeysFinished () {
     this.loading = false;
     this.loaded = true;
+    this.finished = true;
   }
 
   onSetOffset (offset) {
@@ -60,7 +67,6 @@ class KeyStore {
   }
 
   onSetMatch (match) {
-    this.loaded = false;
     this.matchRegExp = null;
     if (match && match.length) {
       this.match = match;

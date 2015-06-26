@@ -70,7 +70,7 @@ class DB {
       options: options,
       cursor: 0,
       stopped: false,
-      keys: [],
+      results: [],
       next: (cb) => {
         let args = []
         if (_scan.stopped) return;
@@ -99,12 +99,14 @@ class DB {
         if (_scan.stopped) return;
         let [cursor, keys] = results;
         _scan.cursor = (cursor == 0) ? false : cursor;
-        _scan.keys = _scan.keys.concat(keys);
-        if ((_scan.keys.length >= options.count) || (_scan.cursor === false)) {
-          ((keys) => {
-            _scan.keys = [];
-            cb(null, keys);
-          })(_scan.keys);
+        _scan.results = _scan.results.concat(keys.map(key => {
+          return {key};
+        }));
+        if ((_scan.results.length >= options.count) || (_scan.cursor === false)) {
+          ((results) => {
+            _scan.results = [];
+            cb(null, results);
+          })(_scan.results);
         }
         else {
           _scan.next(cb);

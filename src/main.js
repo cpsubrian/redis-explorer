@@ -1,2 +1,6 @@
-import 'babel/polyfill';
-import './app';
+/**
+ * Entry point for babel.
+ */
+
+import 'babel/polyfill'
+import './app'

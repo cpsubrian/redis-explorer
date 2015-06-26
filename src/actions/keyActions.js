@@ -1,65 +1,63 @@
-import alt from '../alt';
-import db from '../utils/db';
+import alt from '../alt'
+import db from '../utils/db'
 
 // 'Global' scan object.
-let _scan;
+let _scan
 
 // Key Actions.
 class KeyActions {
 
   resetKeys () {
-    this.dispatch();
+    this.dispatch()
   }
 
   fetchKeys (options = {}) {
-    this.dispatch();
+    this.dispatch()
 
     // Stop an active scan.
-    if (_scan) _scan.stop();
+    if (_scan) _scan.stop()
 
     // Create the scan.
-    _scan = db.scan(options);
+    _scan = db.scan(options)
 
     // Start the scan.
-    this.actions.fetchKeysNext();
+    this.actions.fetchKeysNext()
   }
 
   fetchKeysFailed (err) {
-    this.dispatch(err);
+    this.dispatch(err)
   }
 
   fetchKeysFinished () {
-    this.dispatch();
+    this.dispatch()
   }
 
   fetchKeysNext () {
-    this.dispatch();
+    this.dispatch()
 
     _scan.next((err, keys) => {
       if (err) {
-        this.actions.fetchKeysFailed(err);
+        this.actions.fetchKeysFailed(err)
+      } else if (keys) {
+        this.actions.fetchKeysAdd(keys)
+      } else {
+        this.actions.fetchKeysFinished()
       }
-      else if (keys) {
-        this.actions.fetchKeysAdd(keys);
-      }
-      else {
-        this.actions.fetchKeysFinished();
-      }
-    });
+    })
   }
 
   fetchKeysAdd (keys) {
-    this.dispatch(keys);
+    this.dispatch(keys)
   }
 
   setOffset (offset) {
-    this.dispatch(offset);
+    this.dispatch(offset)
   }
 
   setMatch (match) {
-    this.dispatch(match);
+    this.dispatch(match)
   }
 
 }
 
-export default alt.createActions(KeyActions);
+export default alt.createActions(KeyActions)

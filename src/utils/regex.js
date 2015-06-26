@@ -1,22 +1,22 @@
 const regex = {
 
   escape (s) {
-    return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
   },
 
   fromGlob (s) {
     let converted = s
       .split('*')
       .map((part) => {
-        return regex.escape(part);
+        return regex.escape(part)
       })
       .map((part) => {
-        return '(' + part + ')';
+        return '(' + part + ')'
       })
-      .join('(.*)');
+      .join('(.*)')
 
-    return new RegExp('^' + converted, 'g');
+    return new RegExp('^' + converted, 'g')
   }
-};
+}
 
-export default regex;
+export default regex

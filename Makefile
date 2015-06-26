@@ -6,6 +6,7 @@ install:
 
 dev:
 	@echo ""
+	@./node_modules/.bin/standard ./src/**/*.js
 	@./node_modules/.bin/grunt
 
 release: install

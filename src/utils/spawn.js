@@ -2,33 +2,34 @@
  * ES7-like async via a wrapped generator function.
  * Inside the function you can yield Promises.
  */
-
-function spawn(genF) {
-  return new Promise(function(resolve, reject) {
-    let gen = genF();
-    function step(nextF) {
-      let next;
+function spawn (genF) {
+  return new Promise((resolve, reject) => {
+    let gen = genF()
+    let step = (nextF) => {
+      let next
       try {
-        next = nextF();
+        next = nextF()
       } catch(e) {
-        // finished with failure, reject the promise
-        reject(e);
-        return;
+        // Finished with failure, reject the promise.
+        reject(e)
+        return
       }
-      if(next.done) {
-        // finished with success, resolve the promise
-        resolve(next.value);
-        return;
+      if (next.done) {
+        // Finished with success, resolve the promise.
+        resolve(next.value)
+        return
       }
-      // not finished, chain off the yielded promise and `step` again
-      Promise.cast(next.value).then(function(v) {
-        step(function() { return gen.next(v); });
-      }, function(e) {
-        step(function() { return gen.throw(e); });
-      });
+      // Not finished, chain off the yielded promise and `step` again.
+      Promise
+        .cast(next.value)
+        .then((v) => {
+          step(() => gen.next(v))
+        }, (e) => {
+          step(() => gen.throw(e))
+        })
     }
-    step(function() { return gen.next(undefined); });
-  });
+    step(() => gen.next(undefined))
+  })
 }
 
-export default spawn;
+export default spawn

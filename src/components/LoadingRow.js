@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const LoadingRow = React.createClass({
 
@@ -9,18 +9,18 @@ const LoadingRow = React.createClass({
   getDefaultProps () {
     return {
       cols: 1
-    };
+    }
   },
 
   render () {
     return (
-      <tr className="loading-row">
+      <tr className='loading-row'>
         <td colSpan={this.props.cols}>
           Loading&hellip;
         </td>
       </tr>
-    );
+    )
   }
-});
+})
 
-export default LoadingRow;
+export default LoadingRow

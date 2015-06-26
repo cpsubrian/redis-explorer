@@ -1,13 +1,9 @@
-import redis from 'redis';
-import remote from 'remote';
-import fs from 'fs';
-import path from 'path';
-import tunnel from 'tunnel-ssh';
-import settings from '../utils/settings';
+import redis from 'redis'
+import tunnel from 'tunnel-ssh'
 
-const DST_PORT = 6379;
-const LOCAL_PORT = 8379;
-const DEFAULT_COUNT = 250;
+const DST_PORT = 6379
+const LOCAL_PORT = 8379
+const DEFAULT_COUNT = 250
 
 // Abstraction around redis.
 class DB {
@@ -15,16 +11,15 @@ class DB {
   // Clean up open connections, then initiate a new host connection.
   connect (host, cb) {
     if (this.client) {
-      this.client.end();
+      this.client.end()
     }
     if (this.tunnel) {
       this.tunnel.close((err) => {
-        if (err && err.message !== 'Not running') return cb(err);
-        this.connectToHost(host, cb);
-      });
-    }
-    else {
-      this.connectToHost(host, cb);
+        if (err && err.message !== 'Not running') return cb(err)
+        this.connectToHost(host, cb)
+      })
+    } else {
+      this.connectToHost(host, cb)
     }
   }
 
@@ -32,14 +27,13 @@ class DB {
   connectToHost (host, cb) {
     if (host.Host === 'localhost') {
       setImmediate(() => {
-        this.client = redis.createClient();
+        this.client = redis.createClient()
         this.client.on('ready', () => {
-          cb();
-        });
-      });
-    }
-    else {
-      this.connectToRemoteHost(host, cb);
+          cb()
+        })
+      })
+    } else {
+      this.connectToRemoteHost(host, cb)
     }
   }
 
@@ -51,20 +45,20 @@ class DB {
       localPort: LOCAL_PORT,
       username: host.User,
       agent: process.env.SSH_AUTH_SOCK
-    };
+    }
     this.tunnel = tunnel(config, (err) => {
-      if (err) return cb(err);
-      this.client = redis.createClient(config.localPort);
+      if (err) return cb(err)
+      this.client = redis.createClient(config.localPort)
       this.client.on('ready', () => {
-        cb();
-      });
-    });
+        cb()
+      })
+    })
   }
 
   // An iterator-like api to scan keys.
   scan (options = {}) {
-    options.cmd = 'SCAN';
-    options.count = options.count || DEFAULT_COUNT;
+    options.cmd = 'SCAN'
+    options.count = options.count || DEFAULT_COUNT
 
     let _scan = {
       options: options,
@@ -73,65 +67,63 @@ class DB {
       results: [],
       next: (cb) => {
         let args = []
-        if (_scan.stopped) return;
+        if (_scan.stopped) return
         if (_scan.cursor !== false) {
-          args.push(_scan.cursor);
+          args.push(_scan.cursor)
           if (options.key) {
-            args.push(options.key);
+            args.push(options.key)
           }
           if (options.count) {
-            args.push('COUNT');
-            args.push(options.count);
+            args.push('COUNT')
+            args.push(options.count)
           }
           if (options.match) {
-            args.push('MATCH');
-            args.push(options.match);
+            args.push('MATCH')
+            args.push(options.match)
           }
-          args.push(_scan.process.bind(this, cb));
-          this.client[options.cmd].apply(this.client, args);
-        }
-        else {
-          if (cb) cb(null, false);
+          args.push(_scan.process.bind(this, cb))
+          this.client[options.cmd].apply(this.client, args)
+        } else {
+          if (cb) cb(null, false)
         }
       },
       process: (cb, err, results) => {
-        if (err) return cb(err);
-        if (_scan.stopped) return;
-        let [cursor, keys] = results;
-        _scan.cursor = (cursor == 0) ? false : cursor;
+        if (err) return cb(err)
+        if (_scan.stopped) return
+        let [cursor, keys] = results
+        _scan.cursor = (cursor === 0) ? false : cursor
         _scan.results = _scan.results.concat(keys.map(key => {
-          return {key};
-        }));
+          return {key}
+        }))
         if ((_scan.results.length >= options.count) || (_scan.cursor === false)) {
           ((results) => {
-            _scan.results = [];
-            _scan.postProcess(cb, results);
-          })(_scan.results);
-        }
-        else {
-          _scan.next(cb);
+            _scan.results = []
+            _scan.postProcess(cb, results)
+          })(_scan.results)
+        } else {
+          _scan.next(cb)
         }
       },
       postProcess: (cb, results) => {
         if (!results.length || !_scan.options.loadTypes) {
-          return cb(null, results);
+          return cb(null, results)
         }
         this.client.multi(results.map((result) => {
-          return ['TYPE', result.key];
+          return ['TYPE', result.key]
         })).exec((err, types) => {
-          if (err) return cb(err);
+          if (err) return cb(err)
           types.forEach((type, i) => {
-            results[i].type = type;
-          });
-          cb(null, results);
-        });
+            results[i].type = type
+          })
+          cb(null, results)
+        })
       },
       stop: () => {
-        _scan.stopped = true;
+        _scan.stopped = true
       }
-    };
-    return _scan;
+    }
+    return _scan
   }
 }
 
-export default (new DB());
+export default (new DB())

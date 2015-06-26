@@ -1,17 +1,21 @@
-import React from 'react';
-import keyActions from '../actions/keyActions';
+import React from 'react'
+import keyActions from '../actions/keyActions'
 
-import {TextField} from 'material-ui';
-import ScrollList from '../components/ScrollList';
-import LoadingRow from '../components/LoadingRow';
-import ValuesRow from '../components/ValuesRow';
+import {TextField} from 'material-ui'
+import ScrollList from '../components/ScrollList'
+import LoadingRow from '../components/LoadingRow'
+import ValuesRow from '../components/ValuesRow'
 
 const ValuesTable = React.createClass({
 
   propTypes: {
     loading: React.PropTypes.bool,
+    finished: React.PropTypes.bool,
     keys: React.PropTypes.array,
-    offset: React.PropTypes.number
+    offset: React.PropTypes.number,
+    itemHeight: React.PropTypes.number,
+    match: React.PropTypes.string,
+    matchRegExp: React.PropTypes.object
   },
 
   getDefaultProps () {
@@ -20,7 +24,7 @@ const ValuesTable = React.createClass({
       keys: [],
       offset: 0,
       itemHeight: 30
-    };
+    }
   },
 
   getItems () {
@@ -28,26 +32,26 @@ const ValuesTable = React.createClass({
       return Object.assign({
         rowKey: key.key,
         value: 'value'
-      }, key);
-    });
+      }, key)
+    })
   },
 
   onSearchChange (e) {
-    keyActions.setMatch(e.currentTarget.value);
+    keyActions.setMatch(e.currentTarget.value)
   },
 
   onScroll (e, newOffset) {
     if (newOffset) {
-      keyActions.setOffset(newOffset);
+      keyActions.setOffset(newOffset)
 
       if (!this.props.finished) {
         let top = e.currentTarget.scrollTop
-          , sh = e.currentTarget.scrollHeight
-          , h = e.currentTarget.offsetHeight;
+        let sh = e.currentTarget.scrollHeight
+        let h = e.currentTarget.offsetHeight
 
         // If we're nearing the bottom, load more keys.
-        if ((sh - top - h) <= (h*2)) {
-          keyActions.fetchKeysNext();
+        if ((sh - top - h) <= (h * 2)) {
+          keyActions.fetchKeysNext()
         }
       }
     }
@@ -62,26 +66,23 @@ const ValuesTable = React.createClass({
   },
 
   renderPlaceholder (props) {
-    return <tr key={props.key}><td colSpan="2" {...props}></td></tr>;
+    return <tr key={props.key}><td colSpan='2' {...props}></td></tr>
   },
 
   render () {
     return (
-      <div className="values-table">
+      <div className='values-table'>
         <table>
           <thead>
             <tr>
-              <th className="key">
+              <th className='key' colSpan='3'>
                 <TextField
-                  className="search"
-                  hintText="key:*:pattern"
-                  floatingLabelText="Search"
+                  className='search'
+                  hintText='key:*:pattern'
+                  floatingLabelText='Search'
                   value={this.props.match}
                   onChange={this.onSearchChange}
                   fullWidth />
-              </th>
-              <th className="value">
-
               </th>
             </tr>
           </thead>
@@ -101,8 +102,8 @@ const ValuesTable = React.createClass({
           }
         </table>
       </div>
-    );
+    )
   }
-});
+})
 
-export default ValuesTable;
+export default ValuesTable

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const ScrollList = React.createClass({
 
@@ -18,65 +18,65 @@ const ScrollList = React.createClass({
           <ul {...props}>
             {children}
           </ul>
-        );
+        )
       },
       renderItem: (props, item) => {
         return (
           <li {...props}>
             {item}
           </li>
-        );
+        )
       },
       renderPlaceholder: (props) => {
         return <li {...props}></li>
       },
       offset: 0,
       limit: 100
-    };
+    }
   },
 
   getInitialState () {
     return {
       offset: this.props.offset
-    };
+    }
   },
 
   componentDidMount () {
-    this.getDOMNode().scrollTop = this.state.offset * this.props.itemHeight;
+    this.getDOMNode().scrollTop = this.state.offset * this.props.itemHeight
   },
 
   onScroll (e) {
     let top = e.currentTarget.scrollTop
-      , count = Math.floor(top / this.props.itemHeight)
-      , newOffset;
+    let count = Math.floor(top / this.props.itemHeight)
+    let newOffset
 
     if (count !== this.state.offset) {
-      newOffset = count;
-      this.setState({offset: newOffset});
+      newOffset = count
+      this.setState({offset: newOffset})
     }
     if (this.props.scrollHandler) {
-      this.props.scrollHandler(e, newOffset);
+      this.props.scrollHandler(e, newOffset)
     }
   },
 
   getDisplayOffset () {
-    let offset = this.state.offset - Math.floor(this.props.limit / 3);
-    return (offset >= 0) ? offset : 0;
+    let offset = this.state.offset - Math.floor(this.props.limit / 3)
+    return (offset >= 0) ? offset : 0
   },
 
   renderItems () {
     let items = this.props.getItems()
-      , offset = this.getDisplayOffset()
-      , slice = items.slice(offset, offset + this.props.limit)
-      , results = []
-      , baseStyles = {
+    let offset = this.getDisplayOffset()
+    let slice = items.slice(offset, offset + this.props.limit)
+    let results = []
+    let baseStyles = {
           visibility: 'hidden !important',
           lineHeight: '0 !important',
           padding: '0 !important',
           margin: '0 !important',
           border: 'none !important',
           fontSize: '0 !important'
-        };
+        }
 
     // Add top placeholder.
     results.push(this.props.renderPlaceholder({
@@ -84,14 +84,14 @@ const ScrollList = React.createClass({
       style: Object.assign({
         height: (offset * this.props.itemHeight) + 'px'
       }, baseStyles)
-    }));
+    }))
 
     // Add currently visible items.
     results = results.concat(slice.map((item, i) => {
       return this.props.renderItem({
         key: item.key || (offset + '_' + i)
-      }, item);
-    }));
+      }, item)
+    }))
 
     // Add bottom placeholder.
     results.push(this.props.renderPlaceholder({
@@ -99,9 +99,9 @@ const ScrollList = React.createClass({
       style: Object.assign({
         height: ((items.length - offset - slice.length) * this.props.itemHeight) + 'px'
       }, baseStyles)
-    }));
+    }))
 
-    return results;
+    return results
   },
 
   render () {
@@ -110,8 +110,8 @@ const ScrollList = React.createClass({
         overflow: 'auto'
       },
       onScroll: this.onScroll
-    }, this.renderItems());
+    }, this.renderItems())
   }
-});
+})
 
-export default ScrollList;
+export default ScrollList

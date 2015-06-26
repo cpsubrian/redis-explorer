@@ -1,36 +1,34 @@
-var path = require('path')
-  , fs = require('fs')
-  , electron = require('electron-prebuilt')
-  , packagejson = require('./package.json')
-  , conf = require('./src/conf.js');
+var electron = require('electron-prebuilt')
+var packagejson = require('./package.json')
+var conf = require('./src/conf.js')
 
 module.exports = function (grunt) {
-  require('load-grunt-tasks')(grunt);
+  require('load-grunt-tasks')(grunt)
 
   var BASENAME = conf['BASENAME']
-    , APPNAME = BASENAME
-    , DEVELPER_ID = conf['DEVELPER_ID']
-    , COMPANY = conf['COMPANY']
-    , ICON = conf['ICON']
-    , ICON_URL = conf['ICON_URL']
-    , BUNDLE_ID = conf['BUNDLE_ID']
-    , OSX_OUT = conf['OSX_OUT']
-    , OSX_FILENAME = OSX_OUT + '/' + APPNAME + '.app'
-    , ELECTRON_VERSION = require('./node_modules/electron-prebuilt/package.json').version
-    , target = grunt.option('target') || 'development'
-    , env = process.env
-    , certificateFile = grunt.option('certificateFile')
-    , certificatePassword = grunt.option('certificatePassword');
+  var APPNAME = BASENAME
+  var DEVELPER_ID = conf['DEVELPER_ID']
+  var COMPANY = conf['COMPANY']
+  var ICON = conf['ICON']
+  var ICON_URL = conf['ICON_URL']
+  var BUNDLE_ID = conf['BUNDLE_ID']
+  var OSX_OUT = conf['OSX_OUT']
+  var OSX_FILENAME = OSX_OUT + '/' + APPNAME + '.app'
+  var ELECTRON_VERSION = require('./node_modules/electron-prebuilt/package.json').version
+  var target = grunt.option('target') || 'development'
+  var env = process.env
+  var certificateFile = grunt.option('certificateFile')
+  var certificatePassword = grunt.option('certificatePassword')
 
-  env.NODE_PATH = '..:' + env.NODE_PATH;
-  env.NODE_ENV = target;
+  env.NODE_PATH = '..:' + env.NODE_PATH
+  env.NODE_ENV = target
 
   grunt.initConfig({
     IDENTITY: 'Developer ID Application: ' + DEVELPER_ID,
     APPNAME: APPNAME,
     OSX_OUT: OSX_OUT,
     OSX_FILENAME: OSX_FILENAME,
-    OSX_FILENAME_ESCAPED: OSX_FILENAME.replace(' ', '\\ ').replace('(','\\(').replace(')','\\)'),
+    OSX_FILENAME_ESCAPED: OSX_FILENAME.replace(' ', '\\ ').replace('(', '\\(').replace(')', '\\)'),
 
     // Electron
     electron: {
@@ -89,8 +87,8 @@ module.exports = function (grunt) {
     'create-windows-installer': {
       appDirectory: 'dist/' + BASENAME + '-win32/',
       authors: COMPANY,
-      //loadingGif: 'resources/loading.gif',
-      //setupIcon: 'resources/setup.ico',
+      // loadingGif: 'resources/loading.gif',
+      // setupIcon: 'resources/setup.ico',
       iconUrl: ICON_URL,
       description: APPNAME,
       title: APPNAME,
@@ -121,11 +119,11 @@ module.exports = function (grunt) {
           expand: true,
           cwd: 'node_modules/material-design-icons/iconfont/',
           src: ['MaterialIcons-Regular.woff2'],
-          dest: 'build/fonts/MaterialIcons/',
+          dest: 'build/fonts/MaterialIcons/'
         }, {
           expand: true,
           cwd: 'node_modules/',
-          src: Object.keys(packagejson.dependencies).map(function (dep) { return dep + '/**/*';}),
+          src: Object.keys(packagejson.dependencies).map(function (dep) { return dep + '/**/*' }),
           dest: 'build/node_modules/'
         }, {
           src: ICON + '.png',
@@ -170,7 +168,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: 'src/',
           src: ['**/*.js'],
-          dest: 'build/',
+          dest: 'build/'
         }]
       }
     },
@@ -208,17 +206,17 @@ module.exports = function (grunt) {
       },
       sign: {
         options: {
-          failOnError: false,
+          failOnError: false
         },
         command: [
           'codesign --deep -v -f -s "<%= IDENTITY %>" <%= OSX_FILENAME_ESCAPED %>/Contents/Frameworks/*',
           'codesign -v -f -s "<%= IDENTITY %>" <%= OSX_FILENAME_ESCAPED %>',
           'codesign -vvv --display <%= OSX_FILENAME_ESCAPED %>',
-          'codesign -v --verify <%= OSX_FILENAME_ESCAPED %>',
-        ].join(' && '),
+          'codesign -v --verify <%= OSX_FILENAME_ESCAPED %>'
+        ].join(' && ')
       },
       zip: {
-        command: 'ditto -c -k --sequesterRsrc --keepParent <%= OSX_FILENAME_ESCAPED %> <%= OSX_OUT %>/' + BASENAME + '-' + packagejson.version + '.zip',
+        command: 'ditto -c -k --sequesterRsrc --keepParent <%= OSX_FILENAME_ESCAPED %> <%= OSX_OUT %>/' + BASENAME + '-' + packagejson.version + '.zip'
       }
     },
 
@@ -249,22 +247,21 @@ module.exports = function (grunt) {
         tasks: ['newer:copy:dev']
       }
     }
-  });
-
+  })
 
   // Define default (development) task.
-  grunt.registerTask('default', ['newer:babel', 'less', 'newer:copy:dev', 'shell:electron', 'watchChokidar']);
+  grunt.registerTask('default', ['newer:babel', 'less', 'newer:copy:dev', 'shell:electron', 'watchChokidar'])
 
   // Define platform-specific release task.
   if (process.platform === 'win32') {
-    grunt.registerTask('release', ['clean:release', 'babel', 'less', 'copy:dev', 'electron:windows', 'copy:windows', 'rcedit:exes', 'create-windows-installer', 'rename:installer']);
+    grunt.registerTask('release', ['clean:release', 'babel', 'less', 'copy:dev', 'electron:windows', 'copy:windows', 'rcedit:exes', 'create-windows-installer', 'rename:installer'])
   } else {
-    grunt.registerTask('release', ['clean:release', 'babel', 'less', 'copy:dev', 'electron:osx', 'copy:osx', 'shell:sign', 'shell:zip']);
+    grunt.registerTask('release', ['clean:release', 'babel', 'less', 'copy:dev', 'electron:osx', 'copy:osx', 'shell:sign', 'shell:zip'])
   }
 
   // Bail-out on electron command if this dies.
   process.on('SIGINT', function () {
-    grunt.task.run(['shell:electron:kill']);
-    process.exit(1);
-  });
+    grunt.task.run(['shell:electron:kill'])
+    process.exit(1)
+  })
 }

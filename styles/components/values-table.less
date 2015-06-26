@@ -27,9 +27,6 @@
       background: @grey-100;
       border-bottom: none;
     }
-    th.key {
-      flex: 2;
-    }
     .search {
       margin-top: -12px;
       margin-bottom: -9px;
@@ -45,7 +42,6 @@
       flex-direction: row;
     }
     td {
-      flex: 1;
       border-bottom: 1px solid @grey-100;
       padding: @space/2 @space;
       height: (30 - @space);
@@ -56,7 +52,21 @@
       font-size: 12px;
     }
     td.key {
-      flex: 2;
+      color: @grey-800;
+    }
+    td.key strong {
+      color: @cyan-600;
+    }
+    td.value {
+      flex: 1;
+      color: @grey-300;
+      padding-left: 0;
+    }
+    tr:hover td {
+      background: @grey-50;
+    }
+    tr:hover td.value {
+      color: @grey-600;
     }
   }
 }

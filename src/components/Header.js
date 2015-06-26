@@ -6,6 +6,7 @@ import Icon from '../components/Icon';
 import {
   DropDownMenu,
   LeftNav,
+  MenuItem,
   Toolbar,
   ToolbarGroup,
   ToolbarSeparator,
@@ -42,7 +43,7 @@ const Header = React.createClass({
   hostsNavProps () {
     let selectedIndex
       , menuItems = this.props.hosts.map((host, i) => {
-          if (this.activeHost === host) {
+          if (this.props.activeHost === host) {
             selectedIndex = i;
           }
           return {
@@ -50,6 +51,18 @@ const Header = React.createClass({
             text: <span className="host-option"><Icon type="public"/> {host.Host}</span>
           };
         });
+
+    // Splice in subheaders.
+    menuItems.splice(0, 0, {type: MenuItem.Types.SUBHEADER, text: 'Local' });
+    menuItems.splice(2, 0, {type: MenuItem.Types.SUBHEADER, text: 'Remote' });
+
+    // Adjust selected index.
+    if (selectedIndex === 0) {
+      selectedIndex = 1;
+    }
+    else {
+      selectedIndex += 2;
+    }
 
     return {
       docked: false,

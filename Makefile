@@ -10,7 +10,7 @@ dev:
 
 release: install
 	@echo ""
-	@./node_modules/.bin/grunt release
+	@./node_modules/.bin/grunt release --target="production"
 
 run:
 	@echo ""

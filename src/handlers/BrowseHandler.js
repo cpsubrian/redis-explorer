@@ -26,24 +26,27 @@ const BrowseHandler = React.createClass({
 
   componentDidMount () {
     if (!this.props.loaded) {
-      this.fetchKeys({match: this.props.match ? this.props.match + '*' : null});
+      this.fetchKeys({match: this.props.match});
     }
   },
 
   componentWillUpdate (nextProps) {
     // Match text changed.
     if (this.props.match !== nextProps.match) {
-      this.fetchKeys({match: nextProps.match ? nextProps.match + '*' : null});
+      this.fetchKeys({match: nextProps.match});
     }
     // Just connected to a new host.
     if (!this.props.connected && nextProps.connected) {
-      this.fetchKeys({match: this.props.match ? this.props.match + '*' : null});
+      this.fetchKeys({match: this.props.match});
     }
   },
 
   fetchKeys (options) {
     if (this.props.connected) {
-      keyActions.fetchKeys(options);
+      keyActions.fetchKeys({
+        match: options.match ? options.match + '*' : null,
+        loadTypes: true
+      });
     }
   },
 

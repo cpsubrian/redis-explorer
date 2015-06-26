@@ -105,12 +105,26 @@ class DB {
         if ((_scan.results.length >= options.count) || (_scan.cursor === false)) {
           ((results) => {
             _scan.results = [];
-            cb(null, results);
+            _scan.postProcess(cb, results);
           })(_scan.results);
         }
         else {
           _scan.next(cb);
         }
+      },
+      postProcess: (cb, results) => {
+        if (!results.length || !_scan.options.loadTypes) {
+          return cb(null, results);
+        }
+        this.client.multi(results.map((result) => {
+          return ['TYPE', result.key];
+        })).exec((err, types) => {
+          if (err) return cb(err);
+          types.forEach((type, i) => {
+            results[i].type = type;
+          });
+          cb(null, results);
+        });
       },
       stop: () => {
         _scan.stopped = true;

@@ -46,13 +46,13 @@
       padding: @space/2 @space;
       height: (30 - @space);
       line-height: (30 - @space);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
       font-size: 12px;
     }
     td.key {
       color: @grey-800;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     td.key strong {
       color: @cyan-600;
@@ -61,12 +61,21 @@
       flex: 1;
       color: @grey-300;
       padding-left: 0;
+      padding-right: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     tr:hover td {
       background: @grey-50;
     }
     tr:hover td.value {
       color: @grey-600;
+    }
+    td.type i {
+      font-size: 16px;
+      vertical-align: middle;
+      color: @blue-grey-200;
     }
   }
 }

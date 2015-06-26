@@ -6,12 +6,12 @@ import _ from 'underscore'
  * Use like:
  *
  *   @debounce(250)
- *   function myFunction () {
+ *   myFunction () {
  *     // Probably does something.
  *   }
  */
-const debounce = function (delay, immediate = false) {
-  return function (target, name, descriptor) {
+function debounce (delay, immediate = false) {
+  return function debounceDecorator (target, name, descriptor) {
     descriptor.value = _.debounce(descriptor.value, delay, immediate)
     return descriptor
   }

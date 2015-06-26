@@ -1,4 +1,5 @@
 import alt from '../alt'
+import _ from 'underscore'
 import regex from '../utils/regex'
 import browseActions from '../actions/browseActions'
 
@@ -86,7 +87,12 @@ class BrowseStore {
   }
 
   onFetchValuesAdd (values) {
-
+    _.each(values, (value, key) => {
+      let obj = _.findWhere(this.keys, {key: key})
+      if (key) {
+        obj.value = value
+      }
+    })
   }
 
   onFetchValuesFailed (err) {

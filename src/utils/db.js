@@ -1,5 +1,6 @@
 import redis from 'redis'
 import tunnel from 'tunnel-ssh'
+import _ from 'underscore'
 
 const DST_PORT = 6379
 const LOCAL_PORT = 8379
@@ -128,11 +129,78 @@ class DB {
     return _scan
   }
 
-  // Load values for a set of keys.
+  // Load values for a set of keys ({key, type}).
   fetchValues (keys, cb) {
-    setImmediate(() => {
-      cb(null, [])
+    // Collect keys by type.
+    let types = keys.reduce((memo, key) => {
+      memo[key.type] = memo[key.type] || []
+      memo[key.type].push(key.key)
+      return memo
+    }, {})
+
+    // Create tasks.
+    let tasks = _.map(types, (keys, type) => {
+      switch (type) {
+        case 'string':
+          return this.fetchStringValues(keys)
+        case 'list':
+          return this.fetchListValues(keys)
+        case 'set':
+          return this.fetchSetValues(keys)
+        case 'zset':
+          return this.fetchSortedSetValues(keys)
+        case 'hash':
+          return this.fetchHashValues(keys)
+        default:
+          return Promise.reject(new Error('Unknown type: ' + type))
+      }
     })
+
+    Promise.all(tasks).then((values) => {
+      cb(null, Object.assign.apply(null, values))
+    }, (err) => {
+      cb(err)
+    })
+  }
+
+  // Fetch string values for an array of keys.
+  fetchStringValues (keys) {
+    return Promise.resolve(keys.reduce((memo, key) => {
+      memo[key] = 'value'
+      return memo
+    }, {}))
+  }
+
+  // Fetch list values for an array of keys.
+  fetchListValues (keys) {
+    return Promise.resolve(keys.reduce((memo, key) => {
+      memo[key] = 'value'
+      return memo
+    }, {}))
+  }
+
+  // Fetch set values for an array of keys.
+  fetchSetValues (keys) {
+    return Promise.resolve(keys.reduce((memo, key) => {
+      memo[key] = 'value'
+      return memo
+    }, {}))
+  }
+
+  // Fetch sorted-set values for an array of keys.
+  fetchSortedSetValues (keys) {
+    return Promise.resolve(keys.reduce((memo, key) => {
+      memo[key] = 'value'
+      return memo
+    }, {}))
+  }
+
+  // Fetch hash values for an array of keys.
+  fetchHashValues (keys) {
+    return Promise.resolve(keys.reduce((memo, key) => {
+      memo[key] = 'value'
+      return memo
+    }, {}))
   }
 }
 

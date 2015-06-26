@@ -30,8 +30,7 @@ const ValuesTable = React.createClass({
   getItems () {
     return this.props.keys.map((key, i) => {
       return Object.assign({
-        rowKey: key.key,
-        value: 'value'
+        rowKey: key.key
       }, key)
     })
   },

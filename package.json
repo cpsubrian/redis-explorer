@@ -24,6 +24,9 @@
   "scripts": {
     "test": "echo 'No Tests'"
   },
+  "standard": {
+    "parser": "babel-eslint"
+  },
   "dependencies": {
     "alt": "^0.16.10",
     "babel": "^5.6.7",
@@ -39,6 +42,7 @@
   },
   "devDependencies": {
     "babel": "^5.5.8",
+    "babel-eslint": "^3.1.19",
     "electron-prebuilt": "^0.28.2",
     "grunt": "^0.4.5",
     "grunt-babel": "^5.0.1",

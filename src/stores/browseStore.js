@@ -19,6 +19,8 @@ class BrowseStore {
     this.matchRegExp = null
   }
 
+  /* General
+   ****************************************************************************/
   onResetKeys () {
     this.keys = []
     this.loading = false
@@ -30,6 +32,21 @@ class BrowseStore {
     this.matchRegExp = null
   }
 
+  onSetOffset (offset) {
+    this.offset = offset
+  }
+
+  onSetMatch (match) {
+    this.matchRegExp = null
+    if (match && match.length) {
+      this.match = match
+    } else {
+      this.match = null
+    }
+  }
+
+  /* Fetch Keys Lifecycle
+   ****************************************************************************/
   onFetchKeys () {
     this.keys = []
     this.loading = true
@@ -44,16 +61,16 @@ class BrowseStore {
     }
   }
 
-  onFetchKeysFailed (err) {
-    this.loading = false
-    this.loaded = true
-    this.error = err
-  }
-
   onFetchKeysAdd (keys) {
     this.loading = false
     this.loaded = true
     this.keys = this.keys.concat(keys)
+  }
+
+  onFetchKeysFailed (err) {
+    this.loading = false
+    this.loaded = true
+    this.error = err
   }
 
   onFetchKeysFinished () {
@@ -62,17 +79,18 @@ class BrowseStore {
     this.finished = true
   }
 
-  onSetOffset (offset) {
-    this.offset = offset
+  /* Fetch Keys Lifecycle
+   ****************************************************************************/
+  onFetchValues (keys) {
+
   }
 
-  onSetMatch (match) {
-    this.matchRegExp = null
-    if (match && match.length) {
-      this.match = match
-    } else {
-      this.match = null
-    }
+  onFetchValuesAdd (values) {
+
+  }
+
+  onFetchValuesFailed (err) {
+    this.error = err
   }
 }
 

@@ -57,6 +57,8 @@ class DB {
 
   // An iterator-like api to scan keys.
   scan (options = {}) {
+    let db = this
+
     options.cmd = 'SCAN'
     options.count = options.count || DEFAULT_COUNT
 
@@ -81,8 +83,8 @@ class DB {
             args.push('MATCH')
             args.push(options.match)
           }
-          args.push(_scan.process.bind(this, cb))
-          this.client[options.cmd].apply(this.client, args)
+          args.push(_scan.process.bind(db, cb))
+          db.client[options.cmd].apply(db.client, args)
         } else {
           if (cb) cb(null, false)
         }
@@ -109,7 +111,7 @@ class DB {
         if (!results.length || !_scan.options.loadTypes) {
           return cb(null, results)
         }
-        this.client.multi(results.map((result) => {
+        db.client.multi(results.map((result) => {
           return ['TYPE', result.key]
         })).exec((err, types) => {
           if (err) return cb(err)
@@ -124,6 +126,13 @@ class DB {
       }
     }
     return _scan
+  }
+
+  // Load values for a set of keys.
+  fetchValues (keys, cb) {
+    setImmediate(() => {
+      cb(null, [])
+    })
   }
 }
 

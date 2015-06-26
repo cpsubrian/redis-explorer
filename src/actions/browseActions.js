@@ -1,6 +1,5 @@
 import alt from '../alt'
 import db from '../utils/db'
-import valuesActions from '../actions/valuesActions'
 
 // 'Global' scan object.
 let _scan
@@ -8,10 +7,22 @@ let _scan
 // Browse Actions.
 class BrowseActions {
 
+  /* General
+   ****************************************************************************/
   resetKeys () {
     this.dispatch()
   }
 
+  setOffset (offset) {
+    this.dispatch(offset)
+  }
+
+  setMatch (match) {
+    this.dispatch(match)
+  }
+
+  /* Fetch Keys Lifecycle
+   ****************************************************************************/
   fetchKeys (options = {}) {
     this.dispatch()
 
@@ -19,18 +30,11 @@ class BrowseActions {
     if (_scan) _scan.stop()
 
     // Create the scan.
+    options.loadTypes = true
     _scan = db.scan(options)
 
     // Start the scan.
     this.actions.fetchKeysNext()
-  }
-
-  fetchKeysFailed (err) {
-    this.dispatch(err)
-  }
-
-  fetchKeysFinished () {
-    this.dispatch()
   }
 
   fetchKeysNext () {
@@ -49,21 +53,39 @@ class BrowseActions {
 
   fetchKeysAdd (keys) {
     this.dispatch(keys)
-
-    // Trigger values fetch if asked for.
-    if (_scan.options.getValues) {
-      valuesActions.fetchValues(keys)
-    }
+    this.actions.fetchValues(keys)
   }
 
-  setOffset (offset) {
-    this.dispatch(offset)
+  fetchKeysFailed (err) {
+    this.dispatch(err)
   }
 
-  setMatch (match) {
-    this.dispatch(match)
+  fetchKeysFinished () {
+    this.dispatch()
   }
 
+  /* Fetch Values Lifecycle
+   ****************************************************************************/
+  fetchValues (keys) {
+    this.dispatch(keys)
+
+    // Start loading the values.
+    db.fetchValues(keys, (err, values) => {
+      if (err) {
+        this.actions.fetchValuesFailed(err)
+      } else {
+        this.actions.fetchValuesAdd(values)
+      }
+    })
+  }
+
+  fetchValuesAdd (values) {
+    this.dispatch(values)
+  }
+
+  fetchValuesFailed (err) {
+    this.dispatch(err)
+  }
 }
 
 export default alt.createActions(BrowseActions)

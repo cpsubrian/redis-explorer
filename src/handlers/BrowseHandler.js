@@ -1,6 +1,6 @@
 import React from 'react'
-import _ from 'underscore'
 import connectToStores from 'alt/utils/connectToStores'
+import debounce from '../utils/debounce'
 import hostsStore from '../stores/hostsStore'
 import browseStore from '../stores/browseStore'
 import browseActions from '../actions/browseActions'
@@ -20,18 +20,18 @@ const BrowseHandler = React.createClass({
       return [hostsStore, browseStore]
     },
     getPropsFromStores () {
-      return _.extend({}, hostsStore.getState(), browseStore.getState())
+      return Object.assign({}, hostsStore.getState(), browseStore.getState())
     }
   },
 
-  // Since prop updates can happend very frequently and fetchKeys is
-  // expensive, we debounce calls to it.
-  componentWillMount () {
-    this.fetchKeys = _.debounce(this.fetchKeys, 250)
+  @debounce(250)
+  fetchKeys (options = {}) {
+    options.match = options.match ? options.match + '*' : null
+    browseActions.fetchKeys(options)
   },
 
   componentDidMount () {
-    if (!this.props.loaded) {
+    if (!this.props.loaded && this.props.connected) {
       this.fetchKeys({match: this.props.match})
     }
   },
@@ -44,15 +44,6 @@ const BrowseHandler = React.createClass({
     // Just connected to a new host.
     if (!this.props.connected && nextProps.connected) {
       this.fetchKeys({match: this.props.match})
-    }
-  },
-
-  fetchKeys (options) {
-    if (this.props.connected) {
-      browseActions.fetchKeys({
-        match: options.match ? options.match + '*' : null,
-        loadTypes: true
-      })
     }
   },
 

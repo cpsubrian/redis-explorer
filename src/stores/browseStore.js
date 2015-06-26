@@ -1,12 +1,12 @@
 import alt from '../alt'
 import regex from '../utils/regex'
-import keyActions from '../actions/keyActions'
+import browseActions from '../actions/browseActions'
 
-class KeyStore {
+class BrowseStore {
 
   constructor () {
     // Bind actions.
-    this.bindActions(keyActions)
+    this.bindActions(browseActions)
 
     // Initialize state.
     this.keys = []
@@ -76,4 +76,4 @@ class KeyStore {
   }
 }
 
-export default alt.createStore(KeyStore)
+export default alt.createStore(BrowseStore)

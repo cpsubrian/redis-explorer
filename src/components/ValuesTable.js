@@ -1,5 +1,5 @@
 import React from 'react'
-import keyActions from '../actions/keyActions'
+import browseActions from '../actions/browseActions'
 
 import {TextField} from 'material-ui'
 import ScrollList from '../components/ScrollList'
@@ -37,12 +37,12 @@ const ValuesTable = React.createClass({
   },
 
   onSearchChange (e) {
-    keyActions.setMatch(e.currentTarget.value)
+    browseActions.setMatch(e.currentTarget.value)
   },
 
   onScroll (e, newOffset) {
     if (newOffset) {
-      keyActions.setOffset(newOffset)
+      browseActions.setOffset(newOffset)
 
       if (!this.props.finished) {
         let top = e.currentTarget.scrollTop
@@ -51,7 +51,7 @@ const ValuesTable = React.createClass({
 
         // If we're nearing the bottom, load more keys.
         if ((sh - top - h) <= (h * 2)) {
-          keyActions.fetchKeysNext()
+          browseActions.fetchKeysNext()
         }
       }
     }

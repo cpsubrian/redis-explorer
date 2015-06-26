@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router'
 import hostsActions from '../actions/hostsActions'
-import keyActions from '../actions/keyActions'
+import browseActions from '../actions/browseActions'
 import Icon from '../components/Icon'
 import {LeftNav, MenuItem, Toolbar, ToolbarGroup} from 'material-ui'
 
@@ -21,7 +21,7 @@ const Header = React.createClass({
 
   onChangeHost (e, i, menuItem) {
     if (menuItem.host.Host !== this.props.activeHost.Host) {
-      keyActions.resetKeys()
+      browseActions.resetKeys()
       hostsActions.connectToHost(menuItem.host)
     }
   },

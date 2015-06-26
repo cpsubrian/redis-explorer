@@ -105,6 +105,7 @@ class DB {
         }
       },
       postProcess: (cb, results) => {
+        if (_scan.stopped) return
         if (!results.length || !_scan.options.loadTypes) {
           return cb(null, results)
         }

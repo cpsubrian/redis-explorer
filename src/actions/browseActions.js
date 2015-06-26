@@ -1,11 +1,12 @@
 import alt from '../alt'
 import db from '../utils/db'
+import valuesActions from '../actions/valuesActions'
 
 // 'Global' scan object.
 let _scan
 
-// Key Actions.
-class KeyActions {
+// Browse Actions.
+class BrowseActions {
 
   resetKeys () {
     this.dispatch()
@@ -48,6 +49,11 @@ class KeyActions {
 
   fetchKeysAdd (keys) {
     this.dispatch(keys)
+
+    // Trigger values fetch if asked for.
+    if (_scan.options.getValues) {
+      valuesActions.fetchValues(keys)
+    }
   }
 
   setOffset (offset) {
@@ -60,4 +66,4 @@ class KeyActions {
 
 }
 
-export default alt.createActions(KeyActions)
+export default alt.createActions(BrowseActions)

@@ -2,8 +2,8 @@ import React from 'react'
 import _ from 'underscore'
 import connectToStores from 'alt/utils/connectToStores'
 import hostsStore from '../stores/hostsStore'
-import keyStore from '../stores/keyStore'
-import keyActions from '../actions/keyActions'
+import browseStore from '../stores/browseStore'
+import browseActions from '../actions/browseActions'
 import ValuesTable from '../components/ValuesTable'
 
 // BrowserHandler Component
@@ -17,17 +17,17 @@ const BrowseHandler = React.createClass({
 
   statics: {
     getStores () {
-      return [hostsStore, keyStore]
+      return [hostsStore, browseStore]
     },
     getPropsFromStores () {
-      return _.extend({}, hostsStore.getState(), keyStore.getState())
+      return _.extend({}, hostsStore.getState(), browseStore.getState())
     }
   },
 
   // Since prop updates can happend very frequently and fetchKeys is
   // expensive, we debounce calls to it.
   componentWillMount () {
-    this.fetchKeys = _.debounce(this.fetchKeys.bind(this), 250)
+    this.fetchKeys = _.debounce(this.fetchKeys, 250)
   },
 
   componentDidMount () {
@@ -49,7 +49,7 @@ const BrowseHandler = React.createClass({
 
   fetchKeys (options) {
     if (this.props.connected) {
-      keyActions.fetchKeys({
+      browseActions.fetchKeys({
         match: options.match ? options.match + '*' : null,
         loadTypes: true
       })

@@ -185,7 +185,7 @@ class DB {
   // Fetch list values for an array of keys.
   fetchListValues (keys) {
     return Promise.resolve(keys.reduce((memo, key) => {
-      memo[key] = 'value'
+      memo[key] = '[value]'
       return memo
     }, {}))
   }
@@ -193,7 +193,7 @@ class DB {
   // Fetch set values for an array of keys.
   fetchSetValues (keys) {
     return Promise.resolve(keys.reduce((memo, key) => {
-      memo[key] = 'value'
+      memo[key] = '[value]'
       return memo
     }, {}))
   }
@@ -201,7 +201,7 @@ class DB {
   // Fetch sorted-set values for an array of keys.
   fetchSortedSetValues (keys) {
     return Promise.resolve(keys.reduce((memo, key) => {
-      memo[key] = 'value'
+      memo[key] = '[value]'
       return memo
     }, {}))
   }
@@ -209,7 +209,7 @@ class DB {
   // Fetch hash values for an array of keys.
   fetchHashValues (keys) {
     return Promise.resolve(keys.reduce((memo, key) => {
-      memo[key] = 'value'
+      memo[key] = '[value]'
       return memo
     }, {}))
   }

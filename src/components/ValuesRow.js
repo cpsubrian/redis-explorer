@@ -18,7 +18,7 @@ const ValuesRow = React.createClass({
         .split(this.props.matchRegExp)
         .map((part, i) => {
           if (i > 0 && i % 2) {
-            return <strong>{part}</strong>
+            return <strong key={i}>{part}</strong>
           } else {
             return part
           }
@@ -68,7 +68,7 @@ const ValuesRow = React.createClass({
     return (
       <tr className='values-row' style={this.props.style}>
         <td className='key'>{this.renderKey()}</td>
-        <td className='value'>{this.props.value}</td>
+        <td className='value'>{this.props.value ? this.props.value.substr(0, 400) : null}</td>
         <td className='type'>{this.renderIcon()}</td>
       </tr>
     )

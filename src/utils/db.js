@@ -68,6 +68,7 @@ class DB {
       cursor: 0,
       stopped: false,
       results: [],
+      // Perform the next iteration of the scan.
       next: (cb) => {
         let args = []
         if (_scan.stopped) return
@@ -90,15 +91,17 @@ class DB {
           if (cb) cb(null, false)
         }
       },
+      // Collect results.
       process: (cb, err, results) => {
         if (err) return cb(err)
         if (_scan.stopped) return
         let [cursor, keys] = results
-        _scan.cursor = (cursor === 0) ? false : cursor
+        _scan.cursor = (cursor === '0') ? false : cursor
         _scan.results = _scan.results.concat(keys.map(key => {
           return {key}
         }))
-        if ((_scan.results.length >= options.count) || (_scan.cursor === false)) {
+        // Make sure we have at least options.count results.
+        if (!_scan.cursor || (_scan.results.length >= options.count)) {
           ((results) => {
             _scan.results = []
             _scan.postProcess(cb, results)
@@ -107,6 +110,7 @@ class DB {
           _scan.next(cb)
         }
       },
+      // Lookup data types of the matching keys.
       postProcess: (cb, results) => {
         if (_scan.stopped) return
         if (!results.length || !_scan.options.loadTypes) {
@@ -165,10 +169,17 @@ class DB {
 
   // Fetch string values for an array of keys.
   fetchStringValues (keys) {
-    return Promise.resolve(keys.reduce((memo, key) => {
-      memo[key] = 'value'
-      return memo
-    }, {}))
+    return new Promise((resolve, reject) => {
+      this.client.multi(keys.map((key) => {
+        return ['GET', key]
+      })).exec((err, results) => {
+        if (err) return reject(err)
+        resolve(keys.reduce((memo, key, i) => {
+          memo[key] = results[i]
+          return memo
+        }, {}))
+      })
+    })
   }
 
   // Fetch list values for an array of keys.

@@ -13,6 +13,28 @@ becomes more stable.
 
 You'll find all the latest releases [here](https://github.com/cpsubrian/redis-explorer/releases).
 
+Connecting to Remote Hosts
+--------------------------
+
+The app currently **only** supports connecting to remote hosts via an ssh tunnel
+via your local `ssh-agent` and **no password**. Right now only redis servers
+running on the default port can be connected to, but many more configuration
+options are on the roadmap.
+
+Available hosts will be parsed from your `~/.ssh/config`, which should contain
+entries like:
+
+```
+Host myhost
+  Hostname [ip address]
+  User [username]
+
+Host anotherhost
+  Hostname [ip address]
+  Port [port]
+  User [username]
+```
+
 Development
 -----------
 

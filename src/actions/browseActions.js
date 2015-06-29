@@ -21,6 +21,10 @@ class BrowseActions {
     this.dispatch(match)
   }
 
+  toggleSelectedKey (key) {
+    this.dispatch(key)
+  }
+
   /* Fetch Keys Lifecycle
    ****************************************************************************/
   fetchKeys (options = {}) {

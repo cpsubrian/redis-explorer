@@ -98,7 +98,7 @@ class DB {
         let [cursor, keys] = results
         _scan.cursor = (cursor === '0') ? false : cursor
         _scan.results = _scan.results.concat(keys.map(key => {
-          return {key}
+          return {key: key, _key: key}
         }))
         // Make sure we have at least options.count results.
         if (!_scan.cursor || (_scan.results.length >= options.count)) {

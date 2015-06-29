@@ -1,6 +1,7 @@
 import React from 'react'
 import keys from '../utils/keys'
 import TypeIcon from '../components/TypeIcon'
+import Highlight from '../components/Highlight'
 
 const KeyDetails = React.createClass({
 
@@ -15,13 +16,17 @@ const KeyDetails = React.createClass({
       case 'string':
         let value
         try {
-          value = JSON.parse(this.props.value)
+          value = (
+            <Highlight className='json'>
+              {JSON.stringify(JSON.parse(this.props.value), null, 2)}
+            </Highlight>
+          )
         } catch (e) {
-          value = this.props.value
+          value = <pre>{this.props.value}</pre>
         }
-        return <pre>{JSON.stringify(value, null, 2)}</pre>
+        return value
       default:
-        return '[value]'
+        return null
     }
   },
 

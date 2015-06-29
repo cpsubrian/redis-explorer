@@ -6,10 +6,10 @@
       position: absolute !important;
       top: 0;
       right: 0;
-      color: @grey-600;
+      color: @cyan-600;
 
       &:hover {
-        color: @grey-300;
+        color: @cyan-300;
       }
     }
 
@@ -17,8 +17,8 @@
       display: flex;
       flex-direction: column;
       height: 100%;
-      background-color: @grey-800;
-      color: @grey-100;
+      background-color: @cyan-900;
+      color: @cyan-50;
       font-size: 12px;
 
       & > * {
@@ -26,15 +26,19 @@
       }
       .key {
         min-height: 48px;
-        padding: 18px 48px 12px 24px;
-        border-bottom: 1px solid @grey-700;
-        color: @cyan-200;
-        white-spacc: pre-wrap;
+        padding: 15px 48px 12px 24px;
+        background: @cyan-700;
+        border-bottom: 1px solid @cyan-600;
+        color: @cyan-100;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        font-size: 16px;
       }
       .type {
         padding: 12px 24px;
-        border-bottom: 1px solid @grey-700;
-        color: @grey-500;
+        background: @cyan-800;
+        border-bottom: 1px solid @cyan-700;
+        color: @cyan-400;
 
         .type-icon {
           font-size: 16px;
@@ -48,10 +52,16 @@
       .value {
         flex: 1;
         overflow: auto;
+        padding: 12px;
 
         pre {
-          padding: 12px 24px;
+          padding: 12px;
+          margin: 0;
           white-space: pre-wrap;
+          word-wrap: break-word;
+        }
+        pre code {
+          background: @white !important;
         }
       }
     }

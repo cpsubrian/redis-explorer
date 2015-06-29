@@ -86,7 +86,7 @@ const BrowseHandler = React.createClass({
           className='key-details-panel'
           openRight={true}
           docked={this.state.keyDetailsDocked}
-          width={500}>
+          width={550}>
           <IconButton className='close' onClick={this.onClickClose}>
             <Icon type='cancel'/>
           </IconButton>

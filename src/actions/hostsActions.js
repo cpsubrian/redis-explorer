@@ -3,6 +3,8 @@ import db from '../utils/db'
 
 class HostsActions {
 
+  /* Connection Lifecycle
+   ****************************************************************************/
   connectToHost (host) {
     this.dispatch(host)
 
@@ -21,6 +23,28 @@ class HostsActions {
 
   connectedToHost () {
     this.dispatch()
+  }
+
+  /* Fetch Info Lifecycle
+   ****************************************************************************/
+  fetchHostInfo (isRefresh) {
+    this.dispatch(isRefresh)
+
+    db.fetchInfo((err, info) => {
+      if (err) {
+        this.actions.fetchHostInfoFailed(err)
+      } else {
+        this.actions.fetchHostInfoFinished(info)
+      }
+    })
+  }
+
+  fetchHostInfoFinished (info) {
+    this.dispatch(info)
+  }
+
+  fetchHostInfoFailed (err) {
+    this.dispatch(err)
   }
 
 }

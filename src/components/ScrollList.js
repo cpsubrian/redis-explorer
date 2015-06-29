@@ -31,7 +31,7 @@ const ScrollList = React.createClass({
         return <li {...props}></li>
       },
       offset: 0,
-      limit: 100
+      limit: 60
     }
   },
 

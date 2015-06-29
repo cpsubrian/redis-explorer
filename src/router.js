@@ -3,12 +3,14 @@ import Router from 'react-router'
 import {Route, NotFoundRoute} from 'react-router'
 
 import MainHandler from './handlers/MainHandler'
-import BrowseHandler from './handlers/BrowseHandler'
 import NotFoundHandler from './handlers/NotFoundHandler'
+import BrowseHandler from './handlers/BrowseHandler'
+import InfoHandler from './handlers/InfoHandler'
 
 const routes = (
   <Route handler={MainHandler}>
     <Route name='browse' path='/' handler={BrowseHandler}/>
+    <Route name='info' path='/info' handler={InfoHandler}/>
     <NotFoundRoute handler={NotFoundHandler}/>
   </Route>
 )

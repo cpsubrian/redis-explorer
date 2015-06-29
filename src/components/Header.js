@@ -78,8 +78,8 @@ const Header = React.createClass({
             <Link to='/' className='button'>
               <Icon type='search'/> Browse
             </Link>
-            <Link to='/pubsub' className='button'>
-              <Icon type='swap_vert'/> Pub/Sub
+            <Link to='/info' className='button'>
+              <Icon type='info'/> Info
             </Link>
           </ToolbarGroup>
           <ToolbarGroup key={1} float='right' className='no-drag'>

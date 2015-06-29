@@ -40,18 +40,29 @@ class HostsStore {
       return 0
     })
 
+    // Add localhost and set active host.
     this.hosts.unshift({
       Host: 'localhost',
       Hostname: 'localhost'
     })
     this.activeHost = this.hosts[0]
+
+    // Host info.
+    this.hostInfoLoading = false
+    this.hostInfoError = null
+    this.hostInfo = null
   }
 
+  /* Connection Lifecycle
+   ****************************************************************************/
   onConnectToHost (host) {
     if ((!this.connected && !this.connecting) || (this.activeHost !== host)) {
       this.activeHost = host
       this.connected = false
       this.connecting = true
+      this.hostInfoLoading = false
+      this.hostInfoError = null
+      this.hostInfo = null
     }
   }
 
@@ -63,6 +74,27 @@ class HostsStore {
   onConnectedToHost () {
     this.connected = true
     this.connecting = false
+  }
+
+  /* Fetch Host Info Lifecycle
+   ****************************************************************************/
+  onFetchHostInfo (isRefresh) {
+    if (!isRefresh) {
+      this.loadingHostInfo = true
+      this.hostInfo = null
+    }
+    this.hostInfoError = null
+  }
+
+  onFetchHostInfoFailed (err) {
+    this.hostInfoLoading = false
+    this.hostInfoError = err
+  }
+
+  onFetchHostInfoFinished (info) {
+    this.hostInfoLoading = false
+    this.hostInfoError = null
+    this.hostInfo = info
   }
 }
 

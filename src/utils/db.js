@@ -1,4 +1,5 @@
 import redis from 'redis'
+import redisInfo from 'redis-info'
 import tunnel from 'tunnel-ssh'
 import _ from 'underscore'
 
@@ -131,6 +132,19 @@ class DB {
       }
     }
     return _scan
+  }
+
+  // Fetch and parse the redis server info.
+  fetchInfo (cb) {
+    this.client.INFO((err, result) => {
+      if (err) return cb(err)
+      try {
+        let info = redisInfo.parse(result)
+        return cb(null, info)
+      } catch (e) {
+        return cb(e)
+      }
+    })
   }
 
   // Load values for a set of keys ({key, type}).

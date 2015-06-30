@@ -113,30 +113,39 @@ const HostInfo = React.createClass({
       getInfo () {
         if (this.props.hostInfo.databases) {
           let dbs = []
+          let rows = []
           for (let i = 0; i <= 16; i++) {
             if (this.props.hostInfo.databases[i]) {
               this.props.hostInfo.databases[i].num = i
               dbs.push(this.props.hostInfo.databases[i])
             }
           }
-          return dbs.map((db) => {
-            return (
-              <table key={'db-' + db.num}>
-                <tr>
-                  <td className='prop'><strong>db{db.num}</strong></td>
-                  <td className='value'></td>
-                </tr>
-                <tr>
-                  <td className='prop'>keys</td>
-                  <td className='value'>db.keys</td>
-                </tr>
-                <tr>
-                  <td className='prop'>expires</td>
-                  <td className='value'>db.expires</td>
-                </tr>
-              </table>
+          dbs.forEach((db) => {
+            rows.push(
+              <tr key={'db-' + db.num + '-label'}>
+                <td className='prop' colSpan='2'>
+                  <strong>db{db.num}</strong>
+                </td>
+              </tr>
+            )
+            rows.push(
+              <tr key={'db-' + db.num + '-keys'}>
+                <td className='prop'>keys</td>
+                <td className='value'>{db.keys}</td>
+              </tr>
+            )
+            rows.push(
+              <tr key={'db-' + db.num + '-expires'}>
+                <td className='prop'>expires</td>
+                <td className='value'>{db.expires}</td>
+              </tr>
             )
           })
+          return (
+            <table>
+              {rows}
+            </table>
+          )
         } else {
           return null
         }

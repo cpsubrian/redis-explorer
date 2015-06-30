@@ -90,7 +90,11 @@ const BrowseHandler = React.createClass({
           <IconButton className='close' onClick={this.onClickClose}>
             <Icon type='cancel'/>
           </IconButton>
-          <KeyDetails ref='keyDetails' {...this.props.selectedKey}/>
+          {this.props.selectedKey ?
+            <KeyDetails ref='keyDetails' {...this.props.selectedKey}/>
+          :/*else*/
+            null
+          }
         </SidePanel>
       </div>
     )

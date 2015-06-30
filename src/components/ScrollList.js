@@ -64,6 +64,20 @@ const ScrollList = React.createClass({
     return (offset >= 0) ? offset : 0
   },
 
+  ensureVisible (index) {
+    let itemTop = index * this.props.itemHeight
+    let top = this.getDOMNode().scrollTop
+    let height = this.getDOMNode().offsetHeight
+    let count = Math.floor(height / this.props.itemHeight)
+
+    if (itemTop < top) {
+      this.getDOMNode().scrollTop = (index - count + 2) * this.props.itemHeight
+    }
+    if ((itemTop + this.props.itemHeight) > (top + height - this.props.itemHeight)) {
+      this.getDOMNode().scrollTop = index * this.props.itemHeight
+    }
+  },
+
   renderItems () {
     let items = this.props.getItems()
     let offset = this.getDisplayOffset()

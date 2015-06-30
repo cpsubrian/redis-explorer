@@ -1,7 +1,9 @@
 import React from 'react'
+import shell from 'shell'
 import browseActions from '../actions/browseActions'
 
 import {TextField} from 'material-ui'
+import {HotKeys} from 'react-hotkeys'
 import ScrollList from '../components/ScrollList'
 import LoadingRow from '../components/LoadingRow'
 import ValuesRow from '../components/ValuesRow'
@@ -15,7 +17,8 @@ const ValuesTable = React.createClass({
     offset: React.PropTypes.number,
     itemHeight: React.PropTypes.number,
     match: React.PropTypes.string,
-    matchRegExp: React.PropTypes.object
+    matchRegExp: React.PropTypes.object,
+    selectedIndex: React.PropTypes.number
   },
 
   getDefaultProps () {
@@ -24,6 +27,29 @@ const ValuesTable = React.createClass({
       keys: [],
       offset: 0,
       itemHeight: 30
+    }
+  },
+
+  getHotKeys () {
+    return {
+      down: (event) => {
+        if (this.props.selectedIndex < (this.props.keys.length - 1)) {
+          let nextKey = this.props.keys[this.props.selectedIndex + 1]._key
+          this.refs.scrollList.ensureVisible(this.props.selectedIndex + 1)
+          browseActions.toggleSelectedKey(nextKey)
+        } else {
+          shell.beep()
+        }
+      },
+      up: (event) => {
+        if (this.props.selectedIndex > 0) {
+          let previousKey = this.props.keys[this.props.selectedIndex - 1]._key
+          this.refs.scrollList.ensureVisible(this.props.selectedIndex - 1)
+          browseActions.toggleSelectedKey(previousKey)
+        } else {
+          shell.beep()
+        }
+      }
     }
   },
 
@@ -66,37 +92,40 @@ const ValuesTable = React.createClass({
 
   render () {
     return (
-      <div className='values-table'>
-        <table>
-          <thead>
-            <tr>
-              <th className='key' colSpan='3'>
-                <TextField
-                  className='search'
-                  hintText='key:*:pattern'
-                  floatingLabelText='Search'
-                  value={this.props.match}
-                  onChange={this.onSearchChange}
-                  fullWidth />
-              </th>
-            </tr>
-          </thead>
-          {this.props.loading ?
-            <tbody>
-              <LoadingRow/>
-            </tbody>
-          :/*else*/
-            <ScrollList
-              renderRoot={this.renderRoot}
-              renderItem={this.renderItem}
-              renderPlaceholder={this.renderPlaceholder}
-              getItems={this.getItems}
-              itemHeight={this.props.itemHeight}
-              offset={this.props.offset}
-              scrollHandler={this.onScroll} />
-          }
-        </table>
-      </div>
+      <HotKeys handlers={this.getHotKeys()}>
+        <div className='values-table'>
+          <table>
+            <thead>
+              <tr>
+                <th className='key' colSpan='3'>
+                  <TextField
+                    className='search'
+                    hintText='key:*:pattern'
+                    floatingLabelText='Search'
+                    value={this.props.match}
+                    onChange={this.onSearchChange}
+                    fullWidth />
+                </th>
+              </tr>
+            </thead>
+            {this.props.loading ?
+              <tbody>
+                <LoadingRow/>
+              </tbody>
+            :/*else*/
+              <ScrollList
+                ref='scrollList'
+                renderRoot={this.renderRoot}
+                renderItem={this.renderItem}
+                renderPlaceholder={this.renderPlaceholder}
+                getItems={this.getItems}
+                itemHeight={this.props.itemHeight}
+                offset={this.props.offset}
+                scrollHandler={this.onScroll} />
+            }
+          </table>
+        </div>
+      </HotKeys>
     )
   }
 })

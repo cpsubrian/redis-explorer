@@ -6,9 +6,9 @@ import Highlight from '../components/Highlight'
 const KeyDetails = React.createClass({
 
   propTypes: {
-    _key: React.PropTypes.string,
-    type: React.PropTypes.string,
-    value: React.PropTypes.object
+    _key: React.PropTypes.string.isRequired,
+    type: React.PropTypes.string.isRequired,
+    value: React.PropTypes.string.isRequired
   },
 
   renderValue () {

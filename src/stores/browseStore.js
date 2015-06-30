@@ -12,6 +12,7 @@ class BrowseStore {
     // Initialize state.
     this.keys = []
     this.selectedKey = null
+    this.selectedIndex = null
     this.loading = false
     this.loaded = false
     this.finished = false
@@ -26,6 +27,7 @@ class BrowseStore {
   onResetKeys () {
     this.keys = []
     this.selectedKey = null
+    this.selectedIndex = null
     this.loading = false
     this.loaded = false
     this.finished = false
@@ -49,13 +51,15 @@ class BrowseStore {
   }
 
   onToggleSelectedKey (key) {
-    this.keys.forEach((item) => {
+    this.keys.forEach((item, i) => {
       if (item.key === key) {
         item.selected = !item.selected
         if (item.selected) {
           this.selectedKey = item
+          this.selectedIndex = i
         } else {
           this.selectedKey = null
+          this.selectedIndex = null
         }
       } else if (item.selected) {
         item.selected = false
@@ -68,6 +72,7 @@ class BrowseStore {
   onFetchKeys () {
     this.keys = []
     this.selectedKey = null
+    this.selectedIndex = null
     this.loading = true
     this.loaded = false
     this.finished = false

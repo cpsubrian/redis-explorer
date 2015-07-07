@@ -39,6 +39,7 @@
         background: @cyan-800;
         border-bottom: 1px solid @cyan-700;
         color: @cyan-400;
+        position: relative;
 
         .type-icon {
           font-size: 16px;
@@ -48,19 +49,52 @@
         .type-name {
           vertical-align: middle;
         }
+        .buttons {
+          position: absolute;
+          top: 10px;
+          right: 24px;
+
+          & > * {
+            margin-left: 12px;
+          }
+          .pill {
+            background: @cyan-100;
+            border: 1px solid @cyan-300;
+            border-radius: 3px;
+            font-size: 10px;
+            line-height: 1em;
+            a {
+              display: inline-block;
+              padding: 4px 8px;
+              color: @cyan-400;
+              text-decoration: none;
+              border-left: 1px solid @cyan-300;
+            }
+            a.active {
+              color: @cyan-800;
+            }
+            a:first {
+              border-left: none;
+            }
+          }
+        }
       }
       .value {
         flex: 1;
         overflow: auto;
-        padding: 12px;
+        padding: 24px;
+        position: relative;
 
         pre {
-          padding: 12px;
+          display: block;
+          padding: 0;
           margin: 0;
           white-space: pre-wrap;
           word-wrap: break-word;
         }
         pre code {
+          display: block;
+          padding: 12px;
           background: @white !important;
           border: 1px solid @grey-100;
         }

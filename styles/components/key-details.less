@@ -58,23 +58,26 @@
             margin-left: 12px;
           }
           .pill {
-            background: @cyan-100;
-            border: 1px solid @cyan-300;
-            border-radius: 3px;
             font-size: 10px;
             line-height: 1em;
             a {
               display: inline-block;
               padding: 4px 8px;
-              color: @cyan-400;
+              color: @cyan-800;
               text-decoration: none;
-              border-left: 1px solid @cyan-300;
+              background: @cyan-500;
+              margin-left: 1px;
             }
             a.active {
-              color: @cyan-800;
+              color: @cyan-50;
             }
-            a:first {
-              border-left: none;
+            a:first-child {
+              border-top-left-radius: 4px;
+              border-bottom-left-radius: 4px;
+            }
+            a:last-child {
+              border-top-right-radius: 4px;
+              border-bottom-right-radius: 4px;
             }
           }
         }

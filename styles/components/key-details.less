@@ -57,19 +57,26 @@
           & > * {
             margin-left: 12px;
           }
-          .pill {
+          a {
             font-size: 10px;
             line-height: 1em;
+            display: inline-block;
+            padding: 4px 8px;
+            color: @cyan-900;
+            text-decoration: none;
+            background: @cyan-600;
+            border-radius: 4px;
+          }
+          a.active {
+            color: @cyan-50;
+          }
+          .pill {
             a {
-              display: inline-block;
-              padding: 4px 8px;
-              color: @cyan-800;
-              text-decoration: none;
-              background: @cyan-500;
               margin-left: 1px;
+              border-radius: 0;
             }
             a.active {
-              color: @cyan-50;
+              background: @cyan-500;
             }
             a:first-child {
               border-top-left-radius: 4px;

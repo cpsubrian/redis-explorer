@@ -51,11 +51,12 @@
         }
         .buttons {
           position: absolute;
-          top: 10px;
+          top: 11px;
           right: 24px;
 
           & > * {
-            margin-left: 12px;
+            margin-left: 8px;
+            float: left;
           }
           a {
             font-size: 10px;
@@ -66,17 +67,19 @@
             text-decoration: none;
             background: @cyan-600;
             border-radius: 4px;
+            transition: background 300ms;
           }
-          a.active {
+          a:hover {
+            background: @cyan-500;
+          }
+          a.active, a:active {
             color: @cyan-50;
+            background: @cyan-400;
           }
           .pill {
             a {
               margin-left: 1px;
               border-radius: 0;
-            }
-            a.active {
-              background: @cyan-500;
             }
             a:first-child {
               border-top-left-radius: 4px;

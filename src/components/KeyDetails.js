@@ -1,4 +1,5 @@
 import React from 'react'
+import clipboard from 'clipboard'
 import keys from '../utils/keys'
 import TypeIcon from '../components/TypeIcon'
 import Highlight from '../components/Highlight'
@@ -43,6 +44,13 @@ const KeyDetails = React.createClass({
             )
           })}
         </div>
+      )
+    }
+
+    if (this.props.type === 'string') {
+      // Todo make this into a component maybe?
+      fragment.copy = (
+        <a href='#' onClick={(e) => clipboard.writeText(this.props.value)}>Copy</a>
       )
     }
 

@@ -1,13 +1,13 @@
 import React from 'react'
 import {Paper} from 'material-ui'
 
-const HostInfo = React.createClass({
+class HostInfo extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     hostInfo: React.PropTypes.object
-  },
+  }
 
-  infoGroups: [
+  static infoGroups = [
     {
       title: 'Server',
       props: [
@@ -151,7 +151,7 @@ const HostInfo = React.createClass({
         }
       }
     }
-  ],
+  ]
 
   renderGroup (group) {
     return (
@@ -173,17 +173,17 @@ const HostInfo = React.createClass({
         }
       </Paper>
     )
-  },
+  }
 
   render () {
     return (
       <div className='host-info'>
-        {this.infoGroups.map((group) => {
+        {HostInfo.infoGroups.map((group) => {
           return this.renderGroup(group)
         })}
       </div>
     )
   }
-})
+}
 
 export default HostInfo

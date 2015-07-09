@@ -1,13 +1,13 @@
 import React from 'react'
 import Details from '../../components/details/Details'
 
-const SetDetails = React.createClass({
+class SetDetails extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     _key: React.PropTypes.string.isRequired,
     type: React.PropTypes.string.isRequired,
     value: React.PropTypes.string.isRequired
-  },
+  }
 
   render () {
     return (
@@ -18,6 +18,6 @@ const SetDetails = React.createClass({
       />
     )
   }
-})
+}
 
 export default SetDetails

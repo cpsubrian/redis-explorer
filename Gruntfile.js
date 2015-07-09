@@ -160,7 +160,7 @@ module.exports = function (grunt) {
     // Javascript (Babel)
     babel: {
       options: {
-        stage: 1,
+        stage: 0,
         sourceMap: 'inline',
         blacklist: 'regenerator'
       },

@@ -2,14 +2,14 @@ import React from 'react'
 import keys from '../../utils/keys'
 import TypeIcon from '../../components/TypeIcon'
 
-const Details = React.createClass({
+class Details extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     _key: React.PropTypes.string.isRequired,
     type: React.PropTypes.string.isRequired,
     value: React.PropTypes.node.isRequired,
     buttons: React.PropTypes.node
-  },
+  }
 
   render () {
     return (
@@ -32,7 +32,6 @@ const Details = React.createClass({
       </div>
     )
   }
-
-})
+}
 
 export default Details

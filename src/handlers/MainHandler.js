@@ -1,43 +1,44 @@
 import React from 'react'
-import {RouteHandler} from 'react-router'
-import mui from 'material-ui'
+import autobind from 'autobind-decorator'
 import connectToStores from 'alt/utils/connectToStores'
 import hostsStore from '../stores/hostsStore'
 import hostsActions from '../actions/hostsActions'
+import {RouteHandler} from 'react-router'
+import mui from 'material-ui'
 import Header from '../components/Header'
 
-// Create a material-ui theme manager.
-const ThemeManager = new mui.Styles.ThemeManager()
+// Create an mui theme manager.
+const themeManager = new mui.Styles.ThemeManager()
 
-// Main app component.
-const MainHandler = React.createClass({
+// The MainHandler class.
+@connectToStores @autobind
+class MainHandler extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     activeHost: React.PropTypes.object
-  },
+  }
 
-  statics: {
-    getStores () {
-      return [hostsStore]
-    },
-    getPropsFromStores () {
-      return hostsStore.getState()
-    }
-  },
+  static getStores () {
+    return [hostsStore]
+  }
 
-  childContextTypes: {
+  static getPropsFromStores () {
+    return hostsStore.getState()
+  }
+
+  static childContextTypes = {
     muiTheme: React.PropTypes.object
-  },
+  }
 
   getChildContext () {
     return {
-      muiTheme: ThemeManager.getCurrentTheme()
+      muiTheme: themeManager.getCurrentTheme()
     }
-  },
+  }
 
   componentWillMount () {
     hostsActions.connectToHost(this.props.activeHost)
-  },
+  }
 
   render () {
     return (
@@ -47,6 +48,7 @@ const MainHandler = React.createClass({
       </div>
     )
   }
-})
+}
 
-export default connectToStores(MainHandler)
+export default MainHandler
+export {themeManager}

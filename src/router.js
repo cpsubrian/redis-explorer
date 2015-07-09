@@ -1,6 +1,5 @@
 import React from 'react'
-import Router from 'react-router'
-import {Route, NotFoundRoute} from 'react-router'
+import Router, {Route, NotFoundRoute} from 'react-router'
 
 import MainHandler from './handlers/MainHandler'
 import NotFoundHandler from './handlers/NotFoundHandler'

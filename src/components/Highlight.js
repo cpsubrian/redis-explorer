@@ -1,32 +1,31 @@
-import hljs from 'highlight.js'
 import React from 'react'
+import autobind from 'autobind-decorator'
+import hljs from 'highlight.js'
 
-const Highlight = React.createClass({
+@autobind
+class Highlight extends React.Component {
 
-  getDefaultProps () {
-    return {
-      innerHTML: false,
-      className: ''
-    }
-  },
+  static defaultProps = {
+    innerHTML: false,
+    className: ''
+  }
 
   componentDidMount () {
     this.highlightCode()
-  },
+  }
 
   componentDidUpdate () {
     this.highlightCode()
-  },
+  }
 
   highlightCode () {
-    let domNode = this.getDOMNode()
-    let nodes = domNode.querySelectorAll('pre code')
+    let nodes = React.findDOMNode(this).querySelectorAll('pre code')
     if (nodes.length > 0) {
       for (let i = 0; i < nodes.length; i = i + 1) {
         hljs.highlightBlock(nodes[i])
       }
     }
-  },
+  }
 
   render () {
     if (this.props.innerHTML) {
@@ -35,6 +34,6 @@ const Highlight = React.createClass({
       return <pre><code className={this.props.className}>{this.props.children}</code></pre>
     }
   }
-})
+}
 
 export default Highlight

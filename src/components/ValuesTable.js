@@ -1,4 +1,5 @@
 import React from 'react'
+import autobind from 'autobind-decorator'
 import shell from 'shell'
 import browseActions from '../actions/browseActions'
 
@@ -8,9 +9,10 @@ import ScrollList from '../components/ScrollList'
 import LoadingRow from '../components/LoadingRow'
 import ValuesRow from '../components/ValuesRow'
 
-const ValuesTable = React.createClass({
+@autobind
+class ValuesTable extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     loading: React.PropTypes.bool,
     finished: React.PropTypes.bool,
     keys: React.PropTypes.array,
@@ -19,16 +21,14 @@ const ValuesTable = React.createClass({
     match: React.PropTypes.string,
     matchRegExp: React.PropTypes.object,
     selectedIndex: React.PropTypes.number
-  },
+  }
 
-  getDefaultProps () {
-    return {
-      loading: false,
-      keys: [],
-      offset: 0,
-      itemHeight: 30
-    }
-  },
+  static defaultProps = {
+    loading: false,
+    keys: [],
+    offset: 0,
+    itemHeight: 30
+  }
 
   getHotKeys () {
     return {
@@ -51,15 +51,15 @@ const ValuesTable = React.createClass({
         }
       }
     }
-  },
+  }
 
   getItems () {
     return this.props.keys
-  },
+  }
 
   onSearchChange (e) {
     browseActions.setMatch(e.currentTarget.value)
-  },
+  }
 
   onScroll (e, newOffset) {
     if (newOffset) {
@@ -76,19 +76,19 @@ const ValuesTable = React.createClass({
         }
       }
     }
-  },
+  }
 
   renderRoot (props, children) {
     return <tbody {...props}>{children}</tbody>
-  },
+  }
 
   renderItem (props, item) {
     return <ValuesRow matchRegExp={this.props.matchRegExp} {...props} {...item}/>
-  },
+  }
 
   renderPlaceholder (props) {
     return <tr key={props.key}><td colSpan='2' {...props}></td></tr>
-  },
+  }
 
   render () {
     return (
@@ -128,6 +128,6 @@ const ValuesTable = React.createClass({
       </HotKeys>
     )
   }
-})
+}
 
 export default ValuesTable

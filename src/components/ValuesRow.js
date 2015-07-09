@@ -1,21 +1,23 @@
 import React from 'react'
+import autobind from 'autobind-decorator'
 import browseActions from '../actions/browseActions'
 import TypeIcon from '../components/TypeIcon'
 
-const ValuesRow = React.createClass({
+@autobind
+class ValuesRow extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     _key: React.PropTypes.string,
     type: React.PropTypes.string,
     style: React.PropTypes.object,
     value: React.PropTypes.string,
     matchRegExp: React.PropTypes.object,
     selected: React.PropTypes.bool
-  },
+  }
 
   onClick (e) {
     browseActions.toggleSelectedKey(this.props._key)
-  },
+  }
 
   renderKey () {
     // Highlight search pattern matches.
@@ -33,7 +35,7 @@ const ValuesRow = React.createClass({
     } else {
       return this.props._key
     }
-  },
+  }
 
   render () {
     var classes = 'values-row'
@@ -48,6 +50,6 @@ const ValuesRow = React.createClass({
       </tr>
     )
   }
-})
+}
 
 export default ValuesRow

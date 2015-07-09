@@ -1,13 +1,13 @@
 import React from 'react'
 import Details from '../../components/details/Details'
 
-const SortedSetDetails = React.createClass({
+class SortedSetDetails extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     _key: React.PropTypes.string.isRequired,
     type: React.PropTypes.string.isRequired,
     value: React.PropTypes.string.isRequired
-  },
+  }
 
   render () {
     return (
@@ -18,6 +18,6 @@ const SortedSetDetails = React.createClass({
       />
     )
   }
-})
+}
 
 export default SortedSetDetails

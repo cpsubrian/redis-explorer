@@ -1,49 +1,47 @@
 import React from 'react'
+import autobind from 'autobind-decorator'
 
-const ScrollList = React.createClass({
+@autobind
+class ScrollList extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     getItems: React.PropTypes.func.isRequired,
     itemHeight: React.PropTypes.number.isRequired,
     renderRoot: React.PropTypes.func,
     renderItem: React.PropTypes.func,
     renderPlaceholder: React.PropTypes.func,
     offset: React.PropTypes.number
-  },
+  }
 
-  getDefaultProps () {
-    return {
-      renderRoot: (props, children) => {
-        return (
-          <ul {...props}>
-            {children}
-          </ul>
-        )
-      },
-      renderItem: (props, item) => {
-        return (
-          <li {...props}>
-            {item}
-          </li>
-        )
-      },
-      renderPlaceholder: (props) => {
-        return <li {...props}></li>
-      },
-      offset: 0,
-      limit: 60
+  static defaultProps = {
+    offset: 0,
+    limit: 60,
+    renderRoot: (props, children) => {
+      return (
+        <ul {...props}>
+          {children}
+        </ul>
+      )
+    },
+    renderItem: (props, item) => {
+      return (
+        <li {...props}>
+          {item}
+        </li>
+      )
+    },
+    renderPlaceholder: (props) => {
+      return <li {...props}></li>
     }
-  },
+  }
 
-  getInitialState () {
-    return {
-      offset: this.props.offset
-    }
-  },
+  state = {
+    offset: this.props.offset
+  }
 
   componentDidMount () {
-    this.getDOMNode().scrollTop = this.state.offset * this.props.itemHeight
-  },
+    React.findDOMNode(this).scrollTop = this.state.offset * this.props.itemHeight
+  }
 
   onScroll (e) {
     let top = e.currentTarget.scrollTop
@@ -57,26 +55,27 @@ const ScrollList = React.createClass({
     if (this.props.scrollHandler) {
       this.props.scrollHandler(e, newOffset)
     }
-  },
+  }
 
   getDisplayOffset () {
     let offset = this.state.offset - Math.floor(this.props.limit / 3)
     return (offset >= 0) ? offset : 0
-  },
+  }
 
   ensureVisible (index) {
+    let container = React.findDOMNode(this)
     let itemTop = index * this.props.itemHeight
-    let top = this.getDOMNode().scrollTop
-    let height = this.getDOMNode().offsetHeight
+    let top = container.scrollTop
+    let height = container.offsetHeight
     let count = Math.floor(height / this.props.itemHeight)
 
     if (itemTop < top) {
-      this.getDOMNode().scrollTop = (index - count + 2) * this.props.itemHeight
+      container.scrollTop = (index - count + 2) * this.props.itemHeight
     }
     if ((itemTop + this.props.itemHeight) > (top + height - this.props.itemHeight)) {
-      this.getDOMNode().scrollTop = index * this.props.itemHeight
+      container.scrollTop = index * this.props.itemHeight
     }
-  },
+  }
 
   renderItems () {
     let items = this.props.getItems()
@@ -116,7 +115,7 @@ const ScrollList = React.createClass({
     }))
 
     return results
-  },
+  }
 
   render () {
     return this.props.renderRoot({
@@ -126,6 +125,6 @@ const ScrollList = React.createClass({
       onScroll: this.onScroll
     }, this.renderItems())
   }
-})
+}
 
 export default ScrollList

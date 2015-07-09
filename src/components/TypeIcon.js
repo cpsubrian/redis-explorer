@@ -2,12 +2,12 @@ import React from 'react'
 import Icon from '../components/Icon'
 import keys from '../utils/keys'
 
-const TypeIcon = React.createClass({
+class TypeIcon extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     title: React.PropTypes.string,
     type: React.PropTypes.string
-  },
+  }
 
   render () {
     let props = {
@@ -30,7 +30,6 @@ const TypeIcon = React.createClass({
     }
     return <Icon className='type-icon' {...props}/>
   }
-
-})
+}
 
 export default TypeIcon

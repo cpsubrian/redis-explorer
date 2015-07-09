@@ -3,21 +3,19 @@ import clipboard from 'clipboard'
 import Details from '../../components/details/Details'
 import Highlight from '../../components/Highlight'
 
-const KeyDetails = React.createClass({
+class KeyDetails extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     _key: React.PropTypes.string.isRequired,
     type: React.PropTypes.string.isRequired,
     value: React.PropTypes.string.isRequired
-  },
+  }
 
-  getInitialState () {
-    return {
-      types: ['JSON', 'Raw'],
-      show: 'JSON',
-      hasJSON: false
-    }
-  },
+  state = {
+    types: ['JSON', 'Raw'],
+    show: 'JSON',
+    hasJSON: false
+  }
 
   renderValue () {
     let value
@@ -36,7 +34,7 @@ const KeyDetails = React.createClass({
       value = <pre><code>{this.props.value}</code></pre>
     }
     return value
-  },
+  }
 
   renderButtons () {
     var buttons = {}
@@ -70,7 +68,7 @@ const KeyDetails = React.createClass({
     )
 
     return React.addons.createFragment(buttons)
-  },
+  }
 
   render () {
     let value = this.renderValue()
@@ -85,6 +83,6 @@ const KeyDetails = React.createClass({
       />
     )
   }
-})
+}
 
 export default KeyDetails

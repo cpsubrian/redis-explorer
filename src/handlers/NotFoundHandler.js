@@ -1,6 +1,6 @@
 import React from 'react'
 
-const NotFoundHandler = React.createClass({
+class NotFoundHandler extends React.Component {
 
   render () {
     return (
@@ -9,6 +9,6 @@ const NotFoundHandler = React.createClass({
       </div>
     )
   }
-})
+}
 
 export default NotFoundHandler

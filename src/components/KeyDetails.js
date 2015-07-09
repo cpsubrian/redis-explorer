@@ -5,14 +5,14 @@ import SetDetails from '../components/details/SetDetails'
 import SortedSetDetails from '../components/details/SortedSetDetails'
 import StringDetails from '../components/details/StringDetails'
 
-const KeyDetails = React.createClass({
+class KeyDetails extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     _key: React.PropTypes.string.isRequired,
     type: React.PropTypes.string.isRequired,
     value: React.PropTypes.string.isRequired,
     buttons: React.PropTypes.node
-  },
+  }
 
   render () {
     switch (this.props.type) {
@@ -28,6 +28,6 @@ const KeyDetails = React.createClass({
         return <HashDetails {...this.props}/>
     }
   }
-})
+}
 
 export default KeyDetails

@@ -1,16 +1,14 @@
 import React from 'react'
 
-const LoadingRow = React.createClass({
+class LoadingRow extends React.Component {
 
-  propTypes: {
+  static propTypes = {
     cols: React.PropTypes.number
-  },
+  }
 
-  getDefaultProps () {
-    return {
-      cols: 1
-    }
-  },
+  static defaultProps = {
+    cols: 1
+  }
 
   render () {
     return (
@@ -21,6 +19,6 @@ const LoadingRow = React.createClass({
       </tr>
     )
   }
-})
+}
 
 export default LoadingRow

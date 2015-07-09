@@ -3,7 +3,7 @@ RedisExplorer
 
 An [electron](http://electron.atom.io/)-powered GUI for [redis](http://redis.io/).
 
-![screenshot](https://raw.githubusercontent.com/cpsubrian/redis-explorer/master/resources/screenshot.png)
+![screencap](https://raw.githubusercontent.com/cpsubrian/redis-explorer/master/resources/screencap.gif)
 
 Installation
 ------------

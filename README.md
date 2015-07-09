@@ -44,6 +44,39 @@ I'm working through an internal list of TODOs at the moment and want to avoid
 stepping on toes. Once I get the main feature list implemented, I'll maintain
 a roadmap and wishlist here in the README so others can contribute more easily.
 
+Roadmap
+-------
+
+- Read All Key Types
+  - [x] String
+  - [ ] List
+  - [ ] Set
+  - [ ] Sorted Set
+  - [ ] Hash
+- Keyspace 'overview'
+  - [ ] Implement a collapsable tree-structure for browsing the keyspace
+    - Configurable delimeter per hosts
+- Manage Remote Hosts
+  - [ ] CRUD Hosts
+  - [ ] Import from ~/.ssh/config ?
+  - [ ] Support other auth schemes
+    - [x] ssh-agent tunnel
+    - others?
+- Console/REPL
+  - [ ] Add a 'console' tab that replecates the functionality of the redis-client REPL
+- Delete Data
+  - [ ] Delete keys
+  - [ ] Delete from lists
+  - [ ] Delete form sets/sorted-sets
+  - [ ] Delete hash keys
+  - [ ] Bulk Delete all of the above
+- Edit Data
+  - [ ] Edit string keys
+  - [ ] Edit lists, Add items
+  - [ ] Edit sets, Add items
+  - [ ] Edit hashes
+
+
 ### How to Build
 
 For development, you'll just need to clone this repo and run `make`.

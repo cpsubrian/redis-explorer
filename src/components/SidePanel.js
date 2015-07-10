@@ -30,8 +30,7 @@ const SidePanel = React.createClass({
   },
 
   windowListeners: {
-    'keyup': '_onWindowKeyUp',
-    'resize': '_onWindowResize'
+    'keyup': '_onWindowKeyUp'
   },
 
   getDefaultProps () {
@@ -155,10 +154,6 @@ const SidePanel = React.createClass({
         this.state.open) {
       this.close()
     }
-  },
-
-  _onWindowResize (e) {
-    this._updateMenuHeight()
   },
 
   _getMaxTranslateX () {

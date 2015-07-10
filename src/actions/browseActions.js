@@ -25,6 +25,15 @@ class BrowseActions {
     this.dispatch(key)
   }
 
+  toggleSelectedIndex (index) {
+    this.dispatch(index)
+  }
+
+  // `item` should be {key, index}
+  toggleSelected (item) {
+    this.dispatch(item)
+  }
+
   /* Fetch Keys Lifecycle
    ****************************************************************************/
   fetchKeys (options = {}) {

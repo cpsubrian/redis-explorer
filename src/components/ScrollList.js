@@ -1,11 +1,14 @@
 import React from 'react'
+import pureRender from 'pure-render-decorator'
 import autobind from 'autobind-decorator'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
+@pureRender
 @autobind
 class ScrollList extends React.Component {
 
   static propTypes = {
-    getItems: React.PropTypes.func.isRequired,
+    items: ImmutablePropTypes.iterable,
     itemHeight: React.PropTypes.number.isRequired,
     renderRoot: React.PropTypes.func,
     renderItem: React.PropTypes.func,
@@ -78,9 +81,8 @@ class ScrollList extends React.Component {
   }
 
   renderItems () {
-    let items = this.props.getItems()
     let offset = this.getDisplayOffset()
-    let slice = items.slice(offset, offset + this.props.limit)
+    let slice = this.props.items.slice(offset, offset + this.props.limit)
     let results = []
     let baseStyles = {
           visibility: 'hidden !important',
@@ -100,17 +102,16 @@ class ScrollList extends React.Component {
     }))
 
     // Add currently visible items.
-    results = results.concat(slice.map((item, i) => {
-      return this.props.renderItem({
-        key: item.key || (offset + '_' + i)
-      }, item)
-    }))
+    let index = offset
+    slice.forEach((item, key) => {
+      results.push(this.props.renderItem({key}, item, index++))
+    })
 
     // Add bottom placeholder.
     results.push(this.props.renderPlaceholder({
       key: 'scroll-list-placeholder-bottom',
       style: Object.assign({
-        height: ((items.length - offset - slice.length) * this.props.itemHeight) + 'px'
+        height: ((this.props.items.size - offset - slice.size) * this.props.itemHeight) + 'px'
       }, baseStyles)
     }))
 

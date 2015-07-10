@@ -1,6 +1,7 @@
 import React from 'react'
 import autobind from 'autobind-decorator'
 import connectToStores from 'alt/utils/connectToStores'
+import pureRender from 'pure-render-decorator'
 import debounce from '../utils/debounce'
 import hostsStore from '../stores/hostsStore'
 import browseStore from '../stores/browseStore'
@@ -11,7 +12,9 @@ import KeyDetails from '../components/KeyDetails'
 import SidePanel from '../components/SidePanel'
 import Icon from '../components/Icon'
 
-@connectToStores @autobind
+@connectToStores
+@pureRender
+@autobind
 class BrowseHandler extends React.Component {
 
   static propTypes = {
@@ -72,7 +75,7 @@ class BrowseHandler extends React.Component {
   }
 
   onClickClose (e) {
-    browseActions.toggleSelectedKey(this.props.selectedKey.key)
+    browseActions.toggleSelected()
   }
 
   render () {
@@ -89,7 +92,7 @@ class BrowseHandler extends React.Component {
             <Icon type='cancel'/>
           </IconButton>
           {this.props.selectedKey ?
-            <KeyDetails ref='keyDetails' {...this.props.selectedKey}/>
+            <KeyDetails ref='keyDetails' item={this.props.selectedKey}/>
           :/*else*/
             null
           }

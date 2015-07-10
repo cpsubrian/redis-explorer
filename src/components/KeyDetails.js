@@ -1,21 +1,21 @@
 import React from 'react'
+import pureRender from 'pure-render-decorator'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import HashDetails from '../components/details/HashDetails'
 import ListDetails from '../components/details/ListDetails'
 import SetDetails from '../components/details/SetDetails'
 import SortedSetDetails from '../components/details/SortedSetDetails'
 import StringDetails from '../components/details/StringDetails'
 
+@pureRender
 class KeyDetails extends React.Component {
 
   static propTypes = {
-    _key: React.PropTypes.string.isRequired,
-    type: React.PropTypes.string.isRequired,
-    value: React.PropTypes.string.isRequired,
-    buttons: React.PropTypes.node
+    item: ImmutablePropTypes.map
   }
 
   render () {
-    switch (this.props.type) {
+    switch (this.props.item.get('type')) {
       case 'string':
         return <StringDetails {...this.props}/>
       case 'list':

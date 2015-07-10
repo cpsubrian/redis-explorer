@@ -1,21 +1,18 @@
 import React from 'react'
+import pureRender from 'pure-render-decorator'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import Details from '../../components/details/Details'
 
+@pureRender
 class SortedSetDetails extends React.Component {
 
   static propTypes = {
-    _key: React.PropTypes.string.isRequired,
-    type: React.PropTypes.string.isRequired,
-    value: React.PropTypes.string.isRequired
+    item: ImmutablePropTypes.map
   }
 
   render () {
     return (
-      <Details
-        _key={this.props._key}
-        type={this.props.type}
-        value={this.props.value}
-      />
+      <Details {...this.props.item.toJS()}/>
     )
   }
 }

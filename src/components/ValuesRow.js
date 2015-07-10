@@ -1,28 +1,34 @@
 import React from 'react'
+import pureRender from 'pure-render-decorator'
 import autobind from 'autobind-decorator'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import browseActions from '../actions/browseActions'
 import TypeIcon from '../components/TypeIcon'
 
+@pureRender
 @autobind
 class ValuesRow extends React.Component {
 
   static propTypes = {
-    _key: React.PropTypes.string,
-    type: React.PropTypes.string,
+    index: React.PropTypes.number,
     style: React.PropTypes.object,
-    value: React.PropTypes.string,
     matchRegExp: React.PropTypes.object,
-    selected: React.PropTypes.bool
+    item: ImmutablePropTypes.map // @todo Enforce more specific shape here and elsewhere
   }
 
   onClick (e) {
-    browseActions.toggleSelectedKey(this.props._key)
+    browseActions.toggleSelected({
+      key: this.props.item.get('key'),
+      index: this.props.index
+    })
   }
 
   renderKey () {
+    let key = this.props.item.get('key')
+
     // Highlight search pattern matches.
     if (this.props.matchRegExp) {
-      return this.props._key
+      return key
         .split(this.props.matchRegExp)
         .map((part, i) => {
           if (i > 0 && i % 2) {
@@ -33,20 +39,19 @@ class ValuesRow extends React.Component {
         })
     // Else, just spit out the key.
     } else {
-      return this.props._key
+      return key
     }
   }
 
   render () {
-    var classes = 'values-row'
-    if (this.props.selected) {
-      classes += ' selected'
-    }
+    let {selected, value, type} = this.props.item.toJS()
+    let classes = 'values-row' + (selected ? ' selected' : '')
+
     return (
       <tr className={classes} style={this.props.style} onClick={this.onClick}>
         <td className='key'>{this.renderKey()}</td>
-        <td className='value'>{this.props.value ? this.props.value.substr(0, 400) : null}</td>
-        <td className='type'><TypeIcon type={this.props.type}/></td>
+        <td className='value'>{value ? value.substr(0, 400) : null}</td>
+        <td className='type'><TypeIcon type={type}/></td>
       </tr>
     )
   }

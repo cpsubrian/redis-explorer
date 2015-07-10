@@ -1,4 +1,6 @@
 import React from 'react'
+import ImmutablePropTypes from 'react-immutable-proptypes'
+import pureRender from 'pure-render-decorator'
 import autobind from 'autobind-decorator'
 import shell from 'shell'
 import browseActions from '../actions/browseActions'
@@ -9,13 +11,14 @@ import ScrollList from '../components/ScrollList'
 import LoadingRow from '../components/LoadingRow'
 import ValuesRow from '../components/ValuesRow'
 
+@pureRender
 @autobind
 class ValuesTable extends React.Component {
 
   static propTypes = {
+    keys: ImmutablePropTypes.orderedMap.isRequired,
     loading: React.PropTypes.bool,
     finished: React.PropTypes.bool,
-    keys: React.PropTypes.array,
     offset: React.PropTypes.number,
     itemHeight: React.PropTypes.number,
     match: React.PropTypes.string,
@@ -25,36 +28,42 @@ class ValuesTable extends React.Component {
 
   static defaultProps = {
     loading: false,
-    keys: [],
     offset: 0,
     itemHeight: 30
+  }
+
+  componentDidUpdate (prevProps) {
+    if (this.refs.scrollList &&
+        (this.props.selectedIndex !== null) &&
+        (prevProps.selectedIndex !== this.props.selectedIndex)) {
+      this.refs.scrollList.ensureVisible(this.props.selectedIndex)
+    }
   }
 
   getHotKeys () {
     return {
       down: (event) => {
-        if (this.props.selectedIndex < (this.props.keys.length - 1)) {
-          let nextKey = this.props.keys[this.props.selectedIndex + 1]._key
-          this.refs.scrollList.ensureVisible(this.props.selectedIndex + 1)
-          browseActions.toggleSelectedKey(nextKey)
+        if ((this.props.selectedIndex !== null) && this.props.selectedIndex < (this.props.keys.size - 1)) {
+          browseActions.toggleSelectedIndex(this.props.selectedIndex + 1)
         } else {
           shell.beep()
         }
       },
       up: (event) => {
-        if (this.props.selectedIndex > 0) {
-          let previousKey = this.props.keys[this.props.selectedIndex - 1]._key
-          this.refs.scrollList.ensureVisible(this.props.selectedIndex - 1)
-          browseActions.toggleSelectedKey(previousKey)
+        if ((this.props.selectedIndex !== null) && this.props.selectedIndex > 0) {
+          browseActions.toggleSelectedIndex(this.props.selectedIndex - 1)
+        } else {
+          shell.beep()
+        }
+      },
+      esc: (event) => {
+        if (this.props.selectedIndex !== null) {
+          browseActions.toggleSelected()
         } else {
           shell.beep()
         }
       }
     }
-  }
-
-  getItems () {
-    return this.props.keys
   }
 
   onSearchChange (e) {
@@ -82,8 +91,8 @@ class ValuesTable extends React.Component {
     return <tbody {...props}>{children}</tbody>
   }
 
-  renderItem (props, item) {
-    return <ValuesRow matchRegExp={this.props.matchRegExp} {...props} {...item}/>
+  renderItem (props, item, index) {
+    return <ValuesRow matchRegExp={this.props.matchRegExp} item={item} index={index} {...props}/>
   }
 
   renderPlaceholder (props) {
@@ -118,7 +127,7 @@ class ValuesTable extends React.Component {
                 renderRoot={this.renderRoot}
                 renderItem={this.renderItem}
                 renderPlaceholder={this.renderPlaceholder}
-                getItems={this.getItems}
+                items={this.props.keys}
                 itemHeight={this.props.itemHeight}
                 offset={this.props.offset}
                 scrollHandler={this.onScroll} />

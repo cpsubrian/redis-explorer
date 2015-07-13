@@ -1,14 +1,15 @@
 import React from 'react'
+import pureRender from 'pure-render-decorator'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import clipboard from 'clipboard'
 import Details from '../../components/details/Details'
 import Highlight from '../../components/Highlight'
 
+@pureRender
 class KeyDetails extends React.Component {
 
   static propTypes = {
-    _key: React.PropTypes.string.isRequired,
-    type: React.PropTypes.string.isRequired,
-    value: React.PropTypes.string.isRequired
+    item: ImmutablePropTypes.map
   }
 
   state = {
@@ -18,26 +19,27 @@ class KeyDetails extends React.Component {
   }
 
   renderValue () {
-    let value
+    let value = this.props.item.get('value')
     try {
       if (this.state.show === 'Raw') {
-        value = <pre><code>{this.props.value}</code></pre>
+        value = <pre><code>{value}</code></pre>
       } else {
         value = (
           <Highlight className='json'>
-            {JSON.stringify(JSON.parse(this.props.value), null, 2)}
+            {JSON.stringify(JSON.parse(value), null, 2)}
           </Highlight>
         )
       }
       this.state.hasJSON = true
     } catch (e) {
-      value = <pre><code>{this.props.value}</code></pre>
+      value = <pre><code>{value}</code></pre>
     }
     return value
   }
 
   renderButtons () {
-    var buttons = {}
+    let buttons = {}
+    let value = this.props.item.get('value')
 
     // Create types buttons.
     if (this.state.hasJSON) {
@@ -64,22 +66,17 @@ class KeyDetails extends React.Component {
 
     // Todo make this into a component maybe?
     buttons.copy = (
-      <a href='#' onClick={(e) => clipboard.writeText(this.props.value)}>Copy</a>
+      <a href='#' onClick={(e) => clipboard.writeText(value)}>Copy</a>
     )
 
     return React.addons.createFragment(buttons)
   }
 
   render () {
-    let value = this.renderValue()
-    let buttons = this.renderButtons()
-
     return (
-      <Details
-        _key={this.props._key}
-        type={this.props.type}
-        value={value}
-        buttons={buttons}
+      <Details {...this.props.item.toJS()}
+        value={this.renderValue()}
+        buttons={this.renderButtons()}
       />
     )
   }

@@ -1,8 +1,11 @@
 import alt from '../alt'
 import _ from 'underscore'
+import Immutable from 'immutable'
+import immutable from 'alt/utils/ImmutableUtil'
 import regex from '../utils/regex'
 import browseActions from '../actions/browseActions'
 
+@immutable
 class BrowseStore {
 
   constructor () {
@@ -10,7 +13,8 @@ class BrowseStore {
     this.bindActions(browseActions)
 
     // Initialize state.
-    this.keys = []
+    this.keys = Immutable.OrderedMap()
+    this.keysIndex = Immutable.List()
     this.selectedKey = null
     this.selectedIndex = null
     this.loading = false
@@ -25,7 +29,8 @@ class BrowseStore {
   /* General
    ****************************************************************************/
   onResetKeys () {
-    this.keys = []
+    this.keys = this.keys.clear()
+    this.keysIndex = this.keysIndex.clear()
     this.selectedKey = null
     this.selectedIndex = null
     this.loading = false
@@ -51,18 +56,35 @@ class BrowseStore {
   }
 
   onToggleSelectedKey (key) {
-    this.keys.forEach((item, i) => {
-      if (item.key === key) {
-        item.selected = !item.selected
-        if (item.selected) {
-          this.selectedKey = item
-          this.selectedIndex = i
-        } else {
-          this.selectedKey = null
-          this.selectedIndex = null
+    if (key) {
+      let index = this.keysIndex.indexOf(key)
+      this.onToggleSelected({key, index})
+    } else {
+      this.onToggleSelected()
+    }
+  }
+
+  onToggleSelectedIndex (index) {
+    let key = this.keysIndex.get(index)
+    this.onToggleSelected({key, index})
+  }
+
+  onToggleSelected (item = {}) {
+    let {key, index} = item
+    key = (typeof key !== 'undefined') ? key : this.selectedKey.get('key')
+    index = (typeof index !== 'undefined') ? index : this.selectedIndex
+    this.keys = this.keys.withMutations((keys) => {
+      if (keys.get(key).get('selected')) {
+        keys.update(key, (item) => item.set('selected', false))
+        this.selectedKey = null
+        this.selectedIndex = null
+      } else {
+        if (this.selectedKey) {
+          keys.update(this.selectedKey.get('key'), (item) => item.set('selected', false))
         }
-      } else if (item.selected) {
-        item.selected = false
+        keys.update(key, (item) => item.set('selected', true))
+        this.selectedKey = keys.get(key)
+        this.selectedIndex = index
       }
     })
   }
@@ -70,7 +92,8 @@ class BrowseStore {
   /* Fetch Keys Lifecycle
    ****************************************************************************/
   onFetchKeys () {
-    this.keys = []
+    this.keys = this.keys.clear()
+    this.keysIndex = this.keysIndex.clear()
     this.selectedKey = null
     this.selectedIndex = null
     this.loading = true
@@ -85,10 +108,17 @@ class BrowseStore {
     }
   }
 
-  onFetchKeysAdd (keys) {
+  onFetchKeysAdd (newKeys) {
     this.loading = false
     this.loaded = true
-    this.keys = this.keys.concat(keys)
+    this.keys = this.keys.withMutations((keys) => {
+      this.keysIndex = this.keysIndex.withMutations((index) => {
+        newKeys.forEach(function (key) {
+          keys.set(key.key, Immutable.Map(key))
+          index.push(key.key)
+        })
+      })
+    })
   }
 
   onFetchKeysFailed (err) {
@@ -106,15 +136,14 @@ class BrowseStore {
   /* Fetch Keys Lifecycle
    ****************************************************************************/
   onFetchValues (keys) {
-
+    // @todo Maybe set a loading flag on each key?
   }
 
   onFetchValuesAdd (values) {
-    _.each(values, (value, key) => {
-      let obj = _.findWhere(this.keys, {key: key})
-      if (key) {
-        obj.value = value
-      }
+    this.keys = this.keys.withMutations((keys) => {
+      _.each(values, (value, key) => {
+        keys.update(key, (item) => item.set('value', value))
+      })
     })
   }
 

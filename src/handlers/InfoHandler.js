@@ -8,8 +8,8 @@ import hostsStore from '../stores/hostsStore'
 import hostsActions from '../actions/hostsActions'
 import HostInfo from '../components/HostInfo'
 
-@pureRender
 @connectToStores
+@pureRender
 @autobind
 class InfoHandler extends React.Component {
 

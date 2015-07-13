@@ -8,7 +8,7 @@ class HostsActions {
   connectToHost (host) {
     this.dispatch(host)
 
-    db.connect(host, (err) => {
+    db.connect(host.toJS(), (err) => {
       if (err) {
         this.actions.connectToHostFailed(err)
       } else {

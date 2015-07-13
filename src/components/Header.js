@@ -1,17 +1,19 @@
 import React from 'react'
-import {Link} from 'react-router'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import autobind from 'autobind-decorator'
-import hostsActions from '../actions/hostsActions'
-import browseActions from '../actions/browseActions'
+import {Link} from 'react-router'
 import Icon from '../components/Icon'
-import {LeftNav, MenuItem, Toolbar, ToolbarGroup} from 'material-ui'
+import {Toolbar, ToolbarGroup} from 'material-ui'
+import HostsNav from '../components/HostsNav'
 
+// @todo add pureRender after I figure out how to account for Router state
+// for <Link> changes.
 @autobind
 class Header extends React.Component {
 
   static propTypes = {
-    hosts: React.PropTypes.array,
-    activeHost: React.PropTypes.object,
+    hosts: ImmutablePropTypes.list,
+    activeHost: ImmutablePropTypes.map,
     connecting: React.PropTypes.bool,
     connected: React.PropTypes.bool
   }
@@ -21,13 +23,6 @@ class Header extends React.Component {
     this.refs.hostsNav.toggle()
   }
 
-  onChangeHost (e, i, menuItem) {
-    if (menuItem.host.Host !== this.props.activeHost.Host) {
-      browseActions.resetKeys()
-      hostsActions.connectToHost(menuItem.host)
-    }
-  }
-
   getHostButtonClass () {
     if (this.props.connecting) {
       return 'connecting'
@@ -35,40 +30,6 @@ class Header extends React.Component {
       return 'connected'
     } else {
       return 'disconnected'
-    }
-  }
-
-  getHostsNavProps () {
-    let selectedIndex
-    let menuItems
-
-    menuItems = this.props.hosts.map((host, i) => {
-      if (this.props.activeHost === host) {
-        selectedIndex = i
-      }
-      return {
-        host: host,
-        text: <span className='host-option'><Icon type='public'/> {host.Host}</span>
-      }
-    })
-
-    // Splice in subheaders.
-    menuItems.splice(0, 0, {type: MenuItem.Types.SUBHEADER, text: 'Local' })
-    menuItems.splice(2, 0, {type: MenuItem.Types.SUBHEADER, text: 'Remote' })
-
-    // Adjust selected index.
-    if (selectedIndex === 0) {
-      selectedIndex = 1
-    } else {
-      selectedIndex += 2
-    }
-
-    return {
-      docked: false,
-      openRight: true,
-      onChange: this.onChangeHost,
-      selectedIndex: selectedIndex,
-      menuItems: menuItems
     }
   }
 
@@ -87,12 +48,12 @@ class Header extends React.Component {
           <ToolbarGroup key={1} float='right' className='no-drag'>
             {this.props.activeHost ?
               <Link to='/hosts' className={'button host-button ' + this.getHostButtonClass()} onClick={this.onClickHostButton}>
-                {this.props.activeHost.Host} <Icon type='public'/>
+                {this.props.activeHost.get('Host')} <Icon type='public'/>
               </Link>
             :/*else*/
               <span>Not Connected</span>
             }
-            <LeftNav ref='hostsNav' {...this.getHostsNavProps()} />
+            <HostsNav ref='hostsNav' {...this.props}/>
           </ToolbarGroup>
         </Toolbar>
       </div>

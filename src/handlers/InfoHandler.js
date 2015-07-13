@@ -1,18 +1,22 @@
 import React from 'react'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import autobind from 'autobind-decorator'
+import pureRender from 'pure-render-decorator'
 import connectToStores from 'alt/utils/connectToStores'
 import debounce from '../utils/debounce'
 import hostsStore from '../stores/hostsStore'
 import hostsActions from '../actions/hostsActions'
 import HostInfo from '../components/HostInfo'
 
-@connectToStores @autobind
+@pureRender
+@connectToStores
+@autobind
 class InfoHandler extends React.Component {
 
   static propTypes = {
     connected: React.PropTypes.bool,
     hostInfoLoading: React.PropTypes.bool,
-    hostInfo: React.PropTypes.object
+    hostInfo: ImmutablePropTypes.map
   }
 
   static getStores () {
@@ -20,13 +24,16 @@ class InfoHandler extends React.Component {
   }
 
   static getPropsFromStores () {
-    return Object.assign(hostsStore.getState())
+    return hostsStore.getState()
+  }
+
+  componentWillMount () {
+    if (this.props.connected) {
+      this.fetchHostInfo()
+    }
   }
 
   componentDidMount () {
-    if (this.props.connected) {
-      hostsActions.fetchHostInfo()
-    }
     this.refreshInterval = setInterval(() => this.fetchHostInfo(true), 1000)
   }
 
@@ -49,8 +56,10 @@ class InfoHandler extends React.Component {
   render () {
     return (
       <div className='info'>
-        {(!this.props.hostInfo || this.props.hostInfoLoading) ?
-          <p>Loading Info</p>
+        {!this.props.hostInfo ?
+          (this.props.hostInfoLoading ?
+            <p>Loading Info</p>
+          : null)
         :/*else*/
           <HostInfo {...this.props}/>
         }

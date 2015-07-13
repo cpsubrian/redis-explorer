@@ -1,10 +1,13 @@
 import React from 'react'
+import pureRender from 'pure-render-decorator'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import {Paper} from 'material-ui'
 
+@pureRender
 class HostInfo extends React.Component {
 
   static propTypes = {
-    hostInfo: React.PropTypes.object
+    hostInfo: ImmutablePropTypes.map
   }
 
   static infoGroups = [
@@ -111,13 +114,14 @@ class HostInfo extends React.Component {
     }, {
       title: 'Keyspace',
       getInfo () {
-        if (this.props.hostInfo.databases) {
+        let databases = this.props.hostInfo.get('databases')
+        if (databases) {
           let dbs = []
           let rows = []
           for (let i = 0; i <= 16; i++) {
-            if (this.props.hostInfo.databases[i]) {
-              this.props.hostInfo.databases[i].num = i
-              dbs.push(this.props.hostInfo.databases[i])
+            if (databases[i]) {
+              databases[i].num = i
+              dbs.push(databases[i])
             }
           }
           dbs.forEach((db) => {
@@ -165,7 +169,7 @@ class HostInfo extends React.Component {
             return (
               <tr key={'prop-' + prop}>
                 <td className='prop'>{prop}</td>
-                <td className='value'>{this.props.hostInfo[prop]}</td>
+                <td className='value'>{this.props.hostInfo.get(prop)}</td>
               </tr>
             )
           })}

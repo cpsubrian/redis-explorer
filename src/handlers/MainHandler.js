@@ -10,8 +10,8 @@ import Header from '../components/Header'
 // Create an mui theme manager.
 const themeManager = new mui.Styles.ThemeManager()
 
-// The MainHandler class.
-@connectToStores @autobind
+@connectToStores
+@autobind
 class MainHandler extends React.Component {
 
   static propTypes = {

@@ -42,7 +42,9 @@ app.on('ready', () => {
   })
 
   // Open dev tools. Probably should remove this when this is more production ready.
-  mainWindow.openDevTools()
+  if (process.env.NODE_ENV !== 'production') {
+    mainWindow.openDevTools()
+  }
 
   // Load the index.html of the app.
   mainWindow.loadUrl('file://' + __dirname + '/index.html')

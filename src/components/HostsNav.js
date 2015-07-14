@@ -1,6 +1,6 @@
 import React from 'react'
 import autobind from 'autobind-decorator'
-import ImmutablePropTypes from 'react-immutable-propTypes'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import hostsActions from '../actions/hostsActions'
 import browseActions from '../actions/browseActions'
 import Icon from '../components/Icon'

@@ -5,6 +5,12 @@ import hljs from 'highlight.js'
 @autobind
 class Highlight extends React.Component {
 
+  static propTypes = {
+    className: React.PropTypes.string,
+    innerHTML: React.PropTypes.bool,
+    children: React.PropTypes.node
+  }
+
   static defaultProps = {
     innerHTML: false,
     className: ''

@@ -133,7 +133,7 @@ class BrowseStore {
     this.finished = true
   }
 
-  /* Fetch Keys Lifecycle
+  /* Fetch Values Lifecycle
    ****************************************************************************/
   onFetchValues (keys) {
     // @todo Maybe set a loading flag on each key?

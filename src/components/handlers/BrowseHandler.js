@@ -2,20 +2,42 @@ import React from 'react'
 import autobind from 'autobind-decorator'
 import connectToStores from 'alt/utils/connectToStores'
 import pureRender from 'pure-render-decorator'
-import debounce from '../utils/debounce'
-import hostsStore from '../stores/hostsStore'
-import browseStore from '../stores/browseStore'
-import browseActions from '../actions/browseActions'
+import debounce from '../../utils/debounce'
+import hostsStore from '../../stores/hostsStore'
+import browseStore from '../../stores/browseStore'
+import browseActions from '../../actions/browseActions'
 import {IconButton} from 'material-ui'
-import ValuesTable from '../components/ValuesTable'
-import KeyDetails from '../components/KeyDetails'
-import SidePanel from '../components/SidePanel'
-import Icon from '../components/Icon'
+import ValuesTable from '../../components/ValuesTable'
+import KeyDetails from '../../components/KeyDetails'
+import SidePanel from '../../components/SidePanel'
+import Icon from '../../components/Icon'
 
+/**
+ * Wrap the Browse component so we can handle transitions.
+ */
+@pureRender
+class BrowseHandler extends React.Component {
+
+  static willTransitionTo () {
+    let state = Object.assign({}, hostsStore.getState(), browseStore.getState())
+    let {loaded, connected, match} = state
+    if (!loaded && connected) {
+      browseActions.fetchKeys({match})
+    }
+  }
+
+  render () {
+    return <Browse/>
+  }
+}
+
+/**
+ * Browse component.
+ */
 @connectToStores
 @pureRender
 @autobind
-class BrowseHandler extends React.Component {
+class Browse extends React.Component {
 
   static propTypes = {
     loaded: React.PropTypes.bool,
@@ -34,12 +56,6 @@ class BrowseHandler extends React.Component {
 
   state = {
     keyDetailsDocked: !!this.props.selectedKey
-  }
-
-  componentDidMount () {
-    if (!this.props.loaded && this.props.connected) {
-      this.fetchKeys({match: this.props.match})
-    }
   }
 
   componentWillReceiveProps (nextProps) {
@@ -63,8 +79,7 @@ class BrowseHandler extends React.Component {
 
   @debounce(250)
   fetchKeys (options = {}) {
-    options.match = options.match ? options.match + '*' : null
-    browseActions.fetchKeys(options)
+    browseActions.fetchKeys.defer(options)
   }
 
   toggleKeyDetails () {

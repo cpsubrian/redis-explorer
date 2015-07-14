@@ -3,15 +3,36 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import autobind from 'autobind-decorator'
 import pureRender from 'pure-render-decorator'
 import connectToStores from 'alt/utils/connectToStores'
-import debounce from '../utils/debounce'
-import hostsStore from '../stores/hostsStore'
-import hostsActions from '../actions/hostsActions'
-import HostInfo from '../components/HostInfo'
+import debounce from '../../utils/debounce'
+import hostsStore from '../../stores/hostsStore'
+import hostsActions from '../../actions/hostsActions'
+import HostInfo from '../../components/HostInfo'
 
+/**
+ * Wrap the Info component so we can handle transisions.
+ */
+@pureRender
+class InfoHandler extends React.Component {
+
+  static willTransitionTo () {
+    let {hostInfo, connected} = hostsStore.getState()
+    if (!hostInfo && connected) {
+      hostsActions.fetchHostInfo()
+    }
+  }
+
+  render () {
+    return <Info />
+  }
+}
+
+/**
+ * Info component.
+ */
 @connectToStores
 @pureRender
 @autobind
-class InfoHandler extends React.Component {
+class Info extends React.Component {
 
   static propTypes = {
     connected: React.PropTypes.bool,
@@ -25,12 +46,6 @@ class InfoHandler extends React.Component {
 
   static getPropsFromStores () {
     return hostsStore.getState()
-  }
-
-  componentWillMount () {
-    if (this.props.connected) {
-      this.fetchHostInfo()
-    }
   }
 
   componentDidMount () {
@@ -50,7 +65,7 @@ class InfoHandler extends React.Component {
 
   @debounce(250)
   fetchHostInfo (isRefresh) {
-    hostsActions.fetchHostInfo(isRefresh)
+    hostsActions.fetchHostInfo.defer(isRefresh)
   }
 
   render () {

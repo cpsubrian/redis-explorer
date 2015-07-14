@@ -1,10 +1,10 @@
 import React from 'react'
 import Router, {Route, NotFoundRoute} from 'react-router'
 
-import MainHandler from './handlers/MainHandler'
-import NotFoundHandler from './handlers/NotFoundHandler'
-import BrowseHandler from './handlers/BrowseHandler'
-import InfoHandler from './handlers/InfoHandler'
+import MainHandler from './components/handlers/MainHandler'
+import NotFoundHandler from './components/handlers/NotFoundHandler'
+import BrowseHandler from './components/handlers/BrowseHandler'
+import InfoHandler from './components/handlers/InfoHandler'
 
 const routes = (
   <Route handler={MainHandler}>

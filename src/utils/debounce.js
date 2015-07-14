@@ -10,7 +10,7 @@ import _ from 'underscore'
  *     // Probably does something.
  *   }
  */
-function debounce (delay, immediate = false) {
+function debounce (delay, immediate = true) {
   return function debounceDecorator (target, name, descriptor) {
     descriptor.value = _.debounce(descriptor.value, delay, immediate)
     return descriptor

@@ -43,6 +43,7 @@ class BrowseActions {
     if (_scan) _scan.stop()
 
     // Create the scan.
+    options.match = options.match ? options.match + '*' : null
     options.loadTypes = true
     _scan = db.scan(options)
 

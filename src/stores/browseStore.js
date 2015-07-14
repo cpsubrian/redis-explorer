@@ -117,8 +117,10 @@ class BrowseStore {
     this.keys = this.keys.withMutations((keys) => {
       this.keysIndex = this.keysIndex.withMutations((index) => {
         newKeys.forEach((key) => {
+          if (!keys.has(key.key)) {
+            index.push(key.key)
+          }
           keys.set(key.key, Immutable.Map(key))
-          index.push(key.key)
         })
       })
     })

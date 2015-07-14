@@ -43,14 +43,39 @@ class ValuesRow extends React.Component {
     }
   }
 
-  render () {
-    let {selected, value, type} = this.props.item.toJS()
-    let classes = 'values-row' + (selected ? ' selected' : '')
+  renderValue () {
+    let type = this.props.item.get('type')
+    let value = this.props.item.get('value')
 
+    if (value) {
+      let teaser
+      switch (type) {
+        case 'list':
+          let parts = []
+          let length = 0
+          for (let i = 0; (length <= 400 && i < value.length); i++) {
+            parts.push(value[i])
+            length += value[i].length
+          }
+          teaser = parts.join(', ')
+          break
+        default:
+          teaser = value
+          break
+      }
+      return teaser ? teaser.substr(0, 400) : null
+    } else {
+      return null
+    }
+  }
+
+  render () {
+    let {selected, type} = this.props.item.toJS()
+    let classes = 'values-row' + (selected ? ' selected' : '')
     return (
       <tr className={classes} style={this.props.style} onClick={this.onClick}>
         <td className='key'>{this.renderKey()}</td>
-        <td className='value'>{value ? value.substr(0, 400) : null}</td>
+        <td className='value'>{this.renderValue()}</td>
         <td className='type'><TypeIcon type={type}/></td>
       </tr>
     )

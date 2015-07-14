@@ -49,9 +49,13 @@ Roadmap
 
 - Read All Key Types
   - [x] String
-  - [ ] List
-  - [ ] Set
-  - [ ] Sorted Set
+  - [x] List
+    - [ ] Change from `LRANGE -inf +inf` to an iterator, to handle really
+          large lists better.
+  - [x] Set
+    - [ ] Change from `SMEMBERS` to `SSCAN`, to handle large sets better.
+  - [x] Sorted Set
+    - [ ] Change from `ZRANGEBYSCORE` to `ZSCAN` or and interator-style range, to handle large sets better.
   - [ ] Hash
 - Keyspace 'overview'
   - [ ] Implement a collapsable tree-structure for browsing the keyspace

@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import mkdirp from 'mkdirp'
 import conf from '../conf'
+import throttle from '../utils/throttle'
 
 let basePath = path.join(
       process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'],
@@ -29,6 +30,11 @@ const settings = {
 
   set (key, value) {
     cache[key] = value
+    settings.write()
+  },
+
+  @throttle(1000)
+  write () {
     fs.writeFileSync(settingsPath, JSON.stringify(cache))
   }
 }

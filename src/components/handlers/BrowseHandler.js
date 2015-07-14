@@ -2,7 +2,7 @@ import React from 'react'
 import autobind from 'autobind-decorator'
 import connectToStores from 'alt/utils/connectToStores'
 import pureRender from 'pure-render-decorator'
-import debounce from '../../utils/debounce'
+import throttle from '../../utils/throttle'
 import hostsStore from '../../stores/hostsStore'
 import browseStore from '../../stores/browseStore'
 import browseActions from '../../actions/browseActions'
@@ -77,7 +77,7 @@ class Browse extends React.Component {
     }
   }
 
-  @debounce(250)
+  @throttle(250)
   fetchKeys (options = {}) {
     browseActions.fetchKeys.defer(options)
   }

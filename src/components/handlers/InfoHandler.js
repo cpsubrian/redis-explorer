@@ -3,7 +3,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import autobind from 'autobind-decorator'
 import pureRender from 'pure-render-decorator'
 import connectToStores from 'alt/utils/connectToStores'
-import debounce from '../../utils/debounce'
+import throttle from '../../utils/throttle'
 import hostsStore from '../../stores/hostsStore'
 import hostsActions from '../../actions/hostsActions'
 import HostInfo from '../../components/HostInfo'
@@ -63,7 +63,7 @@ class Info extends React.Component {
     }
   }
 
-  @debounce(250)
+  @throttle(250)
   fetchHostInfo (isRefresh) {
     hostsActions.fetchHostInfo.defer(isRefresh)
   }

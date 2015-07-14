@@ -3,6 +3,7 @@ import _ from 'underscore'
 import Immutable from 'immutable'
 import immutable from 'alt/utils/ImmutableUtil'
 import regex from '../utils/regex'
+import settings from '../utils/settings'
 import browseActions from '../actions/browseActions'
 
 @immutable
@@ -22,7 +23,7 @@ class BrowseStore {
     this.finished = false
     this.error = null
     this.offset = 0
-    this.match = null
+    this.match = settings.get('browse:match', null)
     this.matchRegExp = null
   }
 
@@ -40,6 +41,7 @@ class BrowseStore {
     this.offset = 0
     this.match = null
     this.matchRegExp = null
+    settings.set('browse:match', null)
   }
 
   onSetOffset (offset) {
@@ -53,6 +55,7 @@ class BrowseStore {
     } else {
       this.match = null
     }
+    settings.set('browse:match', match)
   }
 
   onToggleSelectedKey (key) {

@@ -6,6 +6,7 @@ import Immutable from 'immutable'
 import immutable from 'alt/utils/ImmutableUtil'
 import sshConfig from 'ssh-config'
 import hostsActions from '../actions/hostsActions'
+import settings from '../utils/settings'
 
 @immutable
 class HostsStore {
@@ -48,7 +49,10 @@ class HostsStore {
       Host: 'localhost',
       Hostname: 'localhost'
     }))
-    this.activeHost = this.hosts.get(0)
+
+    // Set active host.
+    let name = settings.get('hosts:active', 'localhost')
+    this.activeHost = this.hosts.find((host) => host.get('Host') === name)
   }
 
   /* Connection Lifecycle
@@ -61,6 +65,7 @@ class HostsStore {
       this.hostInfoLoading = false
       this.hostInfoError = null
       this.hostInfo = null
+      settings.set('hosts:active', host.get('Host'))
     }
   }
 

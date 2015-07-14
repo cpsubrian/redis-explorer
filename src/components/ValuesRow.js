@@ -49,14 +49,22 @@ class ValuesRow extends React.Component {
 
     if (value) {
       let teaser
+      let parts = []
+      let length = 0
+
       switch (type) {
         case 'list':
         case 'set':
-          let parts = []
-          let length = 0
           for (let i = 0; (length <= 400 && i < value.length); i++) {
             parts.push(value[i])
             length += value[i].length
+          }
+          teaser = parts.join(', ')
+          break
+        case 'zset':
+          for (let i = 0; (length <= 400 && i < value.length); i++) {
+            parts.push(value[i].value)
+            length += value[i].value.length
           }
           teaser = parts.join(', ')
           break

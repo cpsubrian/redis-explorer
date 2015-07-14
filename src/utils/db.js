@@ -228,10 +228,25 @@ class DB {
 
   // Fetch sorted-set values for an array of keys.
   fetchSortedSetValues (keys) {
-    return Promise.resolve(keys.reduce((memo, key) => {
-      memo[key] = '[value]'
-      return memo
-    }, {}))
+    return new Promise((resolve, reject) => {
+      this.client.multi(keys.map((key) => {
+        return ['ZRANGEBYSCORE', key, '-inf', '+inf', 'WITHSCORES']
+      })).exec((err, results) => {
+        if (err) return reject(err)
+        resolve(keys.reduce((memo, key, i) => {
+          memo[key] = []
+          results[i].forEach((val, j) => {
+            if (j % 2 === 0 || j === 0) {
+              memo[key].push({
+                value: val,
+                score: parseFloat(results[i][j + 1])
+              })
+            }
+          })
+          return memo
+        }, {}))
+      })
+    })
   }
 
   // Fetch hash values for an array of keys.

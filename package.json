@@ -1,6 +1,6 @@
 {
   "name": "redis-explorer",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A GUI for Redis",
   "main": "browser.js",
   "repository": {

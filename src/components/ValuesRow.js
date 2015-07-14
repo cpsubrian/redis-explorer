@@ -51,6 +51,7 @@ class ValuesRow extends React.Component {
       let teaser
       switch (type) {
         case 'list':
+        case 'set':
           let parts = []
           let length = 0
           for (let i = 0; (length <= 400 && i < value.length); i++) {

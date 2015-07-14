@@ -213,10 +213,17 @@ class DB {
 
   // Fetch set values for an array of keys.
   fetchSetValues (keys) {
-    return Promise.resolve(keys.reduce((memo, key) => {
-      memo[key] = '[value]'
-      return memo
-    }, {}))
+    return new Promise((resolve, reject) => {
+      this.client.multi(keys.map((key) => {
+        return ['SMEMBERS', key]
+      })).exec((err, results) => {
+        if (err) return reject(err)
+        resolve(keys.reduce((memo, key, i) => {
+          memo[key] = results[i]
+          return memo
+        }, {}))
+      })
+    })
   }
 
   // Fetch sorted-set values for an array of keys.

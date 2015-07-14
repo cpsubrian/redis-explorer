@@ -42,7 +42,7 @@ app.on('ready', () => {
   })
 
   // Open dev tools. Probably should remove this when this is more production ready.
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV === 'development') {
     mainWindow.openDevTools()
   }
 

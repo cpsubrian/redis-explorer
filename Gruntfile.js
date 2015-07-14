@@ -13,7 +13,7 @@ module.exports = function (grunt) {
   var ICON_URL = conf['ICON_URL']
   var BUNDLE_ID = conf['BUNDLE_ID']
   var OSX_OUT = conf['OSX_OUT']
-  var OSX_FILENAME = OSX_OUT + '/' + APPNAME + '.app'
+  var OSX_FILENAME = conf['OSX_FILENAME']
   var ELECTRON_VERSION = require('./node_modules/electron-prebuilt/package.json').version
   var target = grunt.option('target') || 'development'
   var env = process.env
@@ -35,8 +35,8 @@ module.exports = function (grunt) {
       windows: {
         options: {
           name: BASENAME,
-          dir: 'build/',
-          out: 'dist/',
+          dir: 'build',
+          out: 'dist',
           version: ELECTRON_VERSION,
           platform: 'win32',
           arch: 'x64',
@@ -47,8 +47,8 @@ module.exports = function (grunt) {
       osx: {
         options: {
           name: APPNAME,
-          dir: 'build/',
-          out: '<%= OSX_OUT %>',
+          dir: 'build',
+          out: 'dist',
           version: ELECTRON_VERSION,
           platform: 'darwin',
           arch: 'x64',

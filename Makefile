@@ -15,12 +15,12 @@ release: install
 
 run:
 	@echo ""
-	@open ./dist/osx/RedisExplorer.app
+	@open ./dist/RedisExplorer-darwin-x64/RedisExplorer.app
 
 copy:
 	@echo ""
 	@rm -Rf /Applications/RedisExplorer.app
-	@cp -R ./dist/osx/RedisExplorer.app /Applications/
+	@cp -R ./dist/RedisExplorer-darwin-x64/RedisExplorer.app /Applications/
 
 .PHONY: install
 .PHONY: dev
